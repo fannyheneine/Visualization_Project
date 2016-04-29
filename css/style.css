@@ -11,14 +11,16 @@ body,html{
     height:100%;
     background-color: #f7f7f7;
     text-align: center;
+    font-family: 'Lato', sans-serif;
 }
 
 #main-container {
     background-image: url("../images/Background.jpg");
-    height:100%;}
+    height:100%;
+    font-weight:300;}
 
 #navigation-horizontal-bar {
-    padding:0;
+padding:0;
 }
 
 
@@ -36,6 +38,7 @@ p {
 
 
 #nav-horizontal-text {
+    padding:10px;
     background-color: #eee;
     border:1px solid #aaa;
     height:150px;
@@ -223,7 +226,6 @@ div[data-toggle="buttons"] label {
     white-space: nowrap;
     vertical-align: top;
     cursor: pointer;
-    background-color: none;
     border: 0px solid
     #c8c8c8;
     border-radius: 3px;
@@ -294,7 +296,7 @@ div.tooltip {
     position: absolute;
     text-align: center;
     width: 80px;
-    height: 80;
+    height: 80px;
     padding: 2px;
     font: 12px sans-serif;
     background: lightsteelblue;
@@ -417,8 +419,10 @@ div.tooltip {
     color: white;
     font-size: 35px;
     line-height: 50px;
-    font-weight: 500;
+    font-weight: 400;
     margin: 15px auto;
+    font-family: 'Lato', sans-serif;
+
 }
 
 #main-container .slide .title-contents p {
@@ -426,12 +430,10 @@ div.tooltip {
     color: white;
     font-size: 20px;
     line-height: 24px;
-    font-weight: 500;
+    font-weight: 300;
     margin: 15px auto;
 }
-#main-container .slide .title-contents a {
-    color: grey
-}
+
 
 #main-container .slide .explore {
     margin-top: 55px;
@@ -471,6 +473,7 @@ div.tooltip {
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
+    text-decoration: none;
 }
 
 .vis-extra{
