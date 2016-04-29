@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CS171 - Project</title>
+
+    <!-- FONT
+ –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,400italic,700' rel='stylesheet' type='text/css'>
+
+	<!-- CSS libraries -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/colorbrewer.css">
+    <link rel="stylesheet" href="css/nv.d3.css">
+
+	<!-- Custom CSS code -->
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<!-- navigation circles persisting in a fixed position, losers -->
+<div id="navi-container" class="vert-buttons">
+	<div id="slide-one" class="slide selected"><div class="circle"></div></div>
+	<div id="slide-two" class="slide"><div class="circle"></div></div>
+	<div id="slide-three" class="slide"><div class="circle"></div></div>
+	<div id="slide-four" class="slide"><div class="circle"></div></div>
+</div>
+
+<div id="main-container">
+<!-- the first slide -->
+
+	<div style="background-image: url('images/Background.jpg')" >
+<center id="title-container" class="slide">
+	<div class="title-contents">
+		<div class="title-logo">
+			<div id="logo-icon" aria-hidden="true">
+			<a href="#body">
+				<img src="images/Logo.jpg" width="60" height="60" alt="Logo">
+			</a>
+			</div>
+			<h1 align="center">A discovery of the Cuisines of the World</h1>
+		</div>
+		<p>We scraped three recipes website to discover more about the cuisines of each country.
+			Play with the interactive visualizations below to explore the different cuisines and their particularities.
+        By choosing a country on the map, all the visualizations will update.</p>
+        <a id="explore" class="button button-primary" href="#Map" onClick="$('#Map')">EXPLORE</a>
+
+	</div>'
+
+
+</center>"
+		</div>
+
+	</div>
+
+<div class="container2">
+	<section id="Map" class="slide">
+<h2 align="center">A World Map of the Cuisines</h2>
+		<h3>Based on the recipes of the different countries</h3>
+        <br>
+        <br>
+
+		<div class="row">
+			<div id="map-bar" class="col-md-4" align="center"></div>
+
+			<div id="map-map" class=" col-md-8" align="center"></div>
+        </div>
+
+</div>
+
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-12">
+
+				<h2>Food Supply Quantity as per UN data</h2>
+				<h3>Detailed annual statistics in grams per capita per day</h3>
+
+				<!-- Visualization placeholders -->
+				<div id="stacked-area-chart"></div>
+				<div id="timeline"></div>
+
+			</div>
+		</div>
+
+	</div>
+
+<div class="container-fluid">
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h2>Last Visualization</h2>
+
+<div class="vis-extra">
+    <svg id="stacked_trial"></svg>
+    </div>
+        </div>
+    </div>
+    </div>
+
+<h2 align="left">Self-Organized Data</h2>
+
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn active">
+        <input type="radio" name="graph-type" value="recipe" checked onchange="forceplot.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Recipes</span>
+    </label>
+    <label class="btn">
+        <input type="radio" name="graph-type" value="ingredient" onchange="forceplot.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Ingredients</span>
+    </label>
+</div>
+
+<div id="force-layout"></div>
+
+</div>
+
+
+
+
+	<h2>Most popular ingredients in each cuisine</h2>
+	<!-- Select box to choose the selection criteria -->
+	<form class="form-inline">
+		<div class="form-group">
+			<label for="rankingType">Cuisine</label>
+			<select class="form-control" id="ranking-type">
+				<option value="American">American</option>
+				<option value="British">British</option>
+				<option value="Canadian">Canadian</option>
+				<option value="Caribbeans">Caribbeans</option>
+				<option value="Chinese">Chinese</option>
+				<option value="East_African">East African</option>
+				<option value="East_European">East European</option>
+				<option value="French">French</option>
+				<option value="Indian">Indian</option>
+				<option value="Italian">Italian</option>
+				<option value="Japanese">Japanese</option>
+				<option value="Korean">Korean</option>
+				<option value="Mediterranean">Mediterranean</option>
+				<option value="Mexican">Mexican</option>
+				<option value="Middle_Eastern">Middle_Eastern</option>
+				<option value="North_African">North African</option>
+				<option value="Portuguese_Spanish">Portuguese_Spanish</option>
+				<option value="Scandinavian">Scandinavian</option>
+				<option value="South_African">South African</option>
+				<option value="South_American">South American</option>
+				<option value="South_Asian">South Asian</option>
+				<option value="Southeast_Asian">Southeast Asian</option>
+				<option value="West_African">West African</option>
+				<option value="West_European">West European</option>
+
+			</select>
+
+
+			<!-- Activity IV -->
+			<!--<button type="button" class="btn btn-link" id="change-sorting"><i class="glyphicon glyphicon-sort"></i> Sort</button>-->
+		</div>
+	</form>
+
+
+
+	<!--<h2><span id="show-ingredient" class="back"></span></h2>-->
+	<row>
+		<div class="col-md-5">
+		<div id="bar-chart"></div>
+		</div>
+		<div class="col-md-1">
+			<img id="ingredient-image">
+		</div>
+		<div class="col-md-5">
+
+			<div id="bar-chart2"></div>
+		</div>
+
+	</row>
+
+
+	<row>
+		<div class="col-md-8">
+			<div id="image-chart"></div>
+		</div>
+	</row>
+
+	<!-- Load JS libraries -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/d3.min.js"></script>
+	<script src="js/d3.tip.js"></script>
+	<script src="js/underscore-min.js"></script>
+    <script src="js/nv.d3.js"></script>
+    <script src="js/d3-legend.min.js"></script>
+	<script src="js/colorbrewer.js"></script>
+    <script src="js/queue.v1.min.js"></script>
+	<script src="js/topojson.v1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-smooth-scroll/1.5.5/jquery.smooth-scroll.min.js" charset="utf-8"></script>
+
+
+
+
+<script type="text/javascript">
+    $('a').smoothScroll();
+</script>
+
+
+
+<!-- Visualization objects -->
+	<script src="js/map.js"></script>
+	<script src="js/main-force.js"></script>
+    <script src="js/forceDiagram.js"></script>
+	<script src="js/main-barchart.js"></script>
+
+	<!-- Load dataForceLayout, create visualizations -->
+	<!-- Visualization objects -->
+	<script src="js/stackedAreaChart.js"></script>
+	<script src="js/timeline.js"></script>
+<script src="testFan.js"></script>-->
+
+	<!-- Load data, create visualizations -->
+	<script src="js/main_stacked.js"></script>
+
+
+</body>
+</html>
+
+<!--
+Notes: We need to put something so the user knows what country he clicked (when he clicks, the color changes and stays this way.
+When you click a country appears.-->
