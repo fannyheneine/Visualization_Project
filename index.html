@@ -31,46 +31,40 @@
 	<div id="slide-four" class="slide"><div class="circle"></div></div>
 </div>
 
-<div id="main-container">
+<div class="container-fluid" id="main-container">
 <!-- the first slide -->
-
-	<div style="background-image: url('images/Background.jpg')" >
-<center id="title-container" class="slide">
-	<div class="title-contents">
-		<div class="title-logo">
-			<div id="logo-icon" aria-hidden="true">
-			<a href="#body">
-				<img src="images/Logo.jpg" width="60" height="60" alt="Logo">
-			</a>
+	<div id="title-container" class="slide">
+		<div class="title-contents">
+			<div class="title-logo">
+				<div id="logo-icon" aria-hidden="true">
+				<a href="#body">
+					<img src="images/Logo.jpg" width="60" height="60" alt="Logo">
+				</a>
+				</div>
+				<h1 align="center">A discovery of the Cuisines of the World</h1>
 			</div>
-			<h1 align="center">A discovery of the Cuisines of the World</h1>
+			<p>We scraped three recipes website to discover more about the cuisines of each country.
+				Play with the interactive visualizations below to explore the different cuisines and their particularities.
+			By choosing a country on the map, all the visualizations will update.</p>
+			<a id="explore" class="button button-primary" href="#Map" onClick="$('#Map')">EXPLORE</a>
+
 		</div>
-		<p>We scraped three recipes website to discover more about the cuisines of each country.
-			Play with the interactive visualizations below to explore the different cuisines and their particularities.
-        By choosing a country on the map, all the visualizations will update.</p>
-        <a id="explore" class="button button-primary" href="#Map" onClick="$('#Map')">EXPLORE</a>
-
-	</div>'
-
-
-</center>"
-		</div>
-
 	</div>
+</div>
 
 <div class="container2">
-	<section id="Map" class="slide">
-<h2 align="center">A World Map of the Cuisines</h2>
-		<h3>Based on the recipes of the different countries</h3>
-        <br>
-        <br>
+    <section id="Map" class="slide">
+        <h2 align="center">A World Map of the Cuisines</h2>
+            <h3>Based on the recipes of the different countries</h3>
+            <br>
+            <br>
 
-		<div class="row">
-			<div id="map-bar" class="col-md-4" align="center"></div>
+            <div class="row">
+                <div id="map-bar" class="col-md-4" align="center"></div>
 
-			<div id="map-map" class=" col-md-8" align="center"></div>
-        </div>
-
+                <div id="map-map" class=" col-md-8" align="center"></div>
+            </div>
+    </section>
 </div>
 
 	<div class="container-fluid">

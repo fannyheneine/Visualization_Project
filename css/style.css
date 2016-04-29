@@ -7,13 +7,17 @@
 /*   BAR-CHART  */
 /****************/
 
-body{
-  margin-left: 20px;
+body,html{
+    height:100%;
     background-color: #f7f7f7;
     text-align: center;
 }
 
-#main-container .slide .title-contents h1{
+#main-container {
+    background-image: url("../images/Background.jpg");
+    height:100%;}
+
+.slide .title-contents h1{
     font-size: 10px;
     text-align: center;
     color: #666666;
@@ -38,10 +42,7 @@ h2{
   fill: #327972;
 }
 
-.label{
-    fill: #50728c;
-    font-size:9pt;
-}
+
 
 .axis {
   font-size: 11px;
@@ -128,6 +129,11 @@ polyline{
 /****************/
 /*   FORCE-CHART  */
 /****************/
+
+.label{
+    fill: #50728c;
+    font-size:9pt;
+}
 
 #force-textbox {
     fill:#f7f7f7;
