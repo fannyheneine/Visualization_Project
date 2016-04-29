@@ -33,8 +33,14 @@ ForceDiagram.prototype.initVis = function(){
     vis.nodeRadius_highlight=vis.width/230;
     vis.nodeRadius_selected=vis.width/180;
 
+    if (vis.width < 500) {
+        vis.nodeStrokeWidth=0;
+        vis.nodeStrokeWidthActive=0;}
+
+    else{
     vis.nodeStrokeWidth=1;
-    vis.nodeStrokeWidthActive=2;
+    vis.nodeStrokeWidthActive=2;}
+
     // SVG drawing area
     vis.svgEl = d3.select("#" + vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
