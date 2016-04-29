@@ -3,10 +3,10 @@
 /**** ADD YOUR STYLES ****/
 
 
-/****************/
-/*   BAR-CHART  */
-/****************/
 
+/****************/
+/*   GENERAL / NAVIGATION  */
+/****************/
 body,html{
     height:100%;
     background-color: #f7f7f7;
@@ -32,13 +32,29 @@ padding:0;
 }
 
 
+.mini-plot-text {
+    float:left;
+    width:30%;
+    text-align:left;
+    display: table-cell;
+    vertical-align: middle;
+    height:140px;
+    padding-right:5px;
+}
+
+.mini-plot {
+    margin-left: 30%;
+    width:70%;
+    height:140px;
+    border: 1px solid black;
+}
 p {
     margin: 1em auto;
 }
 
 
 #nav-horizontal-text {
-    padding:10px;
+    padding:5px;
     background-color: #eee;
     border:1px solid #aaa;
     height:150px;
@@ -61,6 +77,11 @@ h2{
     margin-top: 50px;
 }
 
+
+
+/****************/
+/*   BAR-CHART  */
+/****************/
 .bar {
   fill: #3C948B;
 }
