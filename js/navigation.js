@@ -5,10 +5,10 @@ function nav_relocate() {
     console.log(div_top)
     if (window_top > div_top) {
         $('#navigation-horizontal-bar').addClass('stick');
-        //$('#nav-anchor').height($('#navigation-horizontal-bar').outerHeight());
+        $('#nav-anchor').height($('#navigation-horizontal-bar').outerHeight());
     } else {
         $('#navigation-horizontal-bar').removeClass('stick');
-        //$('#nav-anchor').height(0);
+        $('#nav-anchor').height(0);
     }
 }
 
