@@ -1,6 +1,6 @@
-createMapVisualization();
+//createMapVisualization();
 
-function createMapVisualization() {
+function createMapVisualization2() {
     var map_map_width_1 = 800,
         map_map_height_1 = 500,
         map_pie_width_1 = 400,
@@ -8,7 +8,7 @@ function createMapVisualization() {
         map_bar_width_2 = 400,
         map_bar_height_2 = 250;
 
-    var svg_map_map = d3.select("#map-map").append("svg")
+    var svg_map_map = d3.select("#map-map2").append("svg")
         .attr("width", map_map_width_1)
         .attr("height", map_map_height_1);
 

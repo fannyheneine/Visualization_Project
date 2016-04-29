@@ -549,8 +549,10 @@ ForceDiagram.prototype.updateVis = function() {
         vis.link.each(function(l) {
             var el = d3.select(this);
             setIfDifferent(el, l, 'stroke', "#bbb");
-            var strokeOpacity = (l.strength - (vis.threshold - 1)) / (8 - vis.threshold);
+            var strokeOpacity = (l.strength - (vis.threshold - 1)) / (12 - vis.threshold);
+            var strokeWidth = (l.strength - (vis.threshold - 1)) / (12 - vis.threshold)
             setIfDifferent(el, l, 'stroke-opacity', strokeOpacity);
+            setIfDifferent(el, l, 'stroke-width', strokeWidth);
         });
     }
 
