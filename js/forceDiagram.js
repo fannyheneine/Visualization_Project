@@ -36,7 +36,7 @@ ForceDiagram.prototype.initVis = function(){
     if (vis.width < 500) {
         vis.nodeStrokeWidth=0;
         vis.nodeStrokeWidthActive=0;
-        vis.nodeRadius_normal=vis.width/100;}
+        vis.nodeRadius_normal=vis.width/120;}
 
     else{
     vis.nodeStrokeWidth=1;
@@ -212,15 +212,6 @@ ForceDiagram.prototype.wrangleData = function(filters){
     }
     vis.linksNodesData_Recipes.Links=LinksList;
 
-    var LinkStrengths=[];
-    LinksList.forEach(function(d){LinkStrengths.push(d.strength);});
-    var sum = LinkStrengths.reduce(function (a, b) {
-        return a + b;
-    }, 0);
-
-    var average=sum/LinkStrengths.length;
-    console.log(average)
-    vis.threshold=3.5*average;
 
 
 
@@ -271,7 +262,7 @@ ForceDiagram.prototype.wrangleData = function(filters){
                     linkObject.sourceid=d1.index;
                     linkObject.targetid=d2.index;
                     //normalize interactions by number of recipes
-                    linkObject.strength = 25*commonValues.length/((recipes_1.length + recipes_2.length)/2);
+                    linkObject.strength = 16*commonValues.length/((recipes_1.length + recipes_2.length)/2);
                     linkObject.name = linkname;
                     var commonCuisines=[];
                     commonValues.forEach(function(d,i){
@@ -293,8 +284,6 @@ ForceDiagram.prototype.wrangleData = function(filters){
 
     vis.linksNodesData_Ingredients.Links = LinksList2;
 
-
-
     // Update the visualization
     vis.updateVis();
 
@@ -310,6 +299,7 @@ ForceDiagram.prototype.wrangleData = function(filters){
 ForceDiagram.prototype.updateVis = function() {
 
     var vis = this;
+
 //radio button responsiveness
 
     vis.selectedVal = d3.select('input[name="graph-type"]:checked').property("value");
@@ -324,6 +314,32 @@ ForceDiagram.prototype.updateVis = function() {
             return ingredient.category;
         }));
     }
+
+
+    var LinkStrengths=[];
+    vis.displayData.Links.forEach(function(d){LinkStrengths.push(d.strength);});
+    var sum = LinkStrengths.reduce(function (a, b) {
+        return a + b;
+    }, 0);
+
+    var average=sum/LinkStrengths.length;
+
+    if (vis.width > 500) {
+        if (vis.selectedVal == "recipe") {
+            vis.threshold = 3.5 * average;
+        }
+        else if (vis.selectedVal == "ingredient") {
+            vis.threshold = 8 * average;
+        }
+    } else {
+        if (vis.selectedVal == "recipe") {
+            vis.threshold = 1 * average;
+        }
+        else if (vis.selectedVal == "ingredient") {
+            vis.threshold = 6 * average;
+        }
+    }
+
 
     vis.colorScale.domain(vis.categoryKeys);
 

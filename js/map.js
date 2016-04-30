@@ -172,6 +172,7 @@ function createMapVisualization(scaling, id, size) {
 
                 var filterobject={};
                 filterobject["Cuisine"]=country_cuisine[d.id].cuisine;
+                console.log(filterobject)
                 forceplot.wrangleData(filterobject);
                 forceplot_mini.wrangleData(filterobject);
 
