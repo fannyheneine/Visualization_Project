@@ -170,6 +170,13 @@ function createMapVisualization(scaling, id, size) {
                 barchart.wrangleData(country_cuisine[d.id].cuisine)
                 barchart2.wrangleData(country_cuisine[d.id].cuisine)
 
+                var filterobject={};
+                filterobject["Cuisine"]=country_cuisine[d.id].cuisine;
+                forceplot.wrangleData(filterobject);
+                forceplot_mini.wrangleData(filterobject);
+
+
+
                 //console.log(country_cuisine[d.id].cuisine)
                 //d3.select("#ranking-type")
                 //    .property({value: country_cuisine[d.id].cuisine})

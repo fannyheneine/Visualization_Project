@@ -29,13 +29,14 @@ ForceDiagram.prototype.initVis = function(){
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
     vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
-    vis.nodeRadius_normal=vis.width/280;
-    vis.nodeRadius_highlight=vis.width/230;
-    vis.nodeRadius_selected=vis.width/180;
+    vis.nodeRadius_normal=vis.width/270;
+    vis.nodeRadius_highlight=vis.width/220;
+    vis.nodeRadius_selected=vis.width/170;
 
     if (vis.width < 500) {
         vis.nodeStrokeWidth=0;
-        vis.nodeStrokeWidthActive=0;}
+        vis.nodeStrokeWidthActive=0;
+        vis.nodeRadius_normal=vis.width/100;}
 
     else{
     vis.nodeStrokeWidth=1;

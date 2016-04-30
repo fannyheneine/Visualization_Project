@@ -19,3 +19,25 @@ $(function() {
 });
 
 
+$("#mini-barchart").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#bar-chart").offset().top-200
+    }, 1000);
+});
+
+
+
+$("#mini-forceplot").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#force-layout").offset().top-200
+    }, 1000);
+});
+
+
+
+
+$("#mini-stacked").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#stacked-area-chart").offset().top-200
+    }, 1000);
+});
