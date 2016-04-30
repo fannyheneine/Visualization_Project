@@ -33,21 +33,34 @@ padding:0;
 
 
 .mini-plot-text {
+    padding-top:10px;
+    padding-bottom:10px;
     float:left;
     width:30%;
     text-align:left;
     display: table-cell;
     vertical-align: middle;
-    height:140px;
+    height:150px;
     padding-right:5px;
+    font-family: 'Indie Flower', cursive;
+    font-size:13pt;
+    color: #424242;
 }
 
 .mini-plot {
     margin-left: 30%;
     width:70%;
-    height:140px;
-    border: 1px solid black;
-    /*pointer-events: none;*/
+    height:150px;
+    cursor:pointer;
+    border:1px solid #F1F1F1;
+}
+
+.mini-plot:hover {
+    margin-left: 30%;
+    width:70%;
+    height:150px;
+    background-color: #E3E3E3;
+    border:1px solid #aaa;
 }
 p {
     margin: 1em auto;
@@ -55,10 +68,10 @@ p {
 
 
 #nav-horizontal-text {
-    padding:5px;
-    background-color: #eee;
+    padding:0px;
+    background-color: #F1F1F1;
     border:1px solid #aaa;
-    height:150px;
+    height:152px;
 }
 
 .slide .title-contents h1{

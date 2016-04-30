@@ -411,16 +411,16 @@ ForceDiagram.prototype.updateVis = function() {
             var distance;
             if (vis.selectedVal == "recipe"){
                 //distance=(vis.width/2)/ Math.pow((link.strength + 1), 1.3);
-                distance = (vis.width/2.5)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+10;
+                distance = (vis.width/2.5)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+13;
             }
             else if (vis.selectedVal =="ingredient"){
                 //distance=(vis.width/2)/ (.6*(Math.pow((link.strength + 1), 2.5)+(link.strength + 1)));
-                distance = (vis.width/3)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+10;
+                distance = (vis.width/3)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+13;
             }
             return distance;
         })
         .linkStrength(function (link) {
-            return .3 + .1 * link.strength
+            return .3 + .2 * link.strength
         });
 
     // 2b) START RUNNING THE SIMULATION
