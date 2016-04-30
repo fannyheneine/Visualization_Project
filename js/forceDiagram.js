@@ -51,7 +51,8 @@ ForceDiagram.prototype.initVis = function(){
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-
+    if (vis.width < 500) {
+        vis.svg.attr("pointer-events","none");}
 
     // 1) INITIALIZE FORCE-LAYOUT
 
@@ -324,19 +325,24 @@ ForceDiagram.prototype.updateVis = function() {
 
     var average=sum/LinkStrengths.length;
 
+    vis.maxStrength=d3.max(LinkStrengths);
+    vis.minStrength=d3.min(LinkStrengths);
+    console.log(vis.maxStrength);
+
+
     if (vis.width > 500) {
         if (vis.selectedVal == "recipe") {
             vis.threshold = 3.5 * average;
         }
         else if (vis.selectedVal == "ingredient") {
-            vis.threshold = 8 * average;
+            vis.threshold = 12 * average;
         }
     } else {
         if (vis.selectedVal == "recipe") {
-            vis.threshold = 1 * average;
+            vis.threshold = .9 * average;
         }
         else if (vis.selectedVal == "ingredient") {
-            vis.threshold = 6 * average;
+            vis.threshold = 8 * average;
         }
     }
 
@@ -402,10 +408,19 @@ ForceDiagram.prototype.updateVis = function() {
             return d.name;
         })
         .linkDistance(function (link) {
-            return (vis.width/2)/ Math.pow((link.strength + 1), 2);
+            var distance;
+            if (vis.selectedVal == "recipe"){
+                //distance=(vis.width/2)/ Math.pow((link.strength + 1), 1.3);
+                distance = (vis.width/2.5)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+10;
+            }
+            else if (vis.selectedVal =="ingredient"){
+                //distance=(vis.width/2)/ (.6*(Math.pow((link.strength + 1), 2.5)+(link.strength + 1)));
+                distance = (vis.width/3)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+10;
+            }
+            return distance;
         })
         .linkStrength(function (link) {
-            return .4 + .1 * link.strength
+            return .3 + .1 * link.strength
         });
 
     // 2b) START RUNNING THE SIMULATION
@@ -424,7 +439,7 @@ ForceDiagram.prototype.updateVis = function() {
 
         vis.link.enter().append("line")
             .attr("class", "link")
-            .style("stroke", "#bbb")
+            .style("stroke", "#aaa")
             .attr("display", function (d) {
                 if (d.strength > vis.threshold) {
                     return "null"
@@ -434,10 +449,26 @@ ForceDiagram.prototype.updateVis = function() {
             })
             //assuming max # connections is around 10
             .style("stroke-opacity", function (d) {
-                return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
+                //return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
+                return Math.pow(d.strength/vis.maxStrength,2);
+
+                var strokeOpacity;
+                if (vis.selectedVal == "recipe") {
+                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,2);
+                } else if (vis.selectedVal == "ingredient") {
+                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,1/2);
+                }
+                return strokeOpacity;
             })
             .style("stroke-width", function (d) {
-                return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
+                //return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
+                var strokeWidth;
+                if (vis.selectedVal == "recipe") {
+                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 2);
+                } else if (vis.selectedVal == "ingredient") {
+                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1/2);
+                }
+                return strokeWidth;
             });
 
 
@@ -565,9 +596,9 @@ ForceDiagram.prototype.updateVis = function() {
         });
         vis.link.each(function(l) {
             var el = d3.select(this);
-            setIfDifferent(el, l, 'stroke', "#bbb");
-            var strokeOpacity = (l.strength - (vis.threshold - 1)) / (12 - vis.threshold);
-            var strokeWidth = (l.strength - (vis.threshold - 1)) / (12 - vis.threshold)
+            setIfDifferent(el, l, 'stroke', "#aaa");
+            var strokeOpacity = Math.pow(l.strength/vis.maxStrength,2);
+            var strokeWidth = 1.5*Math.pow(l.strength/vis.maxStrength,2);
             setIfDifferent(el, l, 'stroke-opacity', strokeOpacity);
             setIfDifferent(el, l, 'stroke-width', strokeWidth);
         });
@@ -832,7 +863,7 @@ ForceDiagram.prototype.updateVis = function() {
     window.setTimeout(function()
     {
         vis.force.stop();
-    }, 10000);
+    }, 13000);
 
     //IF WE NEED A CLICK RECTANGLE FOR THE MINI VERSION
 

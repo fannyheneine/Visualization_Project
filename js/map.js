@@ -163,16 +163,15 @@ function createMapVisualization(scaling, id, size) {
                     .style("opacity", 0);
             })
             .on('click',function(d){
-                next_country=country_cuisine[d.id].name
+                next_country=country_cuisine[d.id].name;
                 //console.log(next_country)
-                areachart.wrangleData(next_country)
-                areachart2.wrangleData(next_country)
-                barchart.wrangleData(country_cuisine[d.id].cuisine)
-                barchart2.wrangleData(country_cuisine[d.id].cuisine)
+                areachart.wrangleData(next_country);
+                areachart2.wrangleData(next_country);
+                barchart.wrangleData(country_cuisine[d.id].cuisine);
+                barchart2.wrangleData(country_cuisine[d.id].cuisine);
 
                 var filterobject={};
                 filterobject["Cuisine"]=country_cuisine[d.id].cuisine;
-                console.log(filterobject)
                 forceplot.wrangleData(filterobject);
                 forceplot_mini.wrangleData(filterobject);
 
@@ -185,7 +184,7 @@ function createMapVisualization(scaling, id, size) {
                 //updateVisualization(data_i, data_p, country_cuisine[d.id].cuisine)
 
 
-            })
+            });
             /*.on('click',function(d){
                 next_country=country_cuisine[d.id].name
                 console.log(next_country)
