@@ -117,7 +117,8 @@ BarChart.prototype.wrangleData = function(selection){
             .scale(vis.yScale)
             .orient("left")
 
-        if(vis.size == "big") {
+
+
             vis.svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(" + vis.margin.left + "," + vis.height + ")")
@@ -138,7 +139,7 @@ BarChart.prototype.wrangleData = function(selection){
                 .attr("dy", ".71em")
                 .style("text-anchor", "left")
                 .text("% of appearance in recipes");
-        }
+
 
 
     function colors(varXdomain) {
@@ -180,7 +181,7 @@ BarChart.prototype.updateVisualization = function(selection){
     vis.yScale.domain([0, d3.max(vis.data_p, function(d) { return d[selection] })])
     vis.xScale_ing.domain(varXdomain)
 
-    if(vis.size=="big") {
+
         vis.svg.selectAll(".x")
             .transition()
             .duration(800)
@@ -195,7 +196,7 @@ BarChart.prototype.updateVisualization = function(selection){
             .transition()
             .duration(800)
             .call(vis.yAxis);
-    }
+    
 
     vis.rect = vis.svg.selectAll("rect")
         .data(vis.data_p)

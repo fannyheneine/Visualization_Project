@@ -61,7 +61,7 @@ function createVis_bar() {
     // areachart = new ...
 
     barchart = new BarChart("bar-chart",data_p, data_i, selection ,500, "big");
-    barchart2 = new BarChart("bar-chart2",data_p, data_i, selection ,200,"small");
+    barchart2 = new BarChart("mini-barchart",data_p, data_i, selection ,200,"small");
 
 
 

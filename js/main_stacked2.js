@@ -59,7 +59,7 @@ function createVis_stacked2() {
 	// areachart = new ...
 
 
-	areachart2 = new StackedAreaChart("stacked-area-chart2",allData_UN,country_chosen_st,200);
+	areachart2 = new StackedAreaChart("mini-stacked",allData_UN,country_chosen_st,200);
 	areachart = new StackedAreaChart("stacked-area-chart",allData_UN,country_chosen_st,700);
 
 
