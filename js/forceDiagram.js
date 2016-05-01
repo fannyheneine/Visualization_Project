@@ -8,7 +8,8 @@ ForceDiagram = function(_parentElement, _data1,_data2,_svgWidth,_svgHeight,_nDat
     this.svgWidth=_svgWidth;
     this.svgHeight=_svgHeight;
     this.colorScale = d3.scale.category20();
-    this.nDataPoints=_nDataPoints;
+    this.nDataPointsOriginal=_nDataPoints;
+    this.nDataPoints=this.nDataPointsOriginal;
     this.initVis();
 };
 
@@ -103,15 +104,17 @@ ForceDiagram.prototype.wrangleData = function(filters){
     // THIS IS WHERE THE FILTERING FUNCTIONS WILL GO
     if (filters=="all"){
         vis.allDatafiltered=vis.allData;
+        vis.nDataPoints=vis.nDataPointsOriginal;
     } else {
-        for( var type in vis.filters) {
-            if (type=="Cuisine"){
-                vis.allDatafiltered=vis.allData.filter(function(d){return d.Cuisine==vis.filters[type];});
-                if (vis.width>500){
-                vis.nDataPoints=60;
-                }
-            }
+
+        vis.filters.forEach(function(f){
+            vis.allDatafiltered=vis.allData.filter(function(d){return d[f.type]== f.value;})
+        });
+
+        if (vis.width>500){
+            vis.nDataPoints=60;
         }
+
     }
 
 
@@ -303,7 +306,17 @@ ForceDiagram.prototype.updateVis = function() {
 
     var vis = this;
 
+    vis.filterPrintOut=d3.select("#force-layout-filters").select("p");
+    if (vis.filters=="all"){
+        vis.filterPrintOut
+            .text("Cuisine: "+ "all");
+    } else{
+        vis.filterPrintOut
+            .text(vis.filters[0].type+": "+ vis.filters[0].value.replace(/_/g, ' '));
+    }
+
 //radio button responsiveness
+
 
     vis.selectedVal = d3.select('input[name="graph-type"]:checked').property("value");
     if (vis.selectedVal == "recipe") {
@@ -331,7 +344,6 @@ ForceDiagram.prototype.updateVis = function() {
 
     vis.maxStrength=d3.max(LinkStrengths);
     vis.minStrength=d3.min(LinkStrengths);
-    console.log(vis.maxStrength);
 
 
     if (vis.nDataPoints > 100) {
@@ -429,7 +441,7 @@ ForceDiagram.prototype.updateVis = function() {
 
     // 2b) START RUNNING THE SIMULATION
 
-        vis.force.start();
+    vis.force.start();
 
 
         // 3) DRAW THE LINKS (SVG LINE) ... or don't?
@@ -442,36 +454,37 @@ ForceDiagram.prototype.updateVis = function() {
         vis.link.exit().remove();
 
         vis.link.enter().append("line")
-            .attr("class", "link")
-            .style("stroke", "#aaa")
-            .attr("display", function (d) {
-                if (d.strength > vis.threshold) {
-                    return "null"
-                } else {
-                    return "none"
-                }
-            })
-            //assuming max # connections is around 10
-            .style("stroke-opacity", function (d) {
+            .attr("class", "link");
 
-                var strokeOpacity;
-                if (vis.selectedVal == "recipe") {
-                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,2);
-                } else if (vis.selectedVal == "ingredient") {
-                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,1);
-                }
-                return strokeOpacity;
-            })
-            .style("stroke-width", function (d) {
-                //return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
-                var strokeWidth;
-                if (vis.selectedVal == "recipe") {
-                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 2);
-                } else if (vis.selectedVal == "ingredient") {
-                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1);
-                }
-                return strokeWidth;
-            });
+    vis.link.style("stroke", "#aaa")
+        .attr("display", function (d) {
+            if (d.strength > vis.threshold) {
+                return "null"
+            } else {
+                return "none"
+            }
+        })
+        //assuming max # connections is around 10
+        .style("stroke-opacity", function (d) {
+
+            var strokeOpacity;
+            if (vis.selectedVal == "recipe") {
+                strokeOpacity = Math.pow(d.strength/vis.maxStrength,2);
+            } else if (vis.selectedVal == "ingredient") {
+                strokeOpacity = Math.pow(d.strength/vis.maxStrength,1);
+            }
+            return strokeOpacity;
+        })
+        .style("stroke-width", function (d) {
+            //return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
+            var strokeWidth;
+            if (vis.selectedVal == "recipe") {
+                strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 2);
+            } else if (vis.selectedVal == "ingredient") {
+                strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1);
+            }
+            return strokeWidth;
+        });
 
 
         // 4) DRAW THE NODES (SVG CIRCLE)
@@ -513,56 +526,59 @@ ForceDiagram.prototype.updateVis = function() {
             vis.textToolTipFreeze.remove();
         }
     });
-        vis.node.enter().append("circle")
-            .attr("class", "node")
-            .attr("r", function (d) {
-                return vis.nodeRadius_normal;
-            })
-            .attr("fill", function (d, i) {
+
+
+    vis.node.enter().append("circle")
+        .attr("class", "node")
+        .on("mouseover", function(d){
+            var thisVar=d3.select(this);
+            mouseOverFunction(d,thisVar)
+        })
+        .on("mouseout", function(d){
+            var thisVar=d3.select(this);
+            mouseOutFunction(d,thisVar)
+        })
+        .on("click",function(d){
+            var thisVar=d3.select(this);
+            if (!vis.toggleNode) {
+                mouseOutFunction(d,thisVar);
+                mouseOverFunction(d, thisVar);
+                vis.textToolTipFreeze = vis.svg.append("text").style("fill", "#000")
+                    .attr("class", "force-tooltip-freeze-label")
+                    .attr("x", d.x+8)
+                    .attr("y", d.y-8)
+                    .attr("font-size",18);
                 if (vis.selectedVal == "recipe") {
-                    return vis.colorScale(d.Cuisine.replace(/_/g, ' '))
+                    vis.textToolTipFreeze.text(d.Cuisine.replace(/_/g, ' '));
                 }
                 else if (vis.selectedVal == "ingredient") {
-                    return vis.colorScale(d.category)
+                    vis.textToolTipFreeze.text(d.id.replace(/_/g, ' '));
                 }
-            })
-            .style("stroke", "#ccc")
-            .style("stroke-width", vis.nodeStrokeWidth)
-            .on("mouseover", function(d){
-                var thisVar=d3.select(this);
-                mouseOverFunction(d,thisVar)
-            })
-            .on("mouseout", function(d){
-                var thisVar=d3.select(this);
-                mouseOutFunction(d,thisVar)
-            })
-            .on("click",function(d){
-                var thisVar=d3.select(this);
-                if (!vis.toggleNode) {
-                    mouseOutFunction(d,thisVar);
-                    mouseOverFunction(d, thisVar);
-                    vis.textToolTipFreeze = vis.svg.append("text").style("fill", "#000")
-                        .attr("class", "force-tooltip-freeze-label")
-                        .attr("x", d.x+8)
-                        .attr("y", d.y-8)
-                        .attr("font-size",18);
-                    if (vis.selectedVal == "recipe") {
-                        vis.textToolTipFreeze.text(d.Cuisine.replace(/_/g, ' '));
-                    }
-                    else if (vis.selectedVal == "ingredient") {
-                        vis.textToolTipFreeze.text(d.id.replace(/_/g, ' '));
-                    }
-                    vis.toggleNode = 1;
-                    vis.selectedNode = d;
+                vis.toggleNode = 1;
+                vis.selectedNode = d;
 
-                    setIfDifferent_att(thisVar, d, 'r', vis.nodeRadius_selected);
-                    setIfDifferent(thisVar, d, 'stroke-width', vis.nodeStrokeWidthActive);
-                    vis.tip.hide(d);
-                    d3.event.stopPropagation();
-                }
+                setIfDifferent_att(thisVar, d, 'r', vis.nodeRadius_selected);
+                setIfDifferent(thisVar, d, 'stroke-width', vis.nodeStrokeWidthActive);
+                vis.tip.hide(d);
+                d3.event.stopPropagation();
+            }
 
-            })
-        ;
+        })
+    ;
+
+    vis.node.attr("r", function (d) {
+            return vis.nodeRadius_normal;
+        })
+        .attr("fill", function (d, i) {
+            if (vis.selectedVal == "recipe") {
+                return vis.colorScale(d.Cuisine.replace(/_/g, ' '))
+            }
+            else if (vis.selectedVal == "ingredient") {
+                return vis.colorScale(d.category)
+            }
+        })
+        .style("stroke", "#ccc")
+        .style("stroke-width", vis.nodeStrokeWidth);
 
 
 

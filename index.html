@@ -129,31 +129,43 @@
 
 <div class="container-fluid">
 
-<div class="row">
-    <div class="col-md-12">
+	<div class="row">
+		<div class="col-md-12">
 
-        <h2>Average food consumption on each Continent</h2>
-		<h3>The data is given per gram per capita</h3>
+			<h2>Average food consumption on each Continent</h2>
+			<h3>The data is given per gram per capita</h3>
 
-<div class="vis-extra">
-    <svg id="stacked_trial"></svg>
-    </div>
-        </div>
-    </div>
-    </div>
-
-<h2 align="left">Self-Organized Data</h2>
-
-<div class="btn-group" data-toggle="buttons">
-    <label class="btn active">
-        <input type="radio" name="graph-type" value="recipe" checked onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Recipes</span>
-    </label>
-    <label class="btn">
-        <input type="radio" name="graph-type" value="ingredient" onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Ingredients</span>
-    </label>
+			<div class="vis-extra">
+				<svg id="stacked_trial"></svg>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div id="force-layout"></div>
+<div id="force-layout-group" style="display: table-row">
+
+
+
+	<div id="force-layout-controls" style="display: table-cell">
+		<h2 align="left">Self-Organized Data</h2>
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn active">
+				<input type="radio" name="graph-type" value="recipe" checked onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Recipes</span>
+			</label>
+			<label class="btn">
+				<input type="radio" name="graph-type" value="ingredient" onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Ingredients</span>
+			</label>
+		</div>
+
+        <div id="force-layout-filters"><p></p></div>
+        <input type="button" value="All Cuisines" onclick="forceplot.wrangleData('all');
+                    forceplot_mini.wrangleData('all');">
+        
+        <input type="button" value="Refresh Data" onclick="forceplot.wrangleData(forceplot.filters);
+                    forceplot_mini.wrangleData(forceplot_mini.filters);">
+
+	</div>
+    <div id="force-layout" style="display: table-cell"></div>
 
 </div>
 
@@ -205,8 +217,8 @@
 	<script src="js/map.js"></script>
 	<script src="js/main_map.js"></script>
 
-<!--<script src="js/main-force.js"></script>-->
-<!--<script src="js/forceDiagram.js"></script>-->
+<script src="js/main-force.js"></script>
+<script src="js/forceDiagram.js"></script>
 <script src="js/main_barchart.js"></script>
 <script src="js/barchart.js"></script>
 <script src="js/main_barchart2.js"></script>

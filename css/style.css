@@ -192,6 +192,14 @@ polyline{
 /*   FORCE-CHART  */
 /****************/
 
+#force-layout-controls {
+    vertical-align:top;
+    padding-top:50px;
+}
+#force-layout {
+    padding-left:50px;
+}
+
 .label{
     fill: #50728c;
     font-size:9pt;

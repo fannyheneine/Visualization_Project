@@ -185,8 +185,11 @@ function createMapVisualization(scaling, id, size) {
                     barchart.wrangleData(country_cuisine[d.id].cuisine);
                     barchart2.wrangleData(country_cuisine[d.id].cuisine);
 
-                    var filterobject = {};
-                    filterobject["Cuisine"] = country_cuisine[d.id].cuisine;
+                    var filterobject = [];
+                    filterobject[0]={};
+                    filterobject[0].type = "Cuisine";
+                    filterobject[0].value=country_cuisine[d.id].cuisine;
+                    console.log(filterobject)
                     forceplot.wrangleData(filterobject);
                     forceplot_mini.wrangleData(filterobject);
                 }, 800);
