@@ -216,7 +216,7 @@ function createMapVisualization(scaling, id, size) {
             .attr("class", "boundary")
             .attr("d", map_path)
             .style("stroke", "#eeeeee")
-            .style("stroke-width", 2)
+            .style("stroke-width", 1)
 
 
     }

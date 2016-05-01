@@ -144,7 +144,7 @@ svg{
 
 .boundary{
     stroke:"black";
-    stroke-width:10;
+    stroke-width:5;
     fill:"none";
 }
 
@@ -376,6 +376,10 @@ h3 {
     padding-left: 30px;
 }
 
+#force-layout-group{
+    margin-bottom: 30px;
+}
+
 .axis path,
 .axis line {
     fill: none;
@@ -586,9 +590,14 @@ div.tooltip {
 }
 
 .vis-extra{
-    height: 500px;
-    width:600 px;
-
+    height:500px;
+    width:800px;
+    text-align:center;
+    margin-left: 230px;
+    display: block;
+    margin-bottom:60px;
 }
+
+
 /*FONT FACE */
 
