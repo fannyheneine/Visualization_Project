@@ -146,9 +146,11 @@ function createMapVisualization(scaling, id, size) {
                 if (map_unavailable) {return "#eeeeee"}
                 else {return map_colorScale(country_cuisine[d.id].cuisine)}
             })
+
+
             .on('mouseover', function (d, i) {
                 var currentState = this;
-                d3.select(this).style('fill-opacity', 0.6)
+                d3.select(this).style('fill-opacity', 1)
                     .style({"cursor": "pointer"});
                 div.transition()
                     .duration(200)
@@ -166,6 +168,9 @@ function createMapVisualization(scaling, id, size) {
                     .style("opacity", 0);
             })
             .on('click',function(d){
+                //d3.select(this).style('fill', "black")
+                d3.select(".selected").classed("selected", false);
+                d3.select(this).classed("selected", true);
                 var map_unavailable = (country_cuisine[d.id] == undefined || country_cuisine[d.id].cuisine == undefined)
                 if (map_unavailable==false) {
 

@@ -587,8 +587,12 @@ div.tooltip {
 
 .vis-extra{
     height: 500px;
-    width:600 px;
+    width:600px;
 
+}
+
+.selected {
+    fill: black;
 }
 /*FONT FACE */
 
