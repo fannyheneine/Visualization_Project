@@ -144,7 +144,7 @@ svg{
 
 .boundary{
     stroke:"black";
-    stroke-width:10;
+    stroke-width:5;
     fill:"none";
 }
 
@@ -376,6 +376,10 @@ h3 {
     padding-left: 30px;
 }
 
+#force-layout-group{
+    margin-bottom: 30px;
+}
+
 .axis path,
 .axis line {
     fill: none;
@@ -586,6 +590,7 @@ div.tooltip {
 }
 
 .vis-extra{
+<<<<<<< HEAD
     height: 500px;
     width:600px;
 
@@ -594,5 +599,16 @@ div.tooltip {
 .selected {
     fill: black;
 }
+=======
+    height:500px;
+    width:800px;
+    text-align:center;
+    margin-left: 230px;
+    display: block;
+    margin-bottom:60px;
+}
+
+
+>>>>>>> 94f25e89746b17fa27d86a1efaed3f5e8b3cf671
 /*FONT FACE */
 

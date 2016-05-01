@@ -110,43 +110,39 @@
     </section>
 </div>
 
-	<div class="container-fluid">
+<h2>Most popular ingredients in each cuisine</h2>
 
-		<div class="row">
-			<div class="col-md-12">
+<div class="container-fluid" >
 
-				<h2>Food Supply Quantity as per UN data</h2>
-				<h3>Detailed annual statistics in grams per capita per day</h3>
 
-				<!-- Visualization placeholders -->
-				<div id="stacked-area-chart"></div>
-				<div id="timeline"></div>
-
-			</div>
-		</div>
-
+<row>
+	<div class="col-md-5" id="cuisine_chart">
+		<div id="bar-chart"></div>
 	</div>
-
-<div class="container-fluid">
-
-	<div class="row">
-		<div class="col-md-12">
-
-			<h2>Average food consumption on each Continent</h2>
-			<h3>The data is given per gram per capita</h3>
-
-			<div class="vis-extra">
-				<svg id="stacked_trial"></svg>
-			</div>
-		</div>
+	<div class="col-md-1">
+		<img id="ingredient-image">
 	</div>
+	<!--<div class="col-md-5">-->
+
+	<div id="ingredient-chart" class="col-md-5"></div>
+
+
+</row>
+
+
+<row>
+	<div class="col-md-8">
+		<div id="image-chart"></div>
+	</div>
+</row>
+
 </div>
 
 <div id="force-layout-group" style="display: table-row">
 
 
 
-	<div id="force-layout-controls" style="display: table-cell">
+	<div id="force-layout-controls" style="display: table-cell" class="slide">
 		<h2 align="left">Self-Organized Data</h2>
 
         <div id="force-layout-refresh"><a class="btn btn-default force-button" type="button" onclick="forceplot.wrangleData(forceplot.filters);
@@ -177,31 +173,41 @@
 
 </div>
 
+<div class="container-fluid" >
 
-	<h2>Most popular ingredients in each cuisine</h2>
+	<div class="row">
+		<div class="col-md-12">
 
+			<h2>Food Supply Quantity as per UN data</h2>
+			<h3>Detailed annual statistics in grams per capita per day</h3>
 
+			<!-- Visualization placeholders -->
+			<div id="stacked-area-chart"></div>
+			<div id="timeline"></div>
 
-<row>
-	<div class="col-md-5">
-		<div id="bar-chart"></div>
-	</div>
-	<div class="col-md-1">
-	<img id="ingredient-image">
-	</div>
-	<!--<div class="col-md-5">-->
-
-	<div id="ingredient-chart" class="col-md-5"></div>
-
-
-</row>
-
-
-	<row>
-		<div class="col-md-8">
-			<div id="image-chart"></div>
 		</div>
-	</row>
+	</div>
+
+</div>
+
+<div class="container-fluid" >
+	<div class="row">
+		<div class="col-md-12">
+
+			<h2>Average food consumption on each Continent</h2>
+			<h3>The data is given per gram per capita</h3>
+
+			<div class="vis-extra">
+				<svg id="stacked_trial" ></svg>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
 
 	<!-- Load JS libraries -->
 	<script src="js/jquery.min.js"></script>

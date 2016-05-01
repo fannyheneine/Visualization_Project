@@ -425,9 +425,18 @@ nv.addGraph(function() {
         .y(function(d) { return d[1] })
         .controlLabels({stacked: "Stacked"})
         .duration(300);
+
     chart.xAxis.tickFormat(function(d) { return d3.time.format('%Y')(new Date(d)) });
-    chart.yAxis.tickFormat(d3.format(',.4f'));
+
+    chart.yAxis.tickFormat(d3.format(',.0f'));
+
     chart.legend.vers('furious');
+
+    chart.yAxis.axisLabel("Food in gram per capita")
+
+    chart.margin({bottom: 60});
+    chart.margin({left: 60});
+
     d3.select('#stacked_trial')
         .datum(UN_data)
         .transition().duration(1000)
@@ -440,6 +449,9 @@ nv.addGraph(function() {
                 })
             }, 0)
         });
-    
+    nv.utils.windowResize(chart.update);
+
     return chart;
+    
+
 });
