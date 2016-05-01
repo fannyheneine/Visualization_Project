@@ -135,6 +135,7 @@ function createMapVisualization(scaling, id, size) {
             .attr("class", "tooltip")
             .style("opacity", 0);
 
+        var timeOutHandler;
         svg_map.selectAll("countries")
             .data(map_countries)
             .enter().insert("path", ".graticule")
@@ -167,13 +168,16 @@ function createMapVisualization(scaling, id, size) {
             .on('click',function(d){
                 var map_unavailable = (country_cuisine[d.id] == undefined || country_cuisine[d.id].cuisine == undefined)
                 if (map_unavailable==false) {
-                    //console.log("aquii");
+
+
                     showCuisine(d, world_map, country_cuisine, cuisine_ingredient);
                 }
 
                     div.transition()
-                        .duration(1000)
+                        .duration(500)
                         .style("opacity", .9);
+                window.clearTimeout(timeOutHandler);
+                timeOutHandler= window.setTimeout(function() {
                     next_country = country_cuisine[d.id].name;
                     //console.log(next_country)
                     areachart.wrangleData(next_country);
@@ -185,7 +189,7 @@ function createMapVisualization(scaling, id, size) {
                     filterobject["Cuisine"] = country_cuisine[d.id].cuisine;
                     forceplot.wrangleData(filterobject);
                     forceplot_mini.wrangleData(filterobject);
-
+                }, 800);
 
 
                 //console.log(country_cuisine[d.id].cuisine)
@@ -286,7 +290,7 @@ function createMapVisualization(scaling, id, size) {
 
 
             pie_slice
-                .transition().duration(800)
+                .transition().duration(500)
                 .attrTween("d", function (d) {
                     //console.log(d)
                     this._current = this._current || d;
@@ -351,7 +355,7 @@ function createMapVisualization(scaling, id, size) {
                 return d.startAngle + (d.endAngle - d.startAngle) / 2;
             }
 
-            pie_text.transition().duration(800)
+            pie_text.transition().duration(500)
                 .attrTween("transform", function (d) {
                     this._current = this._current || d;
                     var interpolate = d3.interpolate(this._current, d);
@@ -385,7 +389,7 @@ function createMapVisualization(scaling, id, size) {
             pie_polyline.enter()
                 .append("polyline");
 
-            pie_polyline.transition().duration(800)
+            pie_polyline.transition().duration(500)
                 .attrTween("points", function (d) {
                     this._current = this._current || d;
                     var interpolate = d3.interpolate(this._current, d);
@@ -422,7 +426,7 @@ function createMapVisualization(scaling, id, size) {
             .enter().append("rect");
         hbar
             .transition()
-            .duration(800)
+            .duration(500)
             .attr("class", "hbar")
             .attr("fill", function(d, i) {return hbar_colorScale(i);})
             .attr("y", function(d, i) {return hbar_y(i);})
@@ -447,7 +451,7 @@ function createMapVisualization(scaling, id, size) {
             .enter().append("text");
         hbar_label
             .transition()
-            .duration(800)
+            .duration(500)
             .attr("class", "hbar-label")
             .text(function(d) {
                 return deunderscore(d.ingredient) + " (" + percents(d.num/100) + ")";
@@ -475,7 +479,7 @@ function createMapVisualization(scaling, id, size) {
             .enter().append("image");
         hbar_img
             .transition()
-            .duration(800)
+            .duration(500)
             .attr("class", "hbar-image")
             .attr("xlink:href", function(d) {return "images/"+ d.ingredient +".png";})
             .attr("y", function(d, i) {return himage_y(i);})
