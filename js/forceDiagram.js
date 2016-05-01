@@ -103,11 +103,13 @@ ForceDiagram.prototype.wrangleData = function(filters){
     // THIS IS WHERE THE FILTERING FUNCTIONS WILL GO
     if (filters=="all"){
         vis.allDatafiltered=vis.allData;
-
     } else {
         for( var type in vis.filters) {
             if (type=="Cuisine"){
-                vis.allDatafiltered=vis.allData.filter(function(d){return d.Cuisine==vis.filters[type];})
+                vis.allDatafiltered=vis.allData.filter(function(d){return d.Cuisine==vis.filters[type];});
+                if (vis.width>500){
+                vis.nDataPoints=40;
+                }
             }
         }
     }
@@ -330,7 +332,7 @@ ForceDiagram.prototype.updateVis = function() {
     console.log(vis.maxStrength);
 
 
-    if (vis.width > 500) {
+    if (vis.nDataPoints > 100) {
         if (vis.selectedVal == "recipe") {
             vis.threshold = 3.5 * average;
         }
