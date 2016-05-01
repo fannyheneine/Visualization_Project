@@ -376,7 +376,7 @@ ForceDiagram.prototype.updateVis = function() {
     }
 
     vis.colorScale.domain(vis.categoryKeys);
-    
+
 
     if (!vis.textToolTipFreeze){}
     else {vis.textToolTipFreeze.remove()}
@@ -450,11 +450,14 @@ ForceDiagram.prototype.updateVis = function() {
             .attr("x",20)
             .attr("y",function(d,i){return i*20+15;})
             .on("click",function(d){
+
+                if (vis.selectedVal=="recipe"){
                 var filterObj=[];
                 filterObj[0]={};
                 filterObj[0].type="Cuisine";
                 filterObj[0].value=d;
-                vis.wrangleData(filterObj);
+                vis.wrangleData(filterObj);}
+                
             })
 
 
