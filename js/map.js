@@ -1,10 +1,10 @@
 
 function createMapVisualization(scaling, id, size) {
-    console.log("creating map")
+    console.log("creating map");
     var margin = { top: 10, right: 0, bottom: 10, left: 0 };
-    var map_width = 800/(scaling/2)
+    var map_width = 800/(scaling/2),
         map_height = 0.6*map_width,
-        pie_width = 400,
+        pie_width = 450,
         pie_height = 300,
         hbar_width = 450,
         hbar_height = 300;
@@ -65,11 +65,16 @@ function createMapVisualization(scaling, id, size) {
             .style("display", "none");
 
         svg_pie.append('g')
-            .attr("class", "pie-slices")
+            .attr("class", "pie-slices");
         svg_pie.append("g")
             .attr("class", "pie-labels");
         svg_pie.append("g")
             .attr("class", "pie-lines");
+        svg_pie.append("defs")
+            .attr("class", "pie-patterns");
+
+        //var pie_defs = svg_pie.append('svg:defs');
+
         svg_pie
             .attr("transform", "translate(" + (pie_width / 2 + 15) + "," + (pie_height / 2 + 20) + ")");
 
@@ -107,17 +112,20 @@ function createMapVisualization(scaling, id, size) {
                 .attr("class", "map-label cuisine")
                 .style("font-size", 20)
                 .attr("x", 0)
-                .attr("y", -145);
+                .attr("y", -145)
+                .attr("text-anchor", "middle");
 
             map_label.append("text")
                 .attr("x", 0)
                 .attr("y", -145)
-                .attr("class", "detail");
+                .attr("class", "detail")
+                .attr("text-anchor", "middle");
             map_label.select(".detail")
                 .append("tspan")
                 .attr("x", 0)
                 .attr("dy", 25)
-                .attr("class", "map-label detail country");
+                .attr("class", "map-label detail country")
+                .attr("text-anchor", "middle");
         }
 
         // DRAW MAP
@@ -142,11 +150,6 @@ function createMapVisualization(scaling, id, size) {
                 var currentState = this;
                 d3.select(this).style('fill-opacity', 0.6)
                     .style({"cursor": "pointer"});
-                var map_unavailable = (country_cuisine[d.id] == undefined || country_cuisine[d.id].cuisine == undefined)
-                if (map_unavailable==false) {
-                    console.log("aquii")
-                    showCuisine(d, world_map, country_cuisine, cuisine_ingredient);
-                }
                 div.transition()
                     .duration(200)
                     .style("opacity", .9);
@@ -159,22 +162,31 @@ function createMapVisualization(scaling, id, size) {
                 d3.selectAll('.countries')
                     .style('fill-opacity', 1);
                 div.transition()
-                    .duration(500)
+                    .duration(200)
                     .style("opacity", 0);
             })
             .on('click',function(d){
-                next_country=country_cuisine[d.id].name;
-                //console.log(next_country)
-                areachart.wrangleData(next_country);
-                areachart2.wrangleData(next_country);
-                barchart.wrangleData(country_cuisine[d.id].cuisine);
-                barchart2.wrangleData(country_cuisine[d.id].cuisine);
+                var map_unavailable = (country_cuisine[d.id] == undefined || country_cuisine[d.id].cuisine == undefined)
+                if (map_unavailable==false) {
+                    //console.log("aquii");
+                    showCuisine(d, world_map, country_cuisine, cuisine_ingredient);
+                }
+                if (size=="big") {
+                    div.transition()
+                        .duration(1000)
+                        .style("opacity", .9);
+                    next_country = country_cuisine[d.id].name;
+                    //console.log(next_country)
+                    areachart.wrangleData(next_country);
+                    areachart2.wrangleData(next_country);
+                    barchart.wrangleData(country_cuisine[d.id].cuisine);
+                    barchart2.wrangleData(country_cuisine[d.id].cuisine);
 
-                var filterobject={};
-                filterobject["Cuisine"]=country_cuisine[d.id].cuisine;
-                forceplot.wrangleData(filterobject);
-                forceplot_mini.wrangleData(filterobject);
-
+                    var filterobject = {};
+                    filterobject["Cuisine"] = country_cuisine[d.id].cuisine;
+                    forceplot.wrangleData(filterobject);
+                    forceplot_mini.wrangleData(filterobject);
+                }
 
 
                 //console.log(country_cuisine[d.id].cuisine)
@@ -197,6 +209,8 @@ function createMapVisualization(scaling, id, size) {
             }))
             .attr("class", "boundary")
             .attr("d", map_path)
+            .style("stroke", "#eeeeee")
+            .style("stroke-width", 2)
 
 
     }
@@ -208,142 +222,187 @@ function createMapVisualization(scaling, id, size) {
             cuisine_data = cuisine_ingredient[cuisine_key],
             category_data = cuisine_data.category_pct;
 
-        //UPDATE CUISINE LABEL
-        //
-        map_label.style("display", null);
-
-        map_label.select("text.cuisine")
-            .text(underscore(cuisine_key) + " Food")
-            .attr("font-size", 20);
-        map_label.select("tspan.country")
-            .text("Country: " +  country_data.name)
-            .attr("font-size", 16);
-        //
-
-        if (hover_yet) {showIngredient(country, curr_category, cuisine_data);}
-
-
-        var pie_slice = svg_pie.select(".pie-slices").selectAll("path.slice")
-            .data(pie_layout(category_data));
-
-        pie_slice.enter()
-            .insert("path")
-            .style("fill", function(d,i) {return pie_colorScale(i); })
-            .attr("class", "slice");
-
-        pie_slice
-            .transition().duration(800)
-            .attrTween("d", function(d) {
-                //console.log(d)
-                this._current = this._current || d;
-                var interpolate = d3.interpolate(this._current, d);
-                this._current = interpolate(0);
-                return function(t) {
-                    if (d.data.category == curr_category) {return pie_arc_big(interpolate(t));}
-                    else {return pie_arc(interpolate(t));}
-                };
-            });
-
-        pie_slice
-            .on('mouseover', function (d, i) {
-                d3.selectAll(".slice")
-                    .attr("d", pie_arc);
-                d3.select(this)
-                    .attr("d", pie_arc_big)
-                    .style({"cursor": "pointer"})
-                    .style('fill-opacity', 0.6);
-                showIngredient(d, d.data.category, cuisine_data);
-            })
-            .on('mouseout', function (d, i) {
-                d3.selectAll('.slice')
-                    .style('fill-opacity', 1);
-            })
-            //.on('click',function(){
-            //    console.log(this.Country)
-            //})
-
-
-        pie_slice.exit()
-            .remove();
-
-        /* ------- TEXT LABELS -------*/
-
-        var pie_text = svg_pie.select(".pie-labels").selectAll("text")
-            .data(pie_layout(category_data));
-
-        pie_text.enter()
-            .append("text");
-
-        pie_text
-            .attr("class", "pie-labels")
-            .attr("dy", ".35em")
-            .text(function(d) {
-                return (d.data.category);
-            })
-            .append("tspan")
-            .attr("x", 0)
-            .attr("dy", 20)
-            .attr("class", "pie-labels percentage")
-            .text(function(d) {
-                return ("(" + percents(d.data.percent) + ")");
-            });
-
-
-        function midAngle(d){
-            return d.startAngle + (d.endAngle - d.startAngle)/2;
+        if (hover_yet) {
+            showIngredient(country, curr_category, cuisine_data);
         }
 
-        pie_text.transition().duration(800)
-            .attrTween("transform", function(d) {
-                this._current = this._current || d;
-                var interpolate = d3.interpolate(this._current, d);
-                this._current = interpolate(0);
-                return function(t) {
-                    var d2 = interpolate(t);
-                    //console.log(d2)
-                    var pos = pie_arc_outer.centroid(d2);
-                    pos[0] = radius * 0.9 * (midAngle(d2) < Math.PI ? 1 : -1);
-                    return "translate("+ pos +")";
-                };
-            })
-            .styleTween("text-anchor", function(d){
-                this._current = this._current || d;
-                var interpolate = d3.interpolate(this._current, d);
-                this._current = interpolate(0);
-                return function(t) {
-                    var d2 = interpolate(t);
-                    return midAngle(d2) < Math.PI ? "start":"end";
-                };
-            });
+        if (size == "big") {
+            //UPDATE CUISINE LABEL
+            //
+            map_label.style("display", null);
 
-        pie_text.exit()
-            .remove();
+            map_label.select("text.cuisine")
+                .text(deunderscore(cuisine_key) + " Food")
+                .attr("font-size", 20);
+            map_label.select("tspan.country")
+                .text("Country: " + country_data.name)
+                .attr("font-size", 16);
+            //
 
-        /* ------- SLICE TO TEXT POLYLINES -------*/
 
-        var pie_polyline = svg_pie.select(".pie-lines").selectAll("polyline")
-            .data(pie_layout(category_data));
+            var pie_patterns = svg_pie.select(".pie-patterns").selectAll("pattern")
+                .data(pie_layout(category_data));
 
-        pie_polyline.enter()
-            .append("polyline");
+            pie_patterns.enter()
+                .append("svg:pattern");
 
-        pie_polyline.transition().duration(800)
-            .attrTween("points", function(d){
-                this._current = this._current || d;
-                var interpolate = d3.interpolate(this._current, d);
-                this._current = interpolate(0);
-                return function(t) {
-                    var d2 = interpolate(t);
-                    var pos = pie_arc_outer.centroid(d2);
-                    pos[0] = radius * 0.85 * (midAngle(d2) < Math.PI ? 1 : -1);
-                    return [pie_arc_big.centroid(d2), pie_arc_outer.centroid(d2), pos];
-                };
-            });
+            pie_patterns
+                .attr("class", "pie-patterns")
+                .attr("id", function (d, i) {
+                    return "img-" + i;
+                })
+                .attr("width", 100)
+                .attr("height", 100)
+                .attr('patternUnits', 'userSpaceOnUse');
 
-        pie_polyline.exit()
-            .remove();
+            d3.select(".pie_image").remove();
+
+            pie_patterns
+                .append('svg:image')
+                .attr("class", "pie_image")
+                .attr("x", -200)
+                .attr("y", -200)
+                .attr('width', 400)
+                .attr('height', 400)
+                //.attr('xlink:href', function(d,i) {return "images/Protein.jpeg"})
+                .attr('xlink:href', function (d, i) {
+                    console.log(underscore(d.data.category));
+                    return "images/" + underscore(d.data.category) + ".jpg"
+                });
+
+            pie_patterns.exit().remove();
+
+            var pie_slice = svg_pie.select(".pie-slices").selectAll("path.slice")
+                .data(pie_layout(category_data));
+
+
+            pie_slice.enter()
+                .insert("path")
+                .attr("class", "slice")
+                .style("fill", function (d, i) {
+                    return "url(#img-" + i + ")"
+                })
+                .style("stroke", "#eeeeee")
+                .style("stroke-width", 2);
+
+
+            pie_slice
+                .transition().duration(800)
+                .attrTween("d", function (d) {
+                    //console.log(d)
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function (t) {
+                        if (d.data.category == curr_category) {
+                            return pie_arc_big(interpolate(t));
+                        }
+                        else {
+                            return pie_arc(interpolate(t));
+                        }
+                    };
+                });
+
+            pie_slice
+                .on('mouseover', function (d, i) {
+                    d3.select(this)
+                        .style({"cursor": "pointer"})
+                        .style('fill-opacity', 0.8);
+                })
+                .on('mouseout', function (d, i) {
+                    d3.selectAll('.slice')
+                        .style('fill-opacity', 1);
+                })
+                .on('click', function (d, i) {
+                    d3.selectAll(".slice")
+                        .attr("d", pie_arc);
+                    d3.select(this)
+                        .attr("d", pie_arc_big);
+                    showIngredient(d, d.data.category, cuisine_data);
+                });
+
+
+            pie_slice.exit()
+                .remove();
+
+            /* ------- TEXT LABELS -------*/
+
+            var pie_text = svg_pie.select(".pie-labels").selectAll("text")
+                .data(pie_layout(category_data));
+
+            pie_text.enter()
+                .append("text");
+
+            pie_text
+                .attr("class", "pie-labels")
+                .attr("dy", ".35em")
+                .text(function (d) {
+                    return (d.data.category);
+                })
+                .append("tspan")
+                .attr("x", 0)
+                .attr("dy", 20)
+                .attr("class", "pie-labels percentage")
+                .text(function (d) {
+                    return ("(" + percents(d.data.percent) + ")");
+                });
+
+
+            function midAngle(d) {
+                return d.startAngle + (d.endAngle - d.startAngle) / 2;
+            }
+
+            pie_text.transition().duration(800)
+                .attrTween("transform", function (d) {
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function (t) {
+                        var d2 = interpolate(t);
+                        //console.log(d2)
+                        var pos = pie_arc_outer.centroid(d2);
+                        pos[0] = radius * 0.9 * (midAngle(d2) < Math.PI ? 1 : -1);
+                        return "translate(" + pos + ")";
+                    };
+                })
+                .styleTween("text-anchor", function (d) {
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function (t) {
+                        var d2 = interpolate(t);
+                        return midAngle(d2) < Math.PI ? "start" : "end";
+                    };
+                });
+
+            pie_text.exit()
+                .remove();
+
+            /* ------- SLICE TO TEXT POLYLINES -------*/
+
+            var pie_polyline = svg_pie.select(".pie-lines").selectAll("polyline")
+                .data(pie_layout(category_data));
+
+            pie_polyline.enter()
+                .append("polyline");
+
+            pie_polyline.transition().duration(800)
+                .attrTween("points", function (d) {
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function (t) {
+                        var d2 = interpolate(t);
+                        var pos = pie_arc_outer.centroid(d2);
+                        pos[0] = radius * 0.85 * (midAngle(d2) < Math.PI ? 1 : -1);
+                        return [pie_arc_big.centroid(d2), pie_arc_outer.centroid(d2), pos];
+                    };
+                });
+
+            pie_polyline.exit()
+                .remove();
+        }
     }
-
 
     function showIngredient(data, category, cuisine_data) {
         curr_category = category;
@@ -392,7 +451,7 @@ function createMapVisualization(scaling, id, size) {
             .duration(800)
             .attr("class", "hbar-label")
             .text(function(d) {
-                return underscore(d.ingredient) + " (" + percents(d.num/100) + ")";
+                return deunderscore(d.ingredient) + " (" + percents(d.num/100) + ")";
             })
             .attr("y", function(d, i) {return hlabel_y(i);})
             .attr("x", 140)
@@ -431,17 +490,17 @@ function createMapVisualization(scaling, id, size) {
                 d3.select(this).style('opacity', 0.6)
                     .style({"cursor": "pointer"})
                     .attr("width", 55)
-                    .attr("height", 55);;
+                    .attr("height", 55);
             })
             .on('mouseout', function (d, i) {
                 d3.selectAll('.hbar-image')
                     .style('opacity', 1)
                     .attr("width", 45)
-                    .attr("height", 45);;
+                    .attr("height", 45);
             })
             .on('click', function(d){
                 updateVisualization2(d.ingredient,colorbrewer.Set4[12][ingredients.indexOf(d.ingredient.replace("_"," "))])
-            })
+            });
 
         hbar.exit().remove();
         hbar_label.exit().remove();
@@ -460,6 +519,10 @@ function percents(x) {
     return (x*100).toFixed(0) + "%";
 }
 
-function underscore(x) {
+function deunderscore(x) {
     return x.toString().replace(/_/g, " ");
+}
+
+function underscore(x) {
+    return x.toString().replace(/ /g, "_");
 }
