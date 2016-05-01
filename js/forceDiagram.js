@@ -456,7 +456,7 @@ ForceDiagram.prototype.updateVis = function() {
                 if (vis.selectedVal == "recipe") {
                     strokeOpacity = Math.pow(d.strength/vis.maxStrength,2);
                 } else if (vis.selectedVal == "ingredient") {
-                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,1/2);
+                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,1/3);
                 }
                 return strokeOpacity;
             })
@@ -466,7 +466,7 @@ ForceDiagram.prototype.updateVis = function() {
                 if (vis.selectedVal == "recipe") {
                     strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 2);
                 } else if (vis.selectedVal == "ingredient") {
-                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1/2);
+                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1/3);
                 }
                 return strokeWidth;
             });
