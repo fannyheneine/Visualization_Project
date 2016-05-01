@@ -11,11 +11,11 @@ BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _sv
     this.size = _size;
 };
 
-var seen_ingredients = []
 var varXdomain;
 var count = 0;
-var color_ing = "blue"
-var selected_ingredient = "pork"
+var seen_ingredients = []
+var color_ing = "#8dd3c7"
+var selected_ingredient = "wheat_flour"
 
 console.log(color_ing, selected_ingredient)
 
@@ -189,6 +189,9 @@ BarChart.prototype.updateVisualization = function(selection){
     varXdomain = vis.data_i.map(function(d) { return d[selection].replace("_", " ") });
 
     ing_colors = colors(varXdomain)
+
+    console.log(varXdomain)
+    console.log(ing_colors)
 
 
     vis.yScale.domain([0, d3.max(vis.data_p, function(d) { return d[selection] })])
