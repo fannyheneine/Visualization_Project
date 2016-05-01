@@ -1,11 +1,12 @@
 
 
-ForceDiagram = function(_parentElement, _data1,_data2,_svgWidth,_nDataPoints){
+ForceDiagram = function(_parentElement, _data1,_data2,_svgWidth,_svgHeight,_nDataPoints){
     this.parentElement = _parentElement;
     this.allData = _data1;
     this.categories_ingredients=_data2;
     this.displayData = []; // see dataForceLayout wrangling
     this.svgWidth=_svgWidth;
+    this.svgHeight=_svgHeight;
     this.colorScale = d3.scale.category20();
     this.nDataPoints=_nDataPoints;
     this.initVis();
@@ -21,11 +22,11 @@ ForceDiagram.prototype.initVis = function(){
 
     var vis = this;
 
-    vis.margin = { top: 10, right: 10, bottom: 10, left: 10 };
+    vis.margin = { top: 10, right: 100, bottom: 10, left: 10 };
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
-    vis.svgHeight=vis.svgWidth*.6;
+    //vis.svgHeight=vis.svgWidth*.6;
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
     vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
@@ -86,7 +87,6 @@ ForceDiagram.prototype.initVis = function(){
         .attr('class', 'd3-tip');
 
 
-
     vis.wrangleData("all");
 };
 
@@ -103,11 +103,13 @@ ForceDiagram.prototype.wrangleData = function(filters){
     // THIS IS WHERE THE FILTERING FUNCTIONS WILL GO
     if (filters=="all"){
         vis.allDatafiltered=vis.allData;
-
     } else {
         for( var type in vis.filters) {
             if (type=="Cuisine"){
-                vis.allDatafiltered=vis.allData.filter(function(d){return d.Cuisine==vis.filters[type];})
+                vis.allDatafiltered=vis.allData.filter(function(d){return d.Cuisine==vis.filters[type];});
+                if (vis.width>500){
+                vis.nDataPoints=40;
+                }
             }
         }
     }
@@ -317,6 +319,8 @@ ForceDiagram.prototype.updateVis = function() {
     }
 
 
+
+
     var LinkStrengths=[];
     vis.displayData.Links.forEach(function(d){LinkStrengths.push(d.strength);});
     var sum = LinkStrengths.reduce(function (a, b) {
@@ -330,7 +334,7 @@ ForceDiagram.prototype.updateVis = function() {
     console.log(vis.maxStrength);
 
 
-    if (vis.width > 500) {
+    if (vis.nDataPoints > 100) {
         if (vis.selectedVal == "recipe") {
             vis.threshold = 3.5 * average;
         }
@@ -345,7 +349,6 @@ ForceDiagram.prototype.updateVis = function() {
             vis.threshold = 8 * average;
         }
     }
-
 
     vis.colorScale.domain(vis.categoryKeys);
 
@@ -396,6 +399,7 @@ ForceDiagram.prototype.updateVis = function() {
         }
     });
     vis.svg.call(vis.tip);
+
 
 
 
@@ -501,7 +505,6 @@ ForceDiagram.prototype.updateVis = function() {
     vis.selectedNode;
 
 
-
     vis.svgEl.on("click",function(d){
         if (vis.toggleNode){
             vis.toggleNode=0;
@@ -560,6 +563,7 @@ ForceDiagram.prototype.updateVis = function() {
 
             })
         ;
+
 
 
     function mouseOutFunction(d,thisvar) {
