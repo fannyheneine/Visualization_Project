@@ -17,7 +17,7 @@ var seen_ingredients = []
 var color_ing = "#8dd3c7"
 var selected_ingredient = "wheat_flour"
 
-console.log(color_ing, selected_ingredient)
+//console.log(color_ing, selected_ingredient)
 
 
 BarChart.prototype.initVis = function(selection){
@@ -108,7 +108,7 @@ BarChart.prototype.wrangleData = function(selection){
                 //}
                 color_ing = ing_colors[i]
                 selected_ingredient = seen_ingredients[i]
-                console.log(color_ing, selected_ingredient)
+                //console.log(color_ing, selected_ingredient)
                 ingchart.updateVisualization(selected_ingredient.replace(" ", "_"), color_ing)
             })
             .on("mouseover", function(){
@@ -189,9 +189,6 @@ BarChart.prototype.updateVisualization = function(selection){
     varXdomain = vis.data_i.map(function(d) { return d[selection].replace("_", " ") });
 
     ing_colors = colors(varXdomain)
-
-    console.log(varXdomain)
-    console.log(ing_colors)
 
 
     vis.yScale.domain([0, d3.max(vis.data_p, function(d) { return d[selection] })])

@@ -105,6 +105,13 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 
                     barchart.wrangleData(varXdomain2[i].replace(" ","_"))
                     barchart2.wrangleData(varXdomain2[i].replace(" ","_"))
+                    var filterobject = [];
+                    filterobject[0]={};
+                    filterobject[0].type = "Cuisine";
+                    filterobject[0].value= varXdomain2[i].replace(" ","_");
+                    //console.log(filterobject)
+                    forceplot.wrangleData(filterobject);
+                    forceplot_mini.wrangleData(filterobject);
 
                 })
                 .on("mouseover", function(){
