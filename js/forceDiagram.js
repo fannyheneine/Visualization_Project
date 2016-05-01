@@ -22,7 +22,7 @@ ForceDiagram.prototype.initVis = function(){
 
     var vis = this;
 
-    vis.margin = { top: 10, right: 100, bottom: 10, left: 10 };
+    vis.margin = { top: 10, right: 110, bottom: 10, left: 10 };
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
@@ -30,9 +30,9 @@ ForceDiagram.prototype.initVis = function(){
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
     vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
-    vis.nodeRadius_normal=vis.width/270;
-    vis.nodeRadius_highlight=vis.width/220;
-    vis.nodeRadius_selected=vis.width/170;
+    vis.nodeRadius_normal=vis.width/250;
+    vis.nodeRadius_highlight=vis.width/200;
+    vis.nodeRadius_selected=vis.width/150;
 
     if (vis.width < 500) {
         vis.nodeStrokeWidth=0;
@@ -72,7 +72,7 @@ ForceDiagram.prototype.initVis = function(){
 
     vis.svg.append("g")
         .attr("class", "legend")
-        .attr("transform", "translate("+vis.width*.01+","+vis.height *.2+")");
+        .attr("transform", "translate("+vis.width*.01+","+vis.height *.25+")");
 
 
     //
@@ -108,7 +108,7 @@ ForceDiagram.prototype.wrangleData = function(filters){
             if (type=="Cuisine"){
                 vis.allDatafiltered=vis.allData.filter(function(d){return d.Cuisine==vis.filters[type];});
                 if (vis.width>500){
-                vis.nDataPoints=40;
+                vis.nDataPoints=60;
                 }
             }
         }
@@ -415,11 +415,11 @@ ForceDiagram.prototype.updateVis = function() {
             var distance;
             if (vis.selectedVal == "recipe"){
                 //distance=(vis.width/2)/ Math.pow((link.strength + 1), 1.3);
-                distance = (vis.width/2.5)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+13;
+                distance = (vis.height/1.5)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+13;
             }
             else if (vis.selectedVal =="ingredient"){
                 //distance=(vis.width/2)/ (.6*(Math.pow((link.strength + 1), 2.5)+(link.strength + 1)));
-                distance = (vis.width/3)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+13;
+                distance = (vis.height/1.9)*(Math.pow((vis.maxStrength-link.strength)/(vis.maxStrength),4))+13;
             }
             return distance;
         })
@@ -873,9 +873,10 @@ ForceDiagram.prototype.updateVis = function() {
                     return d.target.y;
                 });
         });
-
+    vis.timeoutHandler;
+    window.clearTimeout(vis.timeoutHandler);
     //STOP FORCE LAYOUT AFTER 10 SECONDS
-    window.setTimeout(function()
+    vis.timeoutHandler=window.setTimeout(function()
     {
         vis.force.stop();
     }, 11000);
