@@ -144,78 +144,37 @@
 
 <h2 align="left">Self-Organized Data</h2>
 
-<div class="btn-group" data-toggle="buttons">
-    <label class="btn active">
-        <input type="radio" name="graph-type" value="recipe" checked onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Recipes</span>
-    </label>
-    <label class="btn">
-        <input type="radio" name="graph-type" value="ingredient" onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Ingredients</span>
-    </label>
-</div>
+<!--<div class="btn-group" data-toggle="buttons">-->
+    <!--<label class="btn active">-->
+        <!--<input type="radio" name="graph-type" value="recipe" checked onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Recipes</span>-->
+    <!--</label>-->
+    <!--<label class="btn">-->
+        <!--<input type="radio" name="graph-type" value="ingredient" onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Ingredients</span>-->
+    <!--</label>-->
+<!--</div>-->
 
 <div id="force-layout"></div>
 
 </div>
 
-.idea/workspace.xml
-
 
 	<h2>Most popular ingredients in each cuisine</h2>
-	<!-- Select box to choose the selection criteria -->
-	<form class="form-inline">
-		<div class="form-group">
-			<label for="rankingType">Cuisine</label>
-			<select class="form-control" id="ranking-type">
-				<option value="American">American</option>
-				<option value="British">British</option>
-				<option value="Canadian">Canadian</option>
-				<option value="Caribbeans">Caribbeans</option>
-				<option value="Chinese">Chinese</option>
-				<option value="East_African">East African</option>
-				<option value="East_European">East European</option>
-				<option value="French">French</option>
-				<option value="Indian">Indian</option>
-				<option value="Italian">Italian</option>
-				<option value="Japanese">Japanese</option>
-				<option value="Korean">Korean</option>
-				<option value="Mediterranean">Mediterranean</option>
-				<option value="Mexican">Mexican</option>
-				<option value="Middle_Eastern">Middle_Eastern</option>
-				<option value="North_African">North African</option>
-				<option value="Portuguese_Spanish">Portuguese_Spanish</option>
-				<option value="Scandinavian">Scandinavian</option>
-				<option value="South_African">South African</option>
-				<option value="South_American">South American</option>
-				<option value="South_Asian">South Asian</option>
-				<option value="Southeast_Asian">Southeast Asian</option>
-				<option value="West_African">West African</option>
-				<option value="West_European">West European</option>
-
-			</select>
-
-
-			<!-- Activity IV -->
-			<!--<button type="button" class="btn btn-link" id="change-sorting"><i class="glyphicon glyphicon-sort"></i> Sort</button>-->
-		</div>
-	</form>
 
 
 
-	<!--<h2><span id="show-ingredient" class="back"></span></h2>-->
-	<row>
-		<div class="col-md-5">
+<row>
+	<div class="col-md-5">
 		<div id="bar-chart"></div>
-		</div>
-		<div class="col-md-1">
-			<img id="ingredient-image">
-			<!--<img id="ingredient-image">-->
-		</div>
-		<!--<div class="col-md-5">-->
+	</div>
+	<div class="col-md-1">
+	<img id="ingredient-image">
+	</div>
+	<!--<div class="col-md-5">-->
 
-			<!--<div id="bar-chart2"></div>-->
-		<!--</div>-->
+	<div id="ingredient-chart" class="col-md-5"></div>
 
-	</row>
+
+</row>
 
 
 	<row>
@@ -246,19 +205,25 @@
 	<script src="js/map.js"></script>
 	<script src="js/main_map.js"></script>
 
-	<script src="js/main-force.js"></script>
-    <script src="js/forceDiagram.js"></script>
-	<script src="js/main_barchart.js"></script>
+<script src="js/main-force.js"></script>
+<script src="js/forceDiagram.js"></script>
+<script src="js/main_barchart.js"></script>
+<script src="js/barchart.js"></script>
+<script src="js/main_barchart2.js"></script>
+<script src="js/barchart2.js"></script>
 
-	<!-- Load dataForceLayout, create visualizations -->
-	<!-- Visualization objects -->
-	<script src="js/stackedAreaChart.js"></script>
-	<script src="js/timeline.js"></script>
-	<script src="js/barchart.js"></script>
-	<script src="js/Continent.js"></script>-->
 
-	<!-- Load data, create visualizations -->
-	<script src="js/main_stacked2.js"></script>
+
+<!-- Load dataForceLayout, create visualizations -->
+<!-- Visualization objects -->
+<script src="js/stackedAreaChart.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/Continent.js"></script>
+
+<!-- Load data, create visualizations -->
+<script src="js/main_stacked2.js"></script>
+
+
 
 
 </body>

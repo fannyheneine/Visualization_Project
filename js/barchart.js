@@ -14,6 +14,10 @@ BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _sv
 var seen_ingredients = []
 var varXdomain;
 var count = 0;
+var color_ing = "blue"
+var selected_ingredient = "pork"
+
+console.log(color_ing, selected_ingredient)
 
 
 BarChart.prototype.initVis = function(selection){
@@ -95,18 +99,22 @@ BarChart.prototype.wrangleData = function(selection){
             .attr("fill", function(d,i){
                 return ing_colors[i]
             })
-            //.on("click", function(d,i) {
-            //    if (vis.clicks==0){
-            //        //this.barchart2(vis.varXdomain[i].replace(" ", "_"),vis.ing_colors[i])
-            //        vis.clicks = vis.clicks + 1}
-            //    else{
-            //        vis.updateVisualization2(vis.varXdomain[i].replace(" ", "_"), vis.ing_colors[i]);
-            //    }
-            //})
-            //.on("mouseover", function(){
-            //    d3.select(this)
-            //        .style({"cursor": "pointer"})
-            //});
+            .on("click", function(d,i) {
+                //if (vis.clicks==0){
+                //    //this.barchart2(vis.varXdomain[i].replace(" ", "_"),vis.ing_colors[i])
+                //    vis.clicks = vis.clicks + 1}
+                //else{
+                //    vis.updateVisualization2(vis.varXdomain[i].replace(" ", "_"), vis.ing_colors[i]);
+                //}
+                color_ing = ing_colors[i]
+                selected_ingredient = seen_ingredients[i]
+                console.log(color_ing, selected_ingredient)
+                ingchart.updateVisualization(selected_ingredient.replace(" ", "_"), color_ing)
+            })
+            .on("mouseover", function(){
+                d3.select(this)
+                    .style({"cursor": "pointer"})
+            });
 
 
         vis.xAxis = d3.svg.axis()
@@ -160,6 +168,11 @@ BarChart.prototype.wrangleData = function(selection){
         return ing_colors
     }
 
+    d3.select("#ingredient-image")
+                .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
+                .attr("width","100")
+                .attr("vspace","100px")
+
 
         //vis.imagechart(selection)
 
@@ -196,7 +209,7 @@ BarChart.prototype.updateVisualization = function(selection){
             .transition()
             .duration(800)
             .call(vis.yAxis);
-    
+
 
     vis.rect = vis.svg.selectAll("rect")
         .data(vis.data_p)

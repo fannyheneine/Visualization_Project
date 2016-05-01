@@ -1,6 +1,5 @@
 
 function createMapVisualization(scaling, id, size) {
-    console.log("creating map");
     var margin = { top: 10, right: 0, bottom: 10, left: 0 };
     var map_width = 800/(scaling/2),
         map_height = 0.6*map_width,
@@ -171,7 +170,7 @@ function createMapVisualization(scaling, id, size) {
                     //console.log("aquii");
                     showCuisine(d, world_map, country_cuisine, cuisine_ingredient);
                 }
-                if (size=="big") {
+
                     div.transition()
                         .duration(1000)
                         .style("opacity", .9);
@@ -186,7 +185,7 @@ function createMapVisualization(scaling, id, size) {
                     filterobject["Cuisine"] = country_cuisine[d.id].cuisine;
                     forceplot.wrangleData(filterobject);
                     forceplot_mini.wrangleData(filterobject);
-                }
+
 
 
                 //console.log(country_cuisine[d.id].cuisine)
