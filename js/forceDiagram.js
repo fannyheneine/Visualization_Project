@@ -8,6 +8,15 @@ ForceDiagram = function(_parentElement, _data1,_data2,_svgWidth,_svgHeight,_nDat
     this.svgWidth=_svgWidth;
     this.svgHeight=_svgHeight;
     this.colorScale = d3.scale.category20();
+    this.persistentColors = {};
+    this.persistentColorScale = function(d)
+    {
+        if(!this.persistentColors[d])
+        {
+            this.persistentColors[d] = this.colorScale(d);
+        }
+        return this.persistentColors[d];
+    };
     this.nDataPointsOriginal=_nDataPoints;
     this.nDataPoints=this.nDataPointsOriginal;
     this.initVis();
@@ -66,14 +75,9 @@ ForceDiagram.prototype.initVis = function(){
         .gravity(.02);
 
 
-    //make legend function
-
-    vis.legend = d3.legend.color()
-        .scale(vis.colorScale);
-
     vis.svg.append("g")
-        .attr("class", "legend")
-        .attr("transform", "translate("+vis.width*.01+","+vis.height *.10+")");
+        .attr("class", "force-legend")
+        .attr("transform", "translate("+vis.width*.01+","+vis.height *.11+")");
 
 
     //
@@ -100,6 +104,7 @@ ForceDiagram.prototype.initVis = function(){
 ForceDiagram.prototype.wrangleData = function(filters){
     var vis = this;
 
+    console.log(filters)
     vis.filters=filters;
     // THIS IS WHERE THE FILTERING FUNCTIONS WILL GO
     if (filters=="all"){
@@ -326,14 +331,18 @@ ForceDiagram.prototype.updateVis = function() {
     if (vis.selectedVal == "recipe") {
         vis.displayData = vis.linksNodesData_Recipes;
         vis.categoryKeys = _.uniq(vis.displayData.Nodes.map(function (recipe) {
-            return recipe.Cuisine.replace(/_/g, ' ');
+            return recipe.Cuisine;
         }));
     } else if (vis.selectedVal == "ingredient") {
         vis.displayData = vis.linksNodesData_Ingredients;
-        vis.categoryKeys = _.uniq(vis.displayData.Nodes.map(function (ingredient) {
+        var categoryKeys1 = _.uniq(vis.displayData.Nodes.map(function (ingredient) {
             return ingredient.category;
         }));
+
+        vis.categoryKeys=categoryKeys1.filter(function(d){return d != undefined;})
     }
+
+    vis.categoryKeys=vis.categoryKeys.sort();
 
 
 
@@ -368,6 +377,7 @@ ForceDiagram.prototype.updateVis = function() {
 
     vis.colorScale.domain(vis.categoryKeys);
 
+
     if (!vis.textToolTipFreeze){}
     else {vis.textToolTipFreeze.remove()}
     //figure out neighboring nodes via links
@@ -397,11 +407,67 @@ ForceDiagram.prototype.updateVis = function() {
         return vis.nodesLinkedByIndex[a.index + "," + b.index];
     }
 
+
+    function forceLegend(){
+
+        //draw swatches
+        vis.legendSwatch=vis.svg.select(".force-legend")
+            .selectAll(".force-legend-swatch")
+            .data(vis.categoryKeys, function(d){
+                return d;});
+
+
+        vis.legendSwatch.exit().remove();
+
+        vis.legendSwatch.enter()
+            .append("rect")
+            .attr("class","force-legend-swatch");
+
+        vis.legendSwatch
+            .attr("width",15)
+            .attr("height",15)
+            .attr("y",function(d,i){return i*20+2;})
+            .attr("fill",function(d){return vis.persistentColorScale(d);});
+
+
+
+        //draw labels
+        vis.legendText=vis.svg.select(".force-legend")
+            .selectAll(".force-legend-label")
+            .data(vis.categoryKeys, function(d){return d;});
+
+        vis.legendText.exit().remove();
+
+        vis.legendText.enter()
+            .append("text")
+            .attr("class","force-legend-label");
+
+        vis.legendText
+            .text(function(d){
+                var textOut=d.replace(/_/g, ' ');
+                return textOut;
+            })
+            .attr("x",20)
+            .attr("y",function(d,i){return i*20+15;})
+            .on("click",function(d){
+
+                if (vis.selectedVal=="recipe"){
+                var filterObj=[];
+                filterObj[0]={};
+                filterObj[0].type="Cuisine";
+                filterObj[0].value=d;
+                vis.wrangleData(filterObj);}
+                
+            })
+
+
+    }
+
     //call the legend
-    if (vis.width < 500) {}
-    else{
-    vis.svg.select(".legend")
-        .call(vis.legend);
+    if (vis.width > 500) {
+
+    forceLegend();
+
     }
 
     //call the tool tip
@@ -575,10 +641,10 @@ ForceDiagram.prototype.updateVis = function() {
         })
         .attr("fill", function (d, i) {
             if (vis.selectedVal == "recipe") {
-                return vis.colorScale(d.Cuisine.replace(/_/g, ' '))
+                return vis.persistentColorScale(d.Cuisine)
             }
             else if (vis.selectedVal == "ingredient") {
-                return vis.colorScale(d.category)
+                return vis.persistentColorScale(d.category)
             }
         })
         .style("stroke", "#ccc")
