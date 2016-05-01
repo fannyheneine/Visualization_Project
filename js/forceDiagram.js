@@ -73,7 +73,7 @@ ForceDiagram.prototype.initVis = function(){
 
     vis.svg.append("g")
         .attr("class", "legend")
-        .attr("transform", "translate("+vis.width*.01+","+vis.height *.25+")");
+        .attr("transform", "translate("+vis.width*.01+","+vis.height *.10+")");
 
 
     //

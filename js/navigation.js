@@ -29,7 +29,7 @@ $("#mini-barchart").click(function() {
 
 $("#mini-forceplot").click(function() {
     $('html, body').animate({
-        scrollTop: $("#force-layout").offset().top-200
+        scrollTop: $("#force-layout-controls").offset().top-100
     }, 1000);
 });
 

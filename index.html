@@ -149,11 +149,12 @@
 	<div id="force-layout-controls" style="display: table-cell">
 		<h2 align="left">Self-Organized Data</h2>
 
-        <div id="force-layout-refresh"><input type="button" value="Refresh Data" onclick="forceplot.wrangleData(forceplot.filters);
-                    forceplot_mini.wrangleData(forceplot_mini.filters);">
+        <div id="force-layout-refresh"><a class="btn btn-default force-button" type="button" onclick="forceplot.wrangleData(forceplot.filters);
+                    forceplot_mini.wrangleData(forceplot_mini.filters);"><span class="glyphicon glyphicon-refresh"></span>  &nbsp;&nbsp;Refresh Data</a>
         </div>
 
-        Currently Showing:<br>
+        <!--Currently Showing:<br>-->
+        <hr>
 
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn active">
@@ -166,11 +167,11 @@
 
         <div id="force-layout-filters">
             <p></p></div>
-        <input type="button" value="Show All" class="force-button" onclick="forceplot.wrangleData('all');
-                    forceplot_mini.wrangleData('all');">
+        <a type="button" class="btn btn-default force-button" onclick="forceplot.wrangleData('all');
+                    forceplot_mini.wrangleData('all');"><span class="glyphicon glyphicon-remove-circle"></span> &nbsp;&nbsp;Clear Filters</a>
 
 
-
+        <hr>
 	</div>
     <div id="force-layout" style="display: table-cell"></div>
 
