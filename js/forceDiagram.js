@@ -449,14 +449,12 @@ ForceDiagram.prototype.updateVis = function() {
             })
             //assuming max # connections is around 10
             .style("stroke-opacity", function (d) {
-                //return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
-                return Math.pow(d.strength/vis.maxStrength,2);
 
                 var strokeOpacity;
                 if (vis.selectedVal == "recipe") {
                     strokeOpacity = Math.pow(d.strength/vis.maxStrength,2);
                 } else if (vis.selectedVal == "ingredient") {
-                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,1/3);
+                    strokeOpacity = Math.pow(d.strength/vis.maxStrength,1);
                 }
                 return strokeOpacity;
             })
@@ -466,7 +464,7 @@ ForceDiagram.prototype.updateVis = function() {
                 if (vis.selectedVal == "recipe") {
                     strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 2);
                 } else if (vis.selectedVal == "ingredient") {
-                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1/3);
+                    strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1);
                 }
                 return strokeWidth;
             });
@@ -597,8 +595,21 @@ ForceDiagram.prototype.updateVis = function() {
         vis.link.each(function(l) {
             var el = d3.select(this);
             setIfDifferent(el, l, 'stroke', "#aaa");
-            var strokeOpacity = Math.pow(l.strength/vis.maxStrength,2);
-            var strokeWidth = 1.5*Math.pow(l.strength/vis.maxStrength,2);
+
+            var strokeOpacity;
+            if (vis.selectedVal == "recipe") {
+                strokeOpacity = Math.pow(l.strength/vis.maxStrength,2);
+            } else if (vis.selectedVal == "ingredient") {
+                strokeOpacity = Math.pow(l.strength/vis.maxStrength,1);
+            }
+
+            var strokeWidth;
+            if (vis.selectedVal == "recipe") {
+                strokeWidth = 1.5 * Math.pow(l.strength / vis.maxStrength, 2);
+            } else if (vis.selectedVal == "ingredient") {
+                strokeWidth = 1.5 * Math.pow(l.strength / vis.maxStrength, 1);
+            }
+
             setIfDifferent(el, l, 'stroke-opacity', strokeOpacity);
             setIfDifferent(el, l, 'stroke-width', strokeWidth);
         });
@@ -863,7 +874,7 @@ ForceDiagram.prototype.updateVis = function() {
     window.setTimeout(function()
     {
         vis.force.stop();
-    }, 13000);
+    }, 11000);
 
     //IF WE NEED A CLICK RECTANGLE FOR THE MINI VERSION
 
