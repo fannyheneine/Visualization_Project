@@ -89,6 +89,7 @@ h2{
   color: #666666;
     font-weight: lighter;
     margin-top: 50px;
+    margin-bottom:30px;
 }
 
 
@@ -195,9 +196,41 @@ polyline{
 #force-layout-controls {
     vertical-align:top;
     padding-top:50px;
+    padding-left:20px;
 }
 #force-layout {
     padding-left:50px;
+}
+
+#force-layout-refresh{
+    padding-bottom:30px;
+}
+
+#force-layout-filters {
+    color: #c8c8c8;
+    font-size:1.5em;
+    text-align: left;
+    padding-left:15px;
+    margin:0px;
+}
+
+#force-layout-filters span{
+    color:#7AA3CC;
+}
+
+.force-button {
+    background-color: transparent;
+    color: #7AA3CC;
+    font-size:1.3em;
+    border: 4px solid #7AA3CC;
+    padding:5px;
+    border-radius:5px;
+}
+
+.force-button:hover {
+    color: #bbb;
+    border: 4px solid #bbb;
+
 }
 
 .label{

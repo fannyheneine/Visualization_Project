@@ -148,6 +148,13 @@
 
 	<div id="force-layout-controls" style="display: table-cell">
 		<h2 align="left">Self-Organized Data</h2>
+
+        <div id="force-layout-refresh"><input type="button" value="Refresh Data" onclick="forceplot.wrangleData(forceplot.filters);
+                    forceplot_mini.wrangleData(forceplot_mini.filters);">
+        </div>
+
+        Currently Showing:<br>
+
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn active">
 				<input type="radio" name="graph-type" value="recipe" checked onchange="forceplot.updateVis(); forceplot_mini.updateVis()"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Recipes</span>
@@ -157,12 +164,12 @@
 			</label>
 		</div>
 
-        <div id="force-layout-filters"><p></p></div>
-        <input type="button" value="All Cuisines" onclick="forceplot.wrangleData('all');
+        <div id="force-layout-filters">
+            <p></p></div>
+        <input type="button" value="Show All" class="force-button" onclick="forceplot.wrangleData('all');
                     forceplot_mini.wrangleData('all');">
-        
-        <input type="button" value="Refresh Data" onclick="forceplot.wrangleData(forceplot.filters);
-                    forceplot_mini.wrangleData(forceplot_mini.filters);">
+
+
 
 	</div>
     <div id="force-layout" style="display: table-cell"></div>

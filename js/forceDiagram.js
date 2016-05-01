@@ -309,10 +309,14 @@ ForceDiagram.prototype.updateVis = function() {
     vis.filterPrintOut=d3.select("#force-layout-filters").select("p");
     if (vis.filters=="all"){
         vis.filterPrintOut
-            .text("Cuisine: "+ "all");
+            .text("Cuisine:  ")
+            .append("span")
+            .text("All");
     } else{
         vis.filterPrintOut
-            .text(vis.filters[0].type+": "+ vis.filters[0].value.replace(/_/g, ' '));
+            .text(vis.filters[0].type+":  ")
+            .append("span")
+            .text(vis.filters[0].value.replace(/_/g, ' '));
     }
 
 //radio button responsiveness
