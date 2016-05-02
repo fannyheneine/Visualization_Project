@@ -105,7 +105,6 @@ ForceDiagram.prototype.initVis = function(){
 ForceDiagram.prototype.wrangleData = function(filters){
     var vis = this;
 
-    console.log(filters)
     vis.filters=filters;
     // THIS IS WHERE THE FILTERING FUNCTIONS WILL GO
     if (filters=="all"){
@@ -311,7 +310,7 @@ ForceDiagram.prototype.wrangleData = function(filters){
 ForceDiagram.prototype.updateVis = function() {
 
     var vis = this;
-
+    console.log(vis.filters);
     vis.filterPrintOut=d3.select("#force-layout-filters").select("p");
     if (vis.filters=="all"){
         vis.filterPrintOut
@@ -354,27 +353,14 @@ ForceDiagram.prototype.updateVis = function() {
         return a + b;
     }, 0);
 
+    var sortedLinkStrengths=LinkStrengths.sort(function(a,b){return b-a;});
+    var indexThreshold=Math.floor(Math.sqrt(LinkStrengths.length)*3);
+    vis.threshold = sortedLinkStrengths[indexThreshold];
     var average=sum/LinkStrengths.length;
 
     vis.maxStrength=d3.max(LinkStrengths);
     vis.minStrength=d3.min(LinkStrengths);
-
-
-    if (vis.nDataPoints > 100) {
-        if (vis.selectedVal == "recipe") {
-            vis.threshold = 3.5 * average;
-        }
-        else if (vis.selectedVal == "ingredient") {
-            vis.threshold = 12 * average;
-        }
-    } else {
-        if (vis.selectedVal == "recipe") {
-            vis.threshold = .9 * average;
-        }
-        else if (vis.selectedVal == "ingredient") {
-            vis.threshold = 8 * average;
-        }
-    }
+    vis.averageStrength=d3.min(LinkStrengths);
 
     vis.colorScale.domain(vis.categoryKeys);
 
@@ -428,7 +414,17 @@ ForceDiagram.prototype.updateVis = function() {
             .attr("width",15)
             .attr("height",15)
             .attr("y",function(d,i){return i*20+2;})
-            .attr("fill",function(d){return vis.persistentColorScale(d);});
+            .attr("fill",function(d){return vis.persistentColorScale(d);})
+            .on("click",function(d){
+            if (vis.selectedVal=="recipe"){
+                var filterObj=[];
+                filterObj[0]={};
+                filterObj[0].type="Cuisine";
+                filterObj[0].value=d;
+                forceplot.wrangleData(filterObj);
+                forceplot_mini.wrangleData(filterObj);}
+
+        });
 
 
 
@@ -457,9 +453,10 @@ ForceDiagram.prototype.updateVis = function() {
                 filterObj[0]={};
                 filterObj[0].type="Cuisine";
                 filterObj[0].value=d;
-                vis.wrangleData(filterObj);}
+                forceplot.wrangleData(filterObj);
+                forceplot_mini.wrangleData(filterObj);}
 
-            })
+            });
 
 
     }
@@ -539,21 +536,17 @@ ForceDiagram.prototype.updateVis = function() {
         .style("stroke-opacity", function (d) {
 
             var strokeOpacity;
-            if (vis.selectedVal == "recipe") {
-                strokeOpacity = Math.pow(d.strength/vis.maxStrength,2);
-            } else if (vis.selectedVal == "ingredient") {
-                strokeOpacity = Math.pow(d.strength/vis.maxStrength,1);
-            }
+            var maxOpacity=1;
+            var minOpacity=0.3;
+            strokeOpacity = (maxOpacity-minOpacity) * Math.pow(((d.strength-vis.threshold) / (vis.maxStrength-vis.threshold)), 1)+minOpacity;
+
             return strokeOpacity;
         })
         .style("stroke-width", function (d) {
-            //return (d.strength - (vis.threshold - 1)) / (12 - vis.threshold);
             var strokeWidth;
-            if (vis.selectedVal == "recipe") {
-                strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 2);
-            } else if (vis.selectedVal == "ingredient") {
-                strokeWidth = 1.5 * Math.pow(d.strength / vis.maxStrength, 1);
-            }
+            var maxStroke=2;
+            var minStroke=.5;
+                strokeWidth = (maxStroke-minStroke) * Math.pow(((d.strength-vis.threshold) / (vis.maxStrength-vis.threshold)), 1)+minStroke;
             return strokeWidth;
         });
 
@@ -566,23 +559,6 @@ ForceDiagram.prototype.updateVis = function() {
 
         vis.node.exit().remove();
 
-        //vis.nodeEnter = vis.node.enter().append("g")
-        //    .attr("class", "node");
-
-//
-//    if (vis.selectedVal == "ingredient") {
-//    vis.nodeEnter.append("text")
-//        .text(function (d) {
-//            if (d.recipes.length > vis.threshold*3) {
-//                return d.id;
-//            } else {
-//                return "";
-//            }
-//        })
-//        .attr("transform", "translate(-15,-5)")
-//        .attr("fill", "#000")
-//        .attr("class", "ingredients-label");
-//}
 
 
     vis.toggleNode=0;
@@ -688,18 +664,15 @@ ForceDiagram.prototype.updateVis = function() {
             setIfDifferent(el, l, 'stroke', "#aaa");
 
             var strokeOpacity;
-            if (vis.selectedVal == "recipe") {
-                strokeOpacity = Math.pow(l.strength/vis.maxStrength,2);
-            } else if (vis.selectedVal == "ingredient") {
-                strokeOpacity = Math.pow(l.strength/vis.maxStrength,1);
-            }
+            var maxOpacity=1;
+            var minOpacity=0.3;
+            strokeOpacity = (maxOpacity-minOpacity) * Math.pow(((l.strength-vis.threshold) / (vis.maxStrength-vis.threshold)), 1)+minOpacity;
+
 
             var strokeWidth;
-            if (vis.selectedVal == "recipe") {
-                strokeWidth = 1.5 * Math.pow(l.strength / vis.maxStrength, 2);
-            } else if (vis.selectedVal == "ingredient") {
-                strokeWidth = 1.5 * Math.pow(l.strength / vis.maxStrength, 1);
-            }
+            var maxStroke=2;
+            var minStroke=.5;
+            strokeWidth = (maxStroke-minStroke) * Math.pow(((l.strength-vis.threshold) / (vis.maxStrength-vis.threshold)), 1)+minStroke;
 
             setIfDifferent(el, l, 'stroke-opacity', strokeOpacity);
             setIfDifferent(el, l, 'stroke-width', strokeWidth);
