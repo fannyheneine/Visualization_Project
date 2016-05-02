@@ -7,9 +7,10 @@ var parseDate = d3.time.format("%Y").parse;
 
 
 // Variables for the visualization instances
-var areachart2, areachart;
+var areachart2;
+var areachart;
 var filtered = false;
-var country_chosen_st="Canada";
+var country_chosen_st="United States";
 
 
 // Start application by loading the data
@@ -58,10 +59,9 @@ function createVis_stacked2() {
 	// TO-DO: Instantiate visualization objects here
 	// areachart = new ...
 
-
-	areachart2 = new StackedAreaChart("mini-stacked",allData_UN,country_chosen_st,200);
 	areachart = new StackedAreaChart("stacked-area-chart",allData_UN,country_chosen_st,700);
-
+	areachart2 = new StackedAreaChart2("mini-stacked",allData_UN,country_chosen_st,200);
+	timeline = new Timeline("timeline",allData_UN);
 
 }
 

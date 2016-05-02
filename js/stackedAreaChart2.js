@@ -4,7 +4,7 @@
  * @param _parentElement 	-- the HTML element in which to draw the visualization
  * @param _data						-- the  
  */
-StackedAreaChart = function(_parentElement, _data, country_chosen_st, _svgWidth) {
+StackedAreaChart2 = function(_parentElement, _data, country_chosen_st, _svgWidth) {
 
     // var stack = d3.layout.stack()
     //     			.values(function(d) { return d.values; })
@@ -21,18 +21,18 @@ StackedAreaChart = function(_parentElement, _data, country_chosen_st, _svgWidth)
 }
 
 // Set ordinal color scale
-var colorScale = d3.scale.category20();
-var dataCategories;
+var colorScale2 = d3.scale.category20();
+var dataCategories2;
 
 /*
  * Initialize visualization (static content, e.g. SVG area or axes)
  */
 
-var data_chosen;
-var data_all_stacked;
-var stackedData;
+var data_chosen2;
+var data_all_stacked2;
+var stackedData2;
 
-StackedAreaChart.prototype.initVis = function(country_chosen_st) {
+StackedAreaChart2.prototype.initVis = function(country_chosen_st) {
     var vis = this;
     // vis.area = d3.svg.area()
     // 	 .interpolate("cardinal")
@@ -41,11 +41,11 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
     // 	 .y1(function(d) { return vis.y(d.y0 + d.y); });
 
     //console.log(vis.data)
-    data_all_stacked=vis.data;
+    data_all_stacked2=vis.data;
 
     for (i = 0; i < vis.data.length; i++){
         if (vis.data[i].country == country_chosen_st) {
-            data_chosen = vis.data[i];
+            data_chosen2 = vis.data[i];
         }
     }
 
@@ -62,7 +62,7 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
 
 // Update color scale (all column headers except "Year")
 // We will use the color scale for the stacked area chart
-    colorScale.domain(d3.keys(data_chosen.layers[0]).filter(function(d){ return d != "Year"; }))
+    colorScale2.domain(d3.keys(data_chosen2.layers[0]).filter(function(d){ return d != "Year"; }))
 
     vis.margin = {
         top: 20,
@@ -117,7 +117,7 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
     // Scales and axes
     vis.x = d3.time.scale()
         .range([0, vis.width])
-        .domain(d3.extent(data_chosen.layers, function(d) {
+        .domain(d3.extent(data_chosen2.layers, function(d) {
             return d.Year;
         }));
 
@@ -157,12 +157,12 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         });
 
 
-    dataCategories = colorScale.domain();
+    dataCategories2 = colorScale2.domain();
 
-    var transposedData = dataCategories.map(function(name) {
+    var transposedData = dataCategories2.map(function(name) {
         return {
             name: name,
-            values: data_chosen.layers.map(function(d) {
+            values: data_chosen2.layers.map(function(d) {
                 return {
                     Year: d.Year,
                     y: d[name]
@@ -176,8 +176,8 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
             return d.values;
         });
 
-    stackedData = stack(transposedData);
-    vis.stackedData = stackedData;
+    stackedData2 = stack(transposedData);
+    vis.stackedData = stackedData2;
 
     //console.log(stackedData);
 
@@ -195,20 +195,20 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
  */
 var next_country;
 
-StackedAreaChart.prototype.wrangleData = function(next_country) {
+StackedAreaChart2.prototype.wrangleData = function(next_country) {
     var vis = this;
     //console.log(next_country)
 
     if(next_country==country_chosen_st) {
-        vis.displayData = stackedData
+        vis.displayData = stackedData2
     }
     else {
 
-        for (i = 0; i < data_all_stacked.length; i++) {
-            if (data_all_stacked[i].country == next_country) {
-                data_chosen = data_all_stacked[i];
+        for (i = 0; i < data_all_stacked2.length; i++) {
+            if (data_all_stacked2[i].country == next_country) {
+                data_chosen2 = data_all_stacked2[i];
             }
-            else if (data_all_stacked[i].country != next_country) {
+            else if (data_all_stacked2[i].country != next_country) {
                 //console.log("NO DATA!")
                 vis.displayData = 0;
             }
@@ -225,16 +225,16 @@ StackedAreaChart.prototype.wrangleData = function(next_country) {
          });*/
 
 
-        colorScale.domain(d3.keys(data_chosen.layers[0]).filter(function (d) {
+        colorScale2.domain(d3.keys(data_chosen2.layers[0]).filter(function (d) {
             return d != "Year";
         }))
 
-        dataCategories = colorScale.domain();
+        dataCategories2 = colorScale2.domain();
 
-        var transposedData = dataCategories.map(function (name) {
+        var transposedData = dataCategories2.map(function (name) {
             return {
                 name: name,
-                values: data_chosen.layers.map(function (d) {
+                values: data_chosen2.layers.map(function (d) {
                     return {
                         Year: d.Year,
                         y: d[name]
@@ -248,8 +248,8 @@ StackedAreaChart.prototype.wrangleData = function(next_country) {
                 return d.values;
             });
 
-        stackedData = stack(transposedData);
-        vis.stackedData = stackedData;
+        stackedData2 = stack(transposedData);
+        vis.stackedData = stackedData2;
 
         vis.displayData = vis.stackedData;
         country_chosen_st=next_country;
@@ -287,7 +287,7 @@ StackedAreaChart.prototype.wrangleData = function(next_country) {
  * Function parameters only needed if different kinds of updates are needed
  */
 
-StackedAreaChart.prototype.updateVis = function() {
+StackedAreaChart2.prototype.updateVis = function() {
     var vis = this;
 
     if (filtered == true) {
@@ -319,19 +319,20 @@ StackedAreaChart.prototype.updateVis = function() {
 
     categories.enter().append("path")
         .attr("class", "area")
-        .attr("opacity", 0.7);
+        .attr("opacity",0.7);
 
     categories
         .style("fill", function(d) {
-            return colorScale(d.name);
+            return colorScale2(d.name);
         })
         .attr("d", function(d) {
             return vis.area_stacked(d.values);
         })
+        
         .on("mouseover", function(d) {
             div.transition()
                 .duration(200)
-                .style("opacity",1);
+                .style("opacity",.9);
             div.html(d.name)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
@@ -341,6 +342,7 @@ StackedAreaChart.prototype.updateVis = function() {
                 .duration(500)
                 .style("opacity", 0);
         });
+
 
 
     // TO-DO: Update tooltip text

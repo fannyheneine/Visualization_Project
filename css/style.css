@@ -412,13 +412,13 @@ h3 {
     text-anchor: end;
 }
 
-.area {
+/*.area {
     opacity: 0.7;
     clip-path: url(#clip);
 }
 .area:hover {
     opacity: 1;
-}
+}*/
 
 .brush .extent {
     stroke: #fff;
