@@ -4,12 +4,14 @@ var alreadyMap=0;
 function createMapVisualization(scaling, id, size) {
     var margin = { top: 10, right: 0, bottom: 30, left: 0 };
     var map_width = 800/(scaling/2),
-        map_height = 0.6*map_width,
+        map_height,
         pie_width = 450,
         pie_height = 300,
         hbar_width = 450,
-        hbar_height = 300;
+        hbar_height = 250;
 
+    if (size=="big") {map_height = 0.75*map_width}
+    else {map_height = 0.55*map_width}
 
     // INITIATE MAP
     //
@@ -17,8 +19,20 @@ function createMapVisualization(scaling, id, size) {
         .attr("width", map_width + margin.left + margin.right)
         .attr("height", map_height + margin.top + margin.bottom);
 
+    svg_map.append("defs")
+        .append("pattern")
+        .attr("id", "map-pattern")
+        //.attr("class", "map-patterns")
+        .attr("patternUnits", "userSpaceOnUse")
+        .attr("width", map_width)
+        .attr("height", map_height)
+        .append("image")
+        .attr("xlink:href", "images/food_background.jpg")
+        .attr("width", map_width)
+        .attr("height", map_height);
+
     var map_projection = d3.geo.mercator()
-        .center([10, 50])
+        .center([10, 50 - map_height/80])
         .scale(map_width / 2/ Math.PI)
         .translate([map_width / 2, map_height / 2]);
 
@@ -179,7 +193,7 @@ function createMapVisualization(scaling, id, size) {
                 if (map_unavailable==false) {
 
 
-                    showCuisine(d, world_map, country_cuisine, cuisine_ingredient);
+                    showCuisine(d.id, world_map, country_cuisine, cuisine_ingredient);
                 }
 
                     div.transition()
@@ -230,18 +244,20 @@ function createMapVisualization(scaling, id, size) {
             .style("stroke", "#eeeeee")
             .style("stroke-width", 1)
 
+        showCuisine(840, world_map, country_cuisine, cuisine_ingredient);
+        showIngredient("Oil & Dairy", cuisine_ingredient[country_cuisine[840].cuisine]);
 
     }
 
-    function showCuisine(country, world_map, country_cuisine, cuisine_ingredient) {
+    function showCuisine(country_id, world_map, country_cuisine, cuisine_ingredient) {
 
-        var country_data = country_cuisine[country.id],
+        var country_data = country_cuisine[country_id],
             cuisine_key = country_data.cuisine,
             cuisine_data = cuisine_ingredient[cuisine_key],
             category_data = cuisine_data.category_pct;
 
         if (hover_yet) {
-            showIngredient(country, curr_category, cuisine_data);
+            showIngredient(curr_category, cuisine_data);
         }
 
         if (size == "big") {
@@ -336,7 +352,7 @@ function createMapVisualization(scaling, id, size) {
                         .attr("d", pie_arc);
                     d3.select(this)
                         .attr("d", pie_arc_big);
-                    showIngredient(d, d.data.category, cuisine_data);
+                    showIngredient(d.data.category, cuisine_data);
                 });
 
 
@@ -422,7 +438,7 @@ function createMapVisualization(scaling, id, size) {
         }
     }
 
-    function showIngredient(data, category, cuisine_data) {
+    function showIngredient(category, cuisine_data) {
         curr_category = category;
         var ingredient_data = cuisine_data[curr_category],
             ingredient_keys = Object.keys(ingredient_data);
@@ -475,7 +491,7 @@ function createMapVisualization(scaling, id, size) {
             .attr("x", 140)
             .attr("text-anchor", "end")
             .attr("alignment-baseline", "middle")
-            .style("font-size", 16);
+            .style("font-size", 12);
         hbar_label
             .on('mouseover', function (d, i) {
                 var currentState = this;
@@ -499,22 +515,21 @@ function createMapVisualization(scaling, id, size) {
             .attr("xlink:href", function(d) {return "images/"+ d.ingredient +".png";})
             .attr("y", function(d, i) {return himage_y(i);})
             .attr("x", function(d) {return hbar_x(d.num)+150;})
-            //.attr("align", "xMinYMid")
-            .attr("width", 45)
-            .attr("height", 45);
+            .attr("width", hbar_height/7)
+            .attr("height", hbar_height/7);
         hbar_img
             .on('mouseover', function (d, i) {
                 var currentState = this;
                 d3.select(this).style('opacity', 0.6)
                     .style({"cursor": "pointer"})
-                    .attr("width", 55)
-                    .attr("height", 55);
+                    .attr("width", hbar_height/5)
+                    .attr("height", hbar_height/5);
             })
             .on('mouseout', function (d, i) {
                 d3.selectAll('.hbar-image')
                     .style('opacity', 1)
-                    .attr("width", 45)
-                    .attr("height", 45);
+                    .attr("width", hbar_height/7)
+                    .attr("height", hbar_height/7);
             })
             .on('click', function(d){
                 updateVisualization2(d.ingredient,colorbrewer.Set4[12][ingredients.indexOf(d.ingredient.replace("_"," "))])
