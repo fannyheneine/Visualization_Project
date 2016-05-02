@@ -59,8 +59,8 @@ function createVis_stacked2() {
 	// TO-DO: Instantiate visualization objects here
 	// areachart = new ...
 
-	areachart = new StackedAreaChart("stacked-area-chart",allData_UN,country_chosen_st,650);
-	areachart2 = new StackedAreaChart("mini-stacked",allData_UN,country_chosen_st,200);
+	areachart = new StackedAreaChart("stacked-area-chart",allData_UN,country_chosen_st,650,0.6*650,40,"big");
+	areachart2 = new StackedAreaChart("mini-stacked",allData_UN,country_chosen_st,200,0.8*200,20,"small");
 	timeline = new Timeline("timeline",allData_UN);
 
 }
