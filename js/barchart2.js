@@ -1,5 +1,5 @@
 
-BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight, _size){
+BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight,_svgBarWidth, _svgMargin,_size){
     this.parentElement = _parentElement;
     this.data_ing2 = _data;
     //this.color = _this_color;
@@ -7,6 +7,8 @@ BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight, _size){
     //this.selected_ingredient = _selected_ingredient;
     this.size = _size;
     this.svgHeight = _svgHeight;
+    this.leftMargin = _svgMargin;
+    this.barWidth = _svgBarWidth;
     this.initVis(selected_ingredient, color_ing);
 };
 
@@ -21,7 +23,7 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 
     console.log("en initVis",vis.data_ing2)
 
-    vis.margin = {top: 40, right: 10, bottom: 100, left: 20};
+    vis.margin = {top: 40, right: 10, bottom: 100, left: vis.leftMargin};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
@@ -80,7 +82,7 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
                 .attr("height", function(d) {
                     return vis.height - vis.yScale2(d);
                 })
-                .attr("width", 15)
+                .attr("width", vis.barWidth)
                 .attr("x", function(d,i){
                     return (1.15*vis.margin.left+vis.xScale_percentages2(i))
                 })
@@ -120,26 +122,40 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
                 .scale(vis.yScale2)
                 .orient("left")
 
+        if(vis.size=="big") {
+
             vis.svg.append("g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(" +vis.margin.left+"," + vis.height + ")")
+                .attr("transform", "translate(" + vis.margin.left + "," + vis.height + ")")
                 .call(vis.xAxis2)
                 .selectAll("text")
                 .style("text-anchor", "end")
                 .attr("dx", "-.8em")
                 .attr("dy", ".15em")
-                .attr("transform", "rotate(-65)" );
+                .attr("transform", "rotate(-65)");
 
             vis.svg.append("g")
                 .attr("class", "y axis")
-                .attr("transform", "translate(" +vis.margin.left+",0)")
+                .attr("transform", "translate(" + vis.margin.left + ",0)")
                 .call(vis.yAxis2)
                 .append("text")
                 .attr("y", -20)
                 .attr("dy", ".71em")
                 .style("text-anchor", "left")
                 .text("% of appearance in recipes");
+        }
+        else{
+            vis.svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(" + vis.margin.left + "," + vis.height + ")")
+                .call(vis.xAxis2)
 
+
+            vis.svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(" + vis.margin.left + ",0)")
+                .call(vis.yAxis2)
+        }
 
         vis.updateVisualization(selected_ingredient, color_ing);
 
@@ -149,14 +165,6 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 BarChart2.prototype.updateVisualization = function(selected_ingredient,this_color){
 
     var vis = this;
-    //We set the domain of the scales
-    //d3.select("#show-ingredient")
-    //    .text(selected_ingredient)
-    //
-    //d3.select("#ingredient-image")
-    //    .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
-    //    .attr("width","100")
-    //    .attr("top","150px")
 
     d3.select("#ingredient-image")
         .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
@@ -177,22 +185,38 @@ BarChart2.prototype.updateVisualization = function(selected_ingredient,this_colo
 
     vis.xScale_cuisines.domain(varXdomain2);
 
+    if(vis.size=="big") {
+        vis.svg.select(".x")
+            .transition()
+            .duration(800)
+            .call(vis.xAxis2)
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+        //.attr("transform", "rotate(-65)" );
 
-    vis.svg.select(".x")
-        .transition()
-        .duration(800)
-        .call(vis.xAxis2)
-        .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)" );
-    //.attr("transform", "rotate(-65)" );
+        vis.svg.select(".y")
+            .transition()
+            .duration(800)
+            .call(vis.yAxis2);
+    }
+    else{
+        vis.svg.select(".x")
+            .transition()
+            .duration(800)
+            .call(vis.xAxis2)
+            .selectAll(".tick")
+            .style("visibility", "hidden")
 
-    vis.svg.select(".y")
-        .transition()
-        .duration(800)
-        .call(vis.yAxis2);
+        vis.svg.select(".y")
+            .transition()
+            .duration(800)
+            .call(vis.yAxis2)
+            .selectAll(".tick")
+            .style("visibility", "hidden")
+    }
 
     vis.rect = vis.svg.selectAll("rect")
         .data(vis.data2)
@@ -213,7 +237,7 @@ BarChart2.prototype.updateVisualization = function(selected_ingredient,this_colo
         .attr("height", function(d) {
             return vis.height - vis.yScale2(d);
         })
-        .attr("width", 15)
+        //.attr("width", 15)
         .attr("x", function(d,i){
             return (1.15*vis.margin.left+vis.xScale_percentages2(i))
         })

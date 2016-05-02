@@ -1,6 +1,6 @@
 
 
-BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _svgWidth,  _svgHeight, _svgBarWidth,_svgMargin,_size){
+BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _svgWidth,  _svgHeight, _svgBarWidth,_svgMargin,_svgBottomMargin,_size){
     this.parentElement = _parentElement;
     this.data_p = _data_percentages;
     this.data_i = _data_ing;
@@ -11,6 +11,7 @@ BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _sv
     this.size = _size;
     this.leftMargin = _svgMargin;
     this.barWidth = _svgBarWidth;
+    this.bottomMargin = _svgBottomMargin;
     this.initVis(this.selection);
 
 };
@@ -28,7 +29,7 @@ BarChart.prototype.initVis = function(selection){
 
     var vis = this;
 
-    vis.margin = {top: 40, right: 0, bottom: 100, left: vis.leftMargin};
+    vis.margin = {top: vis.bottomMargin, right: 0, bottom: 100, left: vis.leftMargin};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
