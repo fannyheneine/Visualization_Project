@@ -115,6 +115,7 @@ BarChart.prototype.wrangleData = function(selection){
                 selected_ingredient = seen_ingredients[i]
                 //console.log(color_ing, selected_ingredient)
                 ingchart.updateVisualization(selected_ingredient.replace(" ", "_"), color_ing)
+                ingchart2.updateVisualization(selected_ingredient.replace(" ", "_"), color_ing)
             })
             .on("mouseover", function(){
                 d3.select(this)
@@ -200,6 +201,11 @@ BarChart.prototype.wrangleData = function(selection){
                 .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
                 .attr("width","100")
                 .attr("vspace","100px")
+
+    d3.select("#ingredient-image2")
+        .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
+        .attr("width","50")
+        .attr("vspace","50px")
 
 
         //vis.imagechart(selection)
