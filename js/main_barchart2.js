@@ -1,7 +1,8 @@
 
 // Will be used to the save the loaded JSON data
 var data;
-var ingchart;
+var ingchart, ingchart2;
+
 // Date parser to convert strings to date objects
 
 
@@ -16,7 +17,8 @@ function loadData_ingredientChart() {
     d3.csv("data/all_cuisines_all_ing.csv", function (error, data) {
 
         console.log(selected_ingredient, color_ing)
-        ingchart = new BarChart2("ingredient-chart",data ,500,0.8*500, "big");
+        ingchart = new BarChart2("ingredient-chart",data ,500,0.8*500,15,20, "big");
+        ingchart2 = new BarChart2("mini-ingredient-chart",data ,200,200,6,5, "small");
 
 
     })
