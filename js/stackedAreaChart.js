@@ -108,12 +108,14 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 
-    // Overlay with path clipping
-    vis.svg_stacked.append("defs").append("clipPath")
-        .attr("id", "clip")
-        .append("rect")
-        .attr("width", vis.width)
-        .attr("height", vis.height);
+    if (vis.width > 500) {
+        // Overlay with path clipping
+        vis.svg_stacked.append("defs").append("clipPath")
+            .attr("id", "clip")
+            .append("rect")
+            .attr("width", vis.width)
+            .attr("height", vis.height);
+    }
 
 
     // Scales and axes
@@ -156,7 +158,8 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         })
         .y1(function(d) {
             return vis.y(d.y0 + d.y);
-        });
+        })
+
 
 
     dataCategories = colorScale.domain();
