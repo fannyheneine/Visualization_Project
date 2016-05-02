@@ -26,7 +26,7 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
 
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
-    vis.height = 0.6 * vis.svgWidth - vis.margin.top - vis.margin.bottom;
+    vis.height = 0.6*vis.svgWidth - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -51,15 +51,6 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 }
     BarChart2.prototype.wrangleData = function(selected_ingredient, color){
 
-
-
-        //d3.select("#show-ingredient")
-        //        .text(selected_ingredient)
-
-            //d3.select("#ingredient-image")
-            //    .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
-            //    .attr("width","100")
-            //    .attr("vspace","100px")
 
             var vis = this;
 
@@ -95,13 +86,6 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
                 .attr("fill", color)
                 .on("click", function(d,i) {
 
-
-                    //if (clicks2>0){
-                    //    update_imagechart(data_i, data_p, vis.varXdomain2[i].replace(" ","_"))}
-                    //else{
-                    //    imagechart(data_i, data_p, varXdomain2[i].replace(" ","_"))
-                    //    clicks2 = clicks2 + 1
-                    //}
 
                     barchart.wrangleData(varXdomain2[i].replace(" ","_"))
                     barchart2.wrangleData(varXdomain2[i].replace(" ","_"))

@@ -60,9 +60,9 @@ function createVis_bar() {
     // TO-DO: Instantiate visualization objects here
     // areachart = new ...
 
-    barchart = new BarChart("bar-chart",data_p, data_i, selection ,500, "big");
+    barchart = new BarChart("bar-chart",data_p, data_i, selection ,500,0.6*500, 15,10, "big");
     
-    barchart2 = new BarChart("mini-barchart",data_p, data_i, selection ,200,"small");
+    barchart2 = new BarChart("mini-barchart",data_p, data_i, selection ,200, 200, 6,2,"small");
 
 
 
