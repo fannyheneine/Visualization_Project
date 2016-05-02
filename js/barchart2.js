@@ -117,10 +117,17 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
                 .on("mouseover", function(){
                     d3.select(this)
                         .style({"cursor": "pointer"})
+                        .style({"opacity": 0.5})
+                })
+                .on("mouseout", function(){
+                    d3.select(this)
+
+                        .style({"opacity": 1})
                 });
 
 
-            vis.xAxis2 = d3.svg.axis()
+
+        vis.xAxis2 = d3.svg.axis()
                 .scale(vis.xScale_cuisines)
                 .orient("bottom");
 
