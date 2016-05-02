@@ -21,7 +21,7 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 
     console.log("en initVis",vis.data_ing2)
 
-    vis.margin = {top: 40, right: 10, bottom: 80, left: 20};
+    vis.margin = {top: 40, right: 10, bottom: 100, left: 20};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px

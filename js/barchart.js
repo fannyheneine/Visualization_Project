@@ -28,7 +28,7 @@ BarChart.prototype.initVis = function(selection){
 
     var vis = this;
 
-    vis.margin = {top: 40, right: 0, bottom: 80, left: vis.leftMargin};
+    vis.margin = {top: 40, right: 0, bottom: 100, left: vis.leftMargin};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px

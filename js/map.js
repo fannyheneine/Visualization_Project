@@ -1,6 +1,6 @@
 
 function createMapVisualization(scaling, id, size) {
-    var margin = { top: 10, right: 0, bottom: 10, left: 0 };
+    var margin = { top: 10, right: 0, bottom: 30, left: 0 };
     var map_width = 800/(scaling/2),
         map_height = 0.6*map_width,
         pie_width = 450,

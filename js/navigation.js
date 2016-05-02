@@ -21,7 +21,7 @@ $(function() {
 
 $("#mini-barchart").click(function() {
     $('html, body').animate({
-        scrollTop: $("#bar-chart").offset().top-300
+        scrollTop: $("#barcharts").offset().top-220
     }, 600);
 });
 $("#map-return-button").click(function() {
@@ -50,6 +50,6 @@ $("#mini-forceplot").click(function() {
 
 $("#mini-stacked").click(function() {
     $('html, body').animate({
-        scrollTop: $("#stacked-area-chart").offset().top-400
+        scrollTop: $("#stacked-area-chart").offset().top-180
     }, 600);
 });
