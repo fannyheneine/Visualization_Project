@@ -79,6 +79,8 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
     vis.height = 0.6*vis.svgWidth - vis.margin.top - vis.margin.bottom;
 
+    console.log(vis.width)
+
     //console.log("aaaaa", vis.width)
 
     //vis.width = vis.svg_stacked[0][0].parentElement.previousElementSibling.firstElementChild.clientWidth - vis.margin.left - vis.margin.right;

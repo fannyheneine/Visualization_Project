@@ -47,6 +47,7 @@ Timeline.prototype.initVis = function(){
 		.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 
+
 	// Scales and axes
 	vis.x = d3.time.scale()
 		.range([0, vis.width])
