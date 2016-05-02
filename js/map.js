@@ -15,7 +15,7 @@ function createMapVisualization(scaling, id, size) {
     //
     var svg_map = d3.select(id).append("svg")
         .attr("width", map_width + margin.left + margin.right)
-        .attr("height", map_height + margin.top + margin.bottom)
+        .attr("height", map_height + margin.top + margin.bottom);
 
     var map_projection = d3.geo.mercator()
         .center([10, 50])
