@@ -61,11 +61,11 @@ SelectedCountry = function(_parentElement, _data1,_data2,_svgWidth,_svgHeight){
     this.parentElement = _parentElement;
     this.mapData = _data1;
     this.country_cuisine=_data2;
-    console.log(this.country_cuisine)
     this.svgWidth=_svgWidth;
     this.svgHeight=_svgHeight;
     this.mapCountries= topojson.feature(this.mapData, this.mapData.objects.countries).features;
-    console.log(this.mapCountries)
+
+
     this.initVis();
 };
 
@@ -86,21 +86,37 @@ SelectedCountry.prototype.initVis = function() {
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-    vis.map_projection = d3.geo.mercator()
-        .center([10, 50])
-        .scale(vis.svgWidth / 2/ Math.PI)
-        .translate([vis.svgWidth / 2, vis.svgHeight / 2]);
 
-    vis.map_path = d3.geo.path()
-        .projection(vis.map_projection);
 
-vis.wrangleData("American")
+
+    vis.CountriesByCuisine={};
+
+    for (var country_number in vis.country_cuisine){
+        var key=vis.country_cuisine[country_number].cuisine;
+        if (key in vis.CountriesByCuisine){
+            vis.CountriesByCuisine[key].push(country_number);
+        } else {
+            vis.CountriesByCuisine[key]=[];
+            vis.CountriesByCuisine[key].push(country_number);
+        }
+            }
+
+
+vis.wrangleData("American");
 };
 
 
 SelectedCountry.prototype.wrangleData = function(cuisine) {
 
     var vis = this;
+
+
+    vis.filteredMapData=vis.mapCountries.filter(function(d){
+        var found = $.inArray(d.id.toString(), vis.CountriesByCuisine[cuisine]) > -1;
+        return found
+    });
+
+
 
     vis.updateVis()
 
@@ -109,11 +125,53 @@ SelectedCountry.prototype.wrangleData = function(cuisine) {
 SelectedCountry.prototype.updateVis = function() {
 var vis=this;
 
-    vis.countries=vis.svg.selectAll("countries")
-        .data(vis.mapCountries);
+
+    vis.map_projection = d3.geo.mercator()
+        .center([10, 50])
+        .scale(1)
+        .translate([0,0]);
+
+    vis.map_path = d3.geo.path()
+        .projection(vis.map_projection);
+
+    function boundingExtent(features) {
+        var boundExtent = [[0,0],[0,0]];
+        for (var x in features) {
+            var thisBounds = vis.map_path.bounds(features[x]);
+            boundExtent[0][0] = Math.min(thisBounds[0][0],boundExtent[0][0]);
+            boundExtent[0][1] = Math.min(thisBounds[0][1],boundExtent[0][1]);
+            boundExtent[1][0] = Math.max(thisBounds[1][0],boundExtent[1][0]);
+            boundExtent[1][1] = Math.max(thisBounds[1][1],boundExtent[1][1]);
+        }
+        return boundExtent;
+    }
+
+
+    var b=boundingExtent(vis.filteredMapData);
+    var scale=1 / Math.max((b[1][0] - b[0][0]) / vis.width, (b[1][1] - b[0][1]) / vis.height);
+    vis.map_projection
+        .scale(scale)
+        .translate([(vis.width - scale * (b[1][0] + b[0][0])) / 2, (vis.height - scale * (b[1][1] + b[0][1])) / 2]);
+
+
+    vis.map_path_zoomed = d3.geo.path()
+        .projection(vis.map_projection);
+
+
+    vis.countries=vis.svg.selectAll(".selected-countries-on-map")
+        .data(vis.filteredMapData,function(d){return d.id;});
+
+    vis.countries.exit().remove();
+
 
     vis.countries.enter().insert("path", ".graticule")
-        .attr("class", "countries")
-        .attr("d", vis.map_path)
-        .attr("fill", "black");
+        .attr("class", "selected-countries-on-map")
+        .attr("stroke","#fff")
+        .attr("fill","#8A9DA4")
+        .attr("stroke-width",1);
+
+    vis.countries
+        .attr("d", vis.map_path_zoomed);
+
+
 };

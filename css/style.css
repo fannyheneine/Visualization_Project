@@ -7,7 +7,9 @@
 /****************/
 /*   GENERAL / NAVIGATION  */
 /****************/
-
+.selected-countries-on-map {
+    stroke: 1px #000 solid;
+}
 .map-return-button{
      float:right;
      top: 76%;
