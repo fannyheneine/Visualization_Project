@@ -32,7 +32,8 @@ ForceDiagram.prototype.initVis = function(){
 
     var vis = this;
 
-    vis.margin = { top: 10, right: 110, bottom: 10, left: 10 };
+    var rightMargin=0.1*vis.svgWidth;
+    vis.margin = { top: 10, right: rightMargin, bottom: 10, left: 10 };
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
@@ -77,7 +78,7 @@ ForceDiagram.prototype.initVis = function(){
 
     vis.svg.append("g")
         .attr("class", "force-legend")
-        .attr("transform", "translate("+vis.width*.01+","+vis.height *.11+")");
+        .attr("transform", "translate("+vis.width*.01+","+vis.height *.2+")");
 
 
     //
@@ -457,7 +458,7 @@ ForceDiagram.prototype.updateVis = function() {
                 filterObj[0].type="Cuisine";
                 filterObj[0].value=d;
                 vis.wrangleData(filterObj);}
-                
+
             })
 
 

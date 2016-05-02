@@ -46,7 +46,7 @@
 			<p>We scraped three recipes website to discover more about the cuisines of each country.
 				Play with the interactive visualizations below to explore the different cuisines and their particularities.
 			By choosing a country on the map, all the visualizations will update.</p>
-			<a id="explore" class="button button-primary" href="#nav-anchor" onClick="$('#nav-anchor')">EXPLORE</a>
+			<a id="explore" class="button button-primary">EXPLORE</a>
 
 		</div>
 	</div>
@@ -54,10 +54,12 @@
 <div id="nav-anchor"></div>
 <div class="container-fluid" id="navigation-horizontal-bar">
     <div class="row" id="nav-horizontal-text">
-        <div class="col-md-3" id="mini-map">
+        <div class="col-md-3" id="mini-navigation">
+			<div class="btn btn-default map-return-button" id="map-return-button">Back to Map</div>
+			<div id="mini-map"></div>
         </div>
         <div class="col-md-3">
-            <div class="mini-plot-text">
+            <div class="mini-plot-text" style="padding-top: 10px;">
             What ingredients are common in which countries?
             </div>
             <div class="mini-plot" id="mini-barchart">
@@ -66,7 +68,7 @@
 
         </div>
         <div class="col-md-3">
-            <div class="mini-plot-text">
+            <div class="mini-plot-text" style="padding-top: 20px;">
                 How do recipes and ingredients self-organize?
             </div>
 

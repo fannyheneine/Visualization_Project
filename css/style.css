@@ -7,6 +7,22 @@
 /****************/
 /*   GENERAL / NAVIGATION  */
 /****************/
+
+.map-return-button{
+     float:left;
+     top: 65%;
+     position: absolute;
+     left: 6%;
+    background-color:#fff;
+
+ }
+
+.map-return-button:hover{
+    /*background-color:#808080;*/
+    /*color:white;*/
+    /*border-color:white;*/
+    background-color:#E3E3E3;
+}
 body,html{
     height:100%;
     background-color: #f7f7f7;
@@ -17,12 +33,17 @@ body,html{
 #main-container {
     background-image: url("../images/Background.jpg");
     height:100%;
-    font-weight:300;}
+    font-weight:300;
+    padding:0px;}
 
 #navigation-horizontal-bar {
 padding:0;
 }
 
+#mini-map{
+    float:right;
+    margin-right:20px;
+}
 
 #navigation-horizontal-bar.stick {
     width:100%;
@@ -195,7 +216,7 @@ polyline{
 
 #force-layout-controls {
     vertical-align:top;
-    padding-top:50px;
+    padding-top:150px;
     padding-left:20px;
 }
 #force-layout {
@@ -503,11 +524,13 @@ div.tooltip {
 }
 
 #main-container .slide .title-contents {
+    padding-top:25px;
     position: absolute;
     height: 350px;
     width: 100%;
     top: 50%;
     margin-top: -175px;
+    background: rgba(0, 0, 0, 0.25);
 }
 
 
