@@ -48,7 +48,7 @@ ForceDiagram.prototype.initVis = function(){
     if (vis.width < 500) {
         vis.nodeStrokeWidth=0;
         vis.nodeStrokeWidthActive=0;
-        vis.nodeRadius_normal=vis.width/120;}
+        vis.nodeRadius_normal=vis.width/100;}
 
     else{
     vis.nodeStrokeWidth=1;
