@@ -329,18 +329,23 @@ StackedAreaChart.prototype.updateVis = function() {
             return vis.area_stacked(d.values);
         })
         .on("mouseover", function(d) {
-
-            d3.select(this).style("opacity",1);
+            d3.select(this).style("opacity",1)
+            .style({"cursor": "pointer"});
 
             div.style("opacity",1);
             div.html(d.name)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
+
         })
         .on("mouseout", function(d) {
             d3.select(this).style("opacity",0.8);
             div
                 .style("opacity", 0);
+        })
+        .on("click",function (d){
+            console.log(d.name)
+
         });
 
 
@@ -353,4 +358,9 @@ StackedAreaChart.prototype.updateVis = function() {
     vis.svg_stacked.select(".x-axis").call(vis.xAxis);
     vis.svg_stacked.select(".y-axis").call(vis.yAxis);
 
+}
+
+
+var selectCategory = function(cat) {
+    console.log(cat)
 }

@@ -66,18 +66,19 @@ function createVis_stacked2() {
 }
 
 
-//function brushed() {
-//
-//	// TO-DO: React to 'brushed' event
-//	// Set new domain if brush (user selection) is not empty
-//	areachart.x.domain(
-//		timeline.brush.empty() ? timeline.x.domain() : timeline.brush.extent()
-//	);
-//	// Update focus chart (detailed information)
-//	areachart.updateVis();
-//
-//	filtered = true;
-//
-//
-//}
-//
+
+function brushed() {
+
+	// TO-DO: React to 'brushed' event
+	// Set new domain if brush (user selection) is not empty
+	areachart.x.domain(
+		timeline.brush.empty() ? timeline.x.domain() : timeline.brush.extent()
+	);
+	// Update focus chart (detailed information)
+	areachart.updateVis();
+
+	filtered = true;
+
+
+}
+

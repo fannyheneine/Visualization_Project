@@ -22,7 +22,7 @@ Timeline = function(_parentElement, _data){
  */
 
 
-Timeline.prototype.initVis = function(n){
+Timeline.prototype.initVis = function(){
 	var vis = this; // read about the this
 
 	// Better to do it in main_stacked
@@ -34,9 +34,9 @@ Timeline.prototype.initVis = function(n){
 	console.log(vis.displayData)
 
 
-	vis.margin = {top: 0, right: 0, bottom: 30, left: 60};
+	vis.margin = {top: 10, right: 0, bottom: 20, left: 40};
 
-	vis.width = 800 - vis.margin.left - vis.margin.right,
+	vis.width = 700 - vis.margin.left - vis.margin.right,
 		vis.height = 100 - vis.margin.top - vis.margin.bottom;
 
 	// SVG drawing area
