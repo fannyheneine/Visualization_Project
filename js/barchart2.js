@@ -1,11 +1,12 @@
 
-BarChart2 = function(_parentElement, _data, _svgWidth, _size){
+BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight, _size){
     this.parentElement = _parentElement;
     this.data_ing2 = _data;
     //this.color = _this_color;
     this.svgWidth=_svgWidth;
     //this.selected_ingredient = _selected_ingredient;
     this.size = _size;
+    this.svgHeight = _svgHeight;
     this.initVis(selected_ingredient, color_ing);
 };
 
@@ -20,13 +21,13 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 
     console.log("en initVis",vis.data_ing2)
 
-    vis.margin = {top: 40, right: 0, bottom: 60, left: 10};
+    vis.margin = {top: 40, right: 10, bottom: 80, left: 20};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
 
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
-    vis.height = 0.6*vis.svgWidth - vis.margin.top - vis.margin.bottom;
+    vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
