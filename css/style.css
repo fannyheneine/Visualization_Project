@@ -254,6 +254,10 @@ polyline{
     color:#7AA3CC;
 }
 
+#force-layout-group{
+    margin-bottom: 30px;
+}
+
 .force-button {
     /*background-color: transparent;*/
     /*color: #7AA3CC;*/
@@ -394,7 +398,19 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
 /****************/
 
 
+#stacked-area-title {
+    vertical-align:center;
+    padding-top:10px;
+    padding-left:20px;
+    font-size:15pt;
+    color:#49647E;
+    padding-left:30px;
+}
 
+#stacked-area-group{
+    margin-top:30px;
+    margin-bottom: 30px;
+}
 
 h3 {
     font-weight: 300;
@@ -405,10 +421,6 @@ h3 {
 .container-fluid {
     padding-right: 30px;
     padding-left: 30px;
-}
-
-#force-layout-group{
-    margin-bottom: 30px;
 }
 
 .axis path,
