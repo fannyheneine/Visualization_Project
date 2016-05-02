@@ -19,6 +19,7 @@
 
 #selected-country {
     float:left;
+    margin-left:5px;
 }
 
 /*.countries:hover {*/

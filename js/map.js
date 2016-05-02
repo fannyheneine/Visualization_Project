@@ -1,16 +1,15 @@
 
 var selectedCountryPlot;
+var alreadyMap=0;
 function createMapVisualization(scaling, id, size) {
     var margin = { top: 10, right: 0, bottom: 30, left: 0 };
     var map_width = 800/(scaling/2),
-        map_height,
+        map_height = 0.6*map_width,
         pie_width = 450,
         pie_height = 300,
         hbar_width = 450,
-        hbar_height = 250;
+        hbar_height = 300;
 
-    if (size=="big") {map_height = 0.75*map_width}
-    else {map_height = 0.6*map_width}
 
     // INITIATE MAP
     //
@@ -18,20 +17,8 @@ function createMapVisualization(scaling, id, size) {
         .attr("width", map_width + margin.left + margin.right)
         .attr("height", map_height + margin.top + margin.bottom);
 
-    svg_map.append("defs")
-        .append("pattern")
-        .attr("id", "map-pattern")
-        //.attr("class", "map-patterns")
-        .attr("patternUnits", "userSpaceOnUse")
-        .attr("width", map_width)
-        .attr("height", map_height)
-        .append("image")
-        .attr("xlink:href", "images/food_background.jpg")
-        .attr("width", map_width)
-        .attr("height", map_height);
-
     var map_projection = d3.geo.mercator()
-        .center([10, 50 - map_height/80])
+        .center([10, 50])
         .scale(map_width / 2/ Math.PI)
         .translate([map_width / 2, map_height / 2]);
 
@@ -45,6 +32,7 @@ function createMapVisualization(scaling, id, size) {
 
     var hover_yet = false;
     //
+
 
     //INITIATE PIE
 
@@ -119,8 +107,9 @@ function createMapVisualization(scaling, id, size) {
 
 
         //Part 0: load mini-country-selection;
-
-        selectedCountryPlot = new SelectedCountry("selected-country-svg", world_map, country_cuisine,200,178);
+        if (!alreadyMap){
+        selectedCountryPlot = new SelectedCountry("selected-country-svg", world_map, country_cuisine,200,160);
+        alreadyMap=1;}
         // PART I: World Map
 
         // SET UP LABEL
@@ -143,9 +132,6 @@ function createMapVisualization(scaling, id, size) {
                 .attr("dy", 25)
                 .attr("class", "map-label detail country")
                 .attr("text-anchor", "middle");
-
-            showCuisine(840, world_map, country_cuisine, cuisine_ingredient);
-            showIngredient("Oil & Dairy", cuisine_ingredient[country_cuisine[840].cuisine]);
         }
 
         // DRAW MAP
@@ -157,7 +143,6 @@ function createMapVisualization(scaling, id, size) {
             .style("opacity", 0);
 
         var timeOutHandler;
-
         svg_map.selectAll("countries")
             .data(map_countries)
             .enter().insert("path", ".graticule")
@@ -168,6 +153,8 @@ function createMapVisualization(scaling, id, size) {
                 if (map_unavailable) {return "#eeeeee"}
                 else {return map_colorScale(country_cuisine[d.id].cuisine)}
             })
+
+
             .on('mouseover', function (d, i) {
                 var currentState = this;
                 d3.select(this).style('fill-opacity',.8)
@@ -192,7 +179,7 @@ function createMapVisualization(scaling, id, size) {
                 if (map_unavailable==false) {
 
 
-                    showCuisine(d.id, world_map, country_cuisine, cuisine_ingredient);
+                    showCuisine(d, world_map, country_cuisine, cuisine_ingredient);
                 }
 
                     div.transition()
@@ -215,8 +202,6 @@ function createMapVisualization(scaling, id, size) {
                     forceplot.wrangleData(filterobject);
                     forceplot_mini.wrangleData(filterobject);
                 }, 800);
-
-
 
 
                 //console.log(country_cuisine[d.id].cuisine)
@@ -242,17 +227,18 @@ function createMapVisualization(scaling, id, size) {
             .style("stroke", "#eeeeee")
             .style("stroke-width", 1)
 
+
     }
 
-    function showCuisine(country_id, world_map, country_cuisine, cuisine_ingredient) {
+    function showCuisine(country, world_map, country_cuisine, cuisine_ingredient) {
 
-        var country_data = country_cuisine[country_id],
+        var country_data = country_cuisine[country.id],
             cuisine_key = country_data.cuisine,
             cuisine_data = cuisine_ingredient[cuisine_key],
             category_data = cuisine_data.category_pct;
 
         if (hover_yet) {
-            showIngredient(curr_category, cuisine_data);
+            showIngredient(country, curr_category, cuisine_data);
         }
 
         if (size == "big") {
@@ -293,6 +279,7 @@ function createMapVisualization(scaling, id, size) {
                 .attr("y", -200)
                 .attr('width', 400)
                 .attr('height', 400)
+                //.attr('xlink:href', function(d,i) {return "images/Protein.jpeg"})
                 .attr('xlink:href', function (d, i) {
                     console.log(underscore(d.data.category));
                     return "images/" + underscore(d.data.category) + ".jpg"
@@ -346,7 +333,7 @@ function createMapVisualization(scaling, id, size) {
                         .attr("d", pie_arc);
                     d3.select(this)
                         .attr("d", pie_arc_big);
-                    showIngredient(d.data.category, cuisine_data);
+                    showIngredient(d, d.data.category, cuisine_data);
                 });
 
 
@@ -369,7 +356,7 @@ function createMapVisualization(scaling, id, size) {
                 })
                 .append("tspan")
                 .attr("x", 0)
-                .attr("dy", 12)
+                .attr("dy", 20)
                 .attr("class", "pie-labels percentage")
                 .text(function (d) {
                     return ("(" + percents(d.data.percent) + ")");
@@ -432,7 +419,7 @@ function createMapVisualization(scaling, id, size) {
         }
     }
 
-    function showIngredient(category, cuisine_data) {
+    function showIngredient(data, category, cuisine_data) {
         curr_category = category;
         var ingredient_data = cuisine_data[curr_category],
             ingredient_keys = Object.keys(ingredient_data);
@@ -485,7 +472,7 @@ function createMapVisualization(scaling, id, size) {
             .attr("x", 140)
             .attr("text-anchor", "end")
             .attr("alignment-baseline", "middle")
-            .style("font-size", 12);
+            .style("font-size", 16);
         hbar_label
             .on('mouseover', function (d, i) {
                 var currentState = this;
@@ -510,21 +497,21 @@ function createMapVisualization(scaling, id, size) {
             .attr("y", function(d, i) {return himage_y(i);})
             .attr("x", function(d) {return hbar_x(d.num)+150;})
             //.attr("align", "xMinYMid")
-            .attr("width", hbar_height/7)
-            .attr("height", hbar_height/7);
+            .attr("width", 45)
+            .attr("height", 45);
         hbar_img
             .on('mouseover', function (d, i) {
                 var currentState = this;
                 d3.select(this).style('opacity', 0.6)
                     .style({"cursor": "pointer"})
-                    .attr("width", hbar_height/5)
-                    .attr("height", hbar_height/5);
+                    .attr("width", 55)
+                    .attr("height", 55);
             })
             .on('mouseout', function (d, i) {
                 d3.selectAll('.hbar-image')
                     .style('opacity', 1)
-                    .attr("width", hbar_height/7)
-                    .attr("height", hbar_height/7);
+                    .attr("width", 45)
+                    .attr("height", 45);
             })
             .on('click', function(d){
                 updateVisualization2(d.ingredient,colorbrewer.Set4[12][ingredients.indexOf(d.ingredient.replace("_"," "))])
