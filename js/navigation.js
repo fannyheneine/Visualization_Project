@@ -33,7 +33,7 @@ $("#map-return-button").click(function() {
 
 $("#explore").click(function() {
     $('html, body').animate({
-        scrollTop: $("#nav-anchor").offset().top+180
+        scrollTop: $("#nav-anchor").offset().top+50
     }, 600);
 });
 
