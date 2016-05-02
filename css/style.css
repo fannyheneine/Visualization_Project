@@ -9,13 +9,17 @@
 /****************/
 
 .map-return-button{
-     float:left;
-     top: 65%;
+     float:right;
+     top: 76%;
+        left:74%;
      position: absolute;
-     left: 6%;
-    background-color:#fff;
+    background-color:#f1f1f1;
 
  }
+
+#selected-country {
+    float:left;
+}
 
 /*.countries:hover {*/
     /*opacity:.9;*/
@@ -44,6 +48,14 @@ body,html{
 padding:0;
 }
 
+#mini-navigation {
+    background-color: #f1f1f1;
+    padding:10px;
+    padding-right:20px;
+    border-right:1px solid #aaa;
+    height:178px;
+}
+
 #mini-map{
     float:right;
     margin-right:20px;
@@ -58,34 +70,35 @@ padding:0;
 
 
 .mini-plot-text {
-    padding-top:5px;
+    padding-top:3px;
     padding-bottom:5px;
-    float:left;
-    width:30%;
+    position:absolute;
     text-align:left;
-    display: table-cell;
-    vertical-align: middle;
-    height:150px;
+    height:60px;
     padding-right:5px;
     font-family: 'Indie Flower', cursive;
-    font-size:13pt;
+    font-size:12pt;
     color: #424242;
 }
 
 .mini-plot {
-    margin-left: 30%;
-    width:70%;
-    height:150px;
-    cursor:pointer;
-    border:1px solid #F1F1F1;
+    position:absolute;
+    top:60px;
+    height:130px;
 }
 
-.mini-plot:hover {
-    margin-left: 30%;
-    width:70%;
-    height:150px;
-    background-color: #E3E3E3;
-    border:1px solid #aaa;
+.nav-panel:hover {
+    /*background-color: #f0f2fb;*/
+    background-color: #e5e5e5;
+    /*border:2px solid ;*/
+    /*opacity:0.6;*/
+}
+
+.nav-panel {
+    padding:8px;
+    cursor:pointer;
+    height:178px;
+    /*border:2px solid #F1F1F1;*/
 }
 p {
     margin: 1em auto;
@@ -96,8 +109,10 @@ p {
     padding:0px;
     background-color: #F1F1F1;
     border:1px solid #aaa;
-    height:152px;
+    height:180px;
 }
+
+
 
 .slide .title-contents h1{
     font-size: 10px;
@@ -180,9 +195,15 @@ polyline{
     fill: none;
 }
 
+/*
 .area{
   stroke:#999967;
   stroke-width: 0px;
+}
+*/
+
+.area{
+    clip-path:url(#clip)
 }
 
 .map-label{
@@ -247,6 +268,10 @@ polyline{
 
 #force-layout-filters span{
     color:#7AA3CC;
+}
+
+#force-layout-group{
+    margin-bottom: 30px;
 }
 
 .force-button {
@@ -389,7 +414,19 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
 /****************/
 
 
+#stacked-area-title {
+    vertical-align:center;
+    padding-top:10px;
+    padding-left:20px;
+    font-size:15pt;
+    color:#49647E;
+    padding-left:30px;
+}
 
+#stacked-area-group{
+    margin-top:30px;
+    margin-bottom: 30px;
+}
 
 h3 {
     font-weight: 300;
@@ -400,10 +437,6 @@ h3 {
 .container-fluid {
     padding-right: 30px;
     padding-left: 30px;
-}
-
-#force-layout-group{
-    margin-bottom: 30px;
 }
 
 .axis path,
@@ -417,15 +450,10 @@ h3 {
     text-anchor: end;
 }
 
-.area {
-    opacity: 0.7;
-    clip-path: url(#clip);
+/*are
+*/
 
-}
-/*
-.area:hover {
-    opacity: 1;
-}*/
+
 
 .brush .extent {
     stroke: #fff;
@@ -633,3 +661,7 @@ div.tooltip {
     fill: black;
 }
 
+
+.in-between{
+    height:150px
+}

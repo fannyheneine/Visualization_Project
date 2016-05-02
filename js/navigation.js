@@ -21,7 +21,7 @@ $(function() {
 
 $("#mini-barchart").click(function() {
     $('html, body').animate({
-        scrollTop: $("#bar-chart").offset().top-300
+        scrollTop: $("#barcharts").offset().top-220
     }, 600);
 });
 $("#map-return-button").click(function() {
@@ -50,6 +50,49 @@ $("#mini-forceplot").click(function() {
 
 $("#mini-stacked").click(function() {
     $('html, body').animate({
-        scrollTop: $("#stacked-area-chart").offset().top-400
+        scrollTop: $("#stacked-area-chart").offset().top-180
     }, 600);
 });
+
+
+
+
+SelectedCountry = function(_parentElement, _data1,_data2,_svgWidth,_svgHeight){
+    this.parentElement = _parentElement;
+    this.mapData = _data1;
+    this.country_cuisine=_data2;
+    this.svgWidth=_svgWidth;
+    this.svgHeight=_svgHeight;
+
+    this.initVis();
+};
+
+
+SelectedCountry.prototype.initVis = function() {
+
+    var vis = this;
+
+    vis.margin = {top: 10, right: 10, bottom: 10, left: 10};
+
+
+    vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
+    vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
+
+    vis.svg = d3.select("#" + vis.parentElement).append("svg")
+        .attr("width", vis.width + vis.margin.left + vis.margin.right)
+        .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
+};
+
+
+SelectedCountry.prototype.wrangleData = function(country,cuisine) {
+
+    var vis = this;
+
+};
+
+SelectedCountry.prototype.updateVis = function(country,cuisine) {
+
+};

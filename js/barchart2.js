@@ -1,11 +1,12 @@
 
-BarChart2 = function(_parentElement, _data, _svgWidth, _size){
+BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight, _size){
     this.parentElement = _parentElement;
     this.data_ing2 = _data;
     //this.color = _this_color;
     this.svgWidth=_svgWidth;
     //this.selected_ingredient = _selected_ingredient;
     this.size = _size;
+    this.svgHeight = _svgHeight;
     this.initVis(selected_ingredient, color_ing);
 };
 
@@ -20,13 +21,13 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 
     console.log("en initVis",vis.data_ing2)
 
-    vis.margin = {top: 40, right: 0, bottom: 60, left: 10};
+    vis.margin = {top: 40, right: 10, bottom: 100, left: 20};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
 
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
-    vis.height = 0.6 * vis.svgWidth - vis.margin.top - vis.margin.bottom;
+    vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -51,15 +52,6 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 }
     BarChart2.prototype.wrangleData = function(selected_ingredient, color){
 
-
-
-        //d3.select("#show-ingredient")
-        //        .text(selected_ingredient)
-
-            //d3.select("#ingredient-image")
-            //    .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
-            //    .attr("width","100")
-            //    .attr("vspace","100px")
 
             var vis = this;
 
@@ -95,13 +87,6 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
                 .attr("fill", color)
                 .on("click", function(d,i) {
 
-
-                    //if (clicks2>0){
-                    //    update_imagechart(data_i, data_p, vis.varXdomain2[i].replace(" ","_"))}
-                    //else{
-                    //    imagechart(data_i, data_p, varXdomain2[i].replace(" ","_"))
-                    //    clicks2 = clicks2 + 1
-                    //}
 
                     barchart.wrangleData(varXdomain2[i].replace(" ","_"))
                     barchart2.wrangleData(varXdomain2[i].replace(" ","_"))

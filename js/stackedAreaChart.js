@@ -4,7 +4,7 @@
  * @param _parentElement 	-- the HTML element in which to draw the visualization
  * @param _data						-- the  
  */
-StackedAreaChart = function(_parentElement, _data, country_chosen_st, _svgWidth) {
+StackedAreaChart = function(_parentElement, _data, country_chosen_st, _svgWidth, _svgHeight, _svgMargin, _svgSize) {
 
     // var stack = d3.layout.stack()
     //     			.values(function(d) { return d.values; })
@@ -14,6 +14,9 @@ StackedAreaChart = function(_parentElement, _data, country_chosen_st, _svgWidth)
     this.data = _data;
     this.displayData = []; // see data wrangling
     this.svgWidth=_svgWidth;
+    this.svgHeight = _svgHeight;
+    this.size = _svgSize;
+    this.leftMargin = _svgMargin;
 
     // DEBUG RAW DATA
 
@@ -34,11 +37,6 @@ var stackedData;
 
 StackedAreaChart.prototype.initVis = function(country_chosen_st) {
     var vis = this;
-    // vis.area = d3.svg.area()
-    // 	 .interpolate("cardinal")
-    // 	 .x(function(d) { return vis.x(d.Year); })
-    // 	 .y0(function(d) { return vis.y(d.y0); })
-    // 	 .y1(function(d) { return vis.y(d.y0 + d.y); });
 
     //console.log(vis.data)
     data_all_stacked=vis.data;
@@ -49,15 +47,6 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         }
     }
 
-    //console.log(data_chosen.years)
-    // Better to do it in main_stacked using a for loop
-    /*data2.layers.forEach(function (d) {
-     for (var column in d) {
-     if (d.hasOwnProperty(column) && column == "Year") {
-     d[column] = parseDate(d[column].toString());
-     }
-     }
-     });*/
 
 
 // Update color scale (all column headers except "Year")
@@ -68,38 +57,16 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         top: 20,
         right: 0,
         bottom: 20,
-        left: 40
+        left: vis.leftMargin
     };
 
-    //vis.width = 800 - vis.margin.left - vis.margin.right;
-    //vis.height = 400 - vis.margin.top - vis.margin.bottom;
-    //
 
     // SVG drawing area
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
-    vis.height = 0.6*vis.svgWidth - vis.margin.top - vis.margin.bottom;
+    vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
     console.log(vis.width)
 
-    //console.log("aaaaa", vis.width)
-
-    //vis.width = vis.svg_stacked[0][0].parentElement.previousElementSibling.firstElementChild.clientWidth - vis.margin.left - vis.margin.right;
-    //vis.height = vis.svg_stacked[0][0].parentElement.previousElementSibling.firstElementChild.clientHeight - vis.margin.top - vis.margin.bottom;
-    //
-
-    //vis.svg_stacked.attr("width", vis.width + vis.margin.left + vis.margin.right)
-
-
-    //vis.svg_stacked = d3.selectAll(".stacked-area-chart2")
-    //    .append("div")
-    //    .classed("svg-container", true)
-    //    .append("svg")
-    //    //.attr("height", vis.height + vis.margin.top + vis.margin.bottom)
-    //    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")")
-    //    .attr("viewbox", "0 0 1000 500")
-    //    .attr("preserveAspectRatio", "xMinYMin meet")
-    //    .classed("svg-content-responsive", true)
-    //    .append("g")
 
     vis.svg_stacked = d3.select("#" + vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -108,12 +75,14 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 
-    // Overlay with path clipping
-    vis.svg_stacked.append("defs").append("clipPath")
-        .attr("id", "clip")
-        .append("rect")
-        .attr("width", vis.width)
-        .attr("height", vis.height);
+    if (vis.width > 500) {
+        // Overlay with path clipping
+        vis.svg_stacked.append("defs").append("clipPath")
+            .attr("id", "clip")
+            .append("rect")
+            .attr("width", vis.width)
+            .attr("height", vis.height);
+    }
 
 
     // Scales and axes
@@ -134,17 +103,26 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         .scale(vis.y)
         .orient("left");
 
+
     vis.svg_stacked.append("g")
         .attr("class", "x-axis axis")
         .attr("transform", "translate(0," + vis.height + ")");
 
-    vis.svg_stacked.append("g")
-        .attr("class", "y-axis axis")
-        .append("text")
-        .attr("y", -20)
-        .attr("dy", ".71em")
-        .style("text-anchor", "left")
-        .text("Food Supply Quantity in gr/capita/day ");;
+    if(vis.size == "big") {
+
+        vis.svg_stacked.append("g")
+            .attr("class", "y-axis axis")
+            .append("text")
+            .attr("y", -20)
+            .attr("dy", ".71em")
+            .style("text-anchor", "left")
+            .text("Food Supply Quantity in gr/capita/day ");
+    }
+    else{
+        vis.svg_stacked.append("g")
+            .attr("class", "y-axis axis")
+            .text("Food Supply Quantity in gr/capita/day ");
+    }
 
     vis.area_stacked = d3.svg.area()
         .interpolate("cardinal")
@@ -156,7 +134,8 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
         })
         .y1(function(d) {
             return vis.y(d.y0 + d.y);
-        });
+        })
+
 
 
     dataCategories = colorScale.domain();
@@ -211,20 +190,9 @@ StackedAreaChart.prototype.wrangleData = function(next_country) {
                 data_chosen = data_all_stacked[i];
             }
             else if (data_all_stacked[i].country != next_country) {
-                //console.log("NO DATA!")
                 vis.displayData = 0;
             }
         }
-        //console.log(data_chosen.years)
-
-// Better to do it in main_stacked using a for loop
-        /* data_chosen.layers.forEach(function (d) {
-         for (var column in d) {
-         if (d.hasOwnProperty(column) && column == "Year") {
-         d[column] = parseDate(d[column].toString());
-         }
-         }
-         });*/
 
 
         colorScale.domain(d3.keys(data_chosen.layers[0]).filter(function (d) {
@@ -261,21 +229,6 @@ StackedAreaChart.prototype.wrangleData = function(next_country) {
     }
 
 
-    // Wrangle data *****
-    // console.log(vis.displayData);
-
-    // for(i=0; i < vis.displayData.length; i++){
-    // 	console.log(vis.displayData[i]);
-
-    // 	for (j=0; j < 40; j++) {
-    // 		console.log(vis.displayData[i].values[j].Year)
-    // 	};
-
-    // };
-
-
-    // x.domain(d3.extent(data.map(function(d) { return d.date; })));
-    // y.domain([0, d3.max(data.map(function(d) { return d.price; }))]);
 
     // Update the visualization
     vis.updateVis();
@@ -357,8 +310,23 @@ StackedAreaChart.prototype.updateVis = function() {
 
 
     // Call axis functions with the new domain
-    vis.svg_stacked.select(".x-axis").call(vis.xAxis);
-    vis.svg_stacked.select(".y-axis").call(vis.yAxis);
+    if(vis.size=="small"){
+    vis.svg_stacked.select(".x-axis")
+        .call(vis.xAxis)
+        .selectAll(".tick")
+        .style("visibility", "hidden")
+
+        vis.svg_stacked.select(".y-axis")
+            .call(vis.yAxis)
+        .selectAll(".tick")
+        .style("visibility", "hidden")
+    }
+    else{
+        vis.svg_stacked.select(".x-axis")
+            .call(vis.xAxis)
+        vis.svg_stacked.select(".y-axis")
+            .call(vis.yAxis)
+    }
 
 }
 

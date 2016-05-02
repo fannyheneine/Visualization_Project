@@ -1,6 +1,7 @@
 
+var selectedCountryPlot;
 function createMapVisualization(scaling, id, size) {
-    var margin = { top: 10, right: 0, bottom: 10, left: 0 };
+    var margin = { top: 10, right: 0, bottom: 30, left: 0 };
     var map_width = 800/(scaling/2),
         map_height,
         pie_width = 450,
@@ -116,6 +117,10 @@ function createMapVisualization(scaling, id, size) {
     // DEFINE createMap
     function createMap(error, world_map, country_cuisine, cuisine_ingredient) {
 
+
+        //Part 0: load mini-country-selection;
+
+        selectedCountryPlot = new SelectedCountry("selected-country-svg", world_map, country_cuisine,200,178);
         // PART I: World Map
 
         // SET UP LABEL

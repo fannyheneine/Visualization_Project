@@ -33,7 +33,7 @@ function createVis(error,data1,data2) {
     categories_ingredients=data2;
     //console.log(data_ingredients)
     forceplot = new ForceDiagram("force-layout", allData,categories_ingredients,1100,1200*.6,150);
-    forceplot_mini= new ForceDiagram("mini-forceplot", allData,categories_ingredients,250,150,20);
+    forceplot_mini= new ForceDiagram("mini-forceplot", allData,categories_ingredients,250,110,20);
 
 }
 

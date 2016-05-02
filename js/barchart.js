@@ -1,14 +1,19 @@
 
 
-BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _svgWidth, _size){
+BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _svgWidth,  _svgHeight, _svgBarWidth,_svgMargin,_svgBottomMargin,_size){
     this.parentElement = _parentElement;
     this.data_p = _data_percentages;
     this.data_i = _data_ing;
     //this.data = _data;
     this.svgWidth=_svgWidth;
+    this.svgHeight = _svgHeight;
     this.selection = _selection;
-    this.initVis(this.selection);
     this.size = _size;
+    this.leftMargin = _svgMargin;
+    this.barWidth = _svgBarWidth;
+    this.bottomMargin = _svgBottomMargin;
+    this.initVis(this.selection);
+
 };
 
 var varXdomain;
@@ -24,13 +29,13 @@ BarChart.prototype.initVis = function(selection){
 
     var vis = this;
 
-    vis.margin = {top: 40, right: 0, bottom: 60, left: 10};
+    vis.margin = {top: vis.bottomMargin, right: 0, bottom: 100, left: vis.leftMargin};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
 
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
-    vis.height = 0.6*vis.svgWidth - vis.margin.top - vis.margin.bottom;
+    vis.height =vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -132,27 +137,44 @@ BarChart.prototype.wrangleData = function(selection){
             .orient("left")
 
 
-
-            vis.svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(" + vis.margin.left + "," + vis.height + ")")
-                .call(vis.xAxis)
-                .selectAll("text")
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-65)");
+        if(vis.size=="big"){
 
 
-            vis.svg.append("g")
-                .attr("class", "y axis")
-                .attr("transform", "translate(" + vis.margin.left + ",0)")
-                .call(vis.yAxis)
-                .append("text")
-                .attr("y", -20)
-                .attr("dy", ".71em")
-                .style("text-anchor", "left")
-                .text("% of appearance in recipes");
+        vis.svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(" + vis.margin.left + "," + vis.height + ")")
+            .call(vis.xAxis)
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
+
+
+        vis.svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + vis.margin.left + ",0)")
+            .call(vis.yAxis)
+            .append("text")
+            .attr("y", -20)
+            .attr("dy", ".71em")
+            .style("text-anchor", "left")
+            .text("% of appearance in recipes");}
+
+        if(vis.size=="small"){
+
+
+        vis.svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(" + vis.margin.left + "," + vis.height + ")")
+            //.call(vis.xAxis)
+
+
+        vis.svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + vis.margin.left + ",0)")
+            //.call(vis.yAxis)
+            .text("% of appearance in recipes");}
 
 
 
@@ -200,7 +222,7 @@ BarChart.prototype.updateVisualization = function(selection){
     vis.yScale.domain([0, d3.max(vis.data_p, function(d) { return d[selection] })])
     vis.xScale_ing.domain(varXdomain)
 
-
+    if(vis.size=="big") {
         vis.svg.selectAll(".x")
             .transition()
             .duration(800)
@@ -215,7 +237,23 @@ BarChart.prototype.updateVisualization = function(selection){
             .transition()
             .duration(800)
             .call(vis.yAxis);
+    }
+    if(vis.size=="small") {
+        vis.svg.selectAll(".x")
+            .transition()
+            .duration(800)
+            .call(vis.xAxis)
+            .selectAll(".tick")
+            .style("visibility", "hidden")
 
+
+        vis.svg.selectAll(".y")
+            .transition()
+            .duration(800)
+            .call(vis.yAxis)
+            .selectAll(".tick")
+            .style("visibility", "hidden")
+    }
 
     vis.rect = vis.svg.selectAll("rect")
         .data(vis.data_p)
@@ -234,7 +272,7 @@ BarChart.prototype.updateVisualization = function(selection){
         .attr("height", function(d) {
             return vis.height - vis.yScale(d[selection]);
         })
-        .attr("width", 15)
+        .attr("width", vis.barWidth)
         .attr("x", function(d,i){
             return (1.15*vis.margin.left+vis.xScale_percentages(i))
         })
