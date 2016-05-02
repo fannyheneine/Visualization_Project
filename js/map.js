@@ -1,5 +1,6 @@
 
 var selectedCountryPlot;
+var alreadyMap=0;
 function createMapVisualization(scaling, id, size) {
     var margin = { top: 10, right: 0, bottom: 30, left: 0 };
     var map_width = 800/(scaling/2),
@@ -106,8 +107,9 @@ function createMapVisualization(scaling, id, size) {
 
 
         //Part 0: load mini-country-selection;
-
-        selectedCountryPlot = new SelectedCountry("selected-country-svg", world_map, country_cuisine,200,178);
+        if (!alreadyMap){
+        selectedCountryPlot = new SelectedCountry("selected-country-svg", world_map, country_cuisine,200,160);
+        alreadyMap=1;}
         // PART I: World Map
 
         // SET UP LABEL
