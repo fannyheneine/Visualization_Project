@@ -171,6 +171,11 @@ BarChart2.prototype.updateVisualization = function(selected_ingredient,this_colo
         .attr("width","100")
         .attr("vspace","100px")
 
+    d3.select("#ingredient-image2")
+        .attr("src", "./images/" + selected_ingredient.replace(" ","_") + ".png")
+        .attr("width","50")
+        .attr("vspace","50px")
+
     //.data(dataset.map(function(d) { return +d; }))
     varXdomain2 = vis.data_ing2.map(function (d) {
         return d.Country.replace("_", " ")
