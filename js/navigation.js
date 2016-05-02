@@ -53,3 +53,45 @@ $("#mini-stacked").click(function() {
         scrollTop: $("#stacked-area-chart").offset().top-180
     }, 600);
 });
+
+
+
+
+SelectedCountry = function(_parentElement, _data1,_data2,_svgWidth,_svgHeight){
+    this.parentElement = _parentElement;
+    this.mapData = _data1;
+    this.country_cuisine=_data2;
+    this.svgWidth=_svgWidth;
+    this.svgHeight=_svgHeight;
+
+    this.initVis();
+};
+
+
+SelectedCountry.prototype.initVis = function() {
+
+    var vis = this;
+
+    vis.margin = {top: 10, right: 10, bottom: 10, left: 10};
+
+
+    vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
+    vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
+
+};
+
+
+SelectedCountry.prototype.wrangleData = function(country,cuisine) {
+
+    var vis = this;
+
+    vis.margin = {top: 10, right: 10, bottom: 10, left: 10};
+
+    vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
+    vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
+
+};
+
+SelectedCountry.prototype.updateVis = function(country,cuisine) {
+
+};
