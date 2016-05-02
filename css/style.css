@@ -590,25 +590,16 @@ div.tooltip {
 }
 
 .vis-extra{
-<<<<<<< HEAD
-    height: 500px;
-    width:600px;
-
-}
-
-.selected {
-    fill: black;
-}
-=======
     height:500px;
     width:800px;
     text-align:center;
     margin-left: 230px;
     display: block;
     margin-bottom:60px;
+
 }
 
-
->>>>>>> 94f25e89746b17fa27d86a1efaed3f5e8b3cf671
-/*FONT FACE */
+.selected {
+    fill: black;
+}
 
