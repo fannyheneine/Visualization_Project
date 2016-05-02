@@ -185,6 +185,8 @@ function createMapVisualization(scaling, id, size) {
                     div.transition()
                         .duration(500)
                         .style("opacity", .9);
+
+                selectedCountryPlot.wrangleData(country_cuisine[d.id].cuisine);
                 window.clearTimeout(timeOutHandler);
                 timeOutHandler= window.setTimeout(function() {
                     next_country = country_cuisine[d.id].name;
@@ -193,6 +195,7 @@ function createMapVisualization(scaling, id, size) {
                     areachart2.wrangleData(next_country);
                     barchart.wrangleData(country_cuisine[d.id].cuisine);
                     barchart2.wrangleData(country_cuisine[d.id].cuisine);
+
 
                     var filterobject = [];
                     filterobject[0]={};
