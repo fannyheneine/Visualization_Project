@@ -195,6 +195,7 @@ polyline{
 }
 
 .pie-labels{
+    font-size: 12px;
     font-family: Helvetica Neue, Helvetica,Arial, sans-serif;
     fill: #666666;
 }
