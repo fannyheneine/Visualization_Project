@@ -60,7 +60,7 @@ function createVis_stacked2() {
 	// areachart = new ...
 
 	areachart = new StackedAreaChart("stacked-area-chart",allData_UN,country_chosen_st,700);
-	areachart2 = new StackedAreaChart2("mini-stacked",allData_UN,country_chosen_st,200);
+	areachart2 = new StackedAreaChart("mini-stacked",allData_UN,country_chosen_st,200);
 	timeline = new Timeline("timeline",allData_UN);
 
 }

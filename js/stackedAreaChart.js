@@ -319,7 +319,7 @@ StackedAreaChart.prototype.updateVis = function() {
 
     categories.enter().append("path")
         .attr("class", "area")
-        .attr("opacity", 0.7);
+        .attr("opacity", 0.8);
 
     categories
         .style("fill", function(d) {
@@ -329,16 +329,17 @@ StackedAreaChart.prototype.updateVis = function() {
             return vis.area_stacked(d.values);
         })
         .on("mouseover", function(d) {
-            div.transition()
-                .duration(200)
-                .style("opacity",1);
+
+            d3.select(this).style("opacity",1);
+
+            div.style("opacity",1);
             div.html(d.name)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
         })
         .on("mouseout", function(d) {
-            div.transition()
-                .duration(500)
+            d3.select(this).style("opacity",0.8);
+            div
                 .style("opacity", 0);
         });
 
