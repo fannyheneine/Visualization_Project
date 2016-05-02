@@ -658,7 +658,8 @@ div.tooltip {
 }
 
 .selected {
-    fill: black;
+    fill: url(#map-pattern);
+    stroke: black;
 }
 
 
