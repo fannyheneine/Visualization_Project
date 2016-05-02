@@ -150,10 +150,9 @@ function createMapVisualization(scaling, id, size) {
 
             .on('mouseover', function (d, i) {
                 var currentState = this;
-                d3.select(this).style('fill-opacity', 1)
+                d3.select(this).style('fill-opacity',.9)
                     .style({"cursor": "pointer"});
-                div.transition()
-                    .duration(200)
+                div
                     .style("opacity", .9);
                 div.html(country_cuisine[d.id].name)
                     .style("left", (d3.event.pageX) + "px")
@@ -163,8 +162,7 @@ function createMapVisualization(scaling, id, size) {
             .on('mouseout', function (d, i) {
                 d3.selectAll('.countries')
                     .style('fill-opacity', 1);
-                div.transition()
-                    .duration(200)
+                div
                     .style("opacity", 0);
             })
             .on('click',function(d){

@@ -17,6 +17,10 @@
 
  }
 
+.countries:hover {
+    opacity:.9;
+}
+
 .map-return-button:hover{
     /*background-color:#808080;*/
     /*color:white;*/
