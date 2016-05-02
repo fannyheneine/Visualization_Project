@@ -78,17 +78,18 @@ SelectedCountry.prototype.initVis = function() {
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
     vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
+    vis.svg = d3.select("#" + vis.parentElement).append("svg")
+        .attr("width", vis.width + vis.margin.left + vis.margin.right)
+        .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
 };
 
 
 SelectedCountry.prototype.wrangleData = function(country,cuisine) {
 
     var vis = this;
-
-    vis.margin = {top: 10, right: 10, bottom: 10, left: 10};
-
-    vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
-    vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
 };
 

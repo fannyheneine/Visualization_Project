@@ -17,6 +17,10 @@
 
  }
 
+#selected-country {
+    float:left;
+}
+
 /*.countries:hover {*/
     /*opacity:.9;*/
 /*}*/
