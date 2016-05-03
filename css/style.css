@@ -19,6 +19,11 @@
 
  }
 
+#selected-country-text {
+    font-size:13pt;
+    font-color: #5b5b5b;
+    margin:5px;
+}
 #selected-country {
     float:left;
     margin-left:5px;

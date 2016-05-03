@@ -421,7 +421,8 @@ ForceDiagram.prototype.updateVis = function() {
                 filterObj[0].type="Cuisine";
                 filterObj[0].value=d;
                 forceplot.wrangleData(filterObj);
-                forceplot_mini.wrangleData(filterObj);}
+                forceplot_mini.wrangleData(filterObj);
+                selectedCountryPlot.wrangleData(d);}
 
         });
 
@@ -453,7 +454,8 @@ ForceDiagram.prototype.updateVis = function() {
                 filterObj[0].type="Cuisine";
                 filterObj[0].value=d;
                 forceplot.wrangleData(filterObj);
-                forceplot_mini.wrangleData(filterObj);}
+                forceplot_mini.wrangleData(filterObj);
+                    selectedCountryPlot.wrangleData(d);}
 
             });
 

@@ -56,8 +56,8 @@
     <div class="row" id="nav-horizontal-text">
         <div class="col-md-4" id="mini-navigation">
 			<div id="selected-country">
+				<p></p>
 				<div id="selected-country-svg">
-
 				</div>
 			</div>
 			<div class="btn btn-default map-return-button" id="map-return-button"><span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;Back to Map</div>
@@ -173,7 +173,8 @@
         <div id="force-layout-filters">
             <p></p></div>
         <a type="button" class="btn btn-default force-button" onclick="forceplot.wrangleData('all');
-                    forceplot_mini.wrangleData('all');"><span class="glyphicon glyphicon-remove-circle"></span> &nbsp;&nbsp;Clear Filters</a>
+                    forceplot_mini.wrangleData('all');
+                	selectedCountryPlot.wrangleData('all');"><span class="glyphicon glyphicon-remove-circle"></span> &nbsp;&nbsp;Clear Filters</a>
 
 
         <hr>

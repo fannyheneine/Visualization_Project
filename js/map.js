@@ -122,7 +122,7 @@ function createMapVisualization(scaling, id, size) {
 
         //Part 0: load mini-country-selection;
         if (!alreadyMap){
-        selectedCountryPlot = new SelectedCountry("selected-country-svg", world_map, country_cuisine,150,160);
+        selectedCountryPlot = new SelectedCountry("selected-country-svg", world_map, country_cuisine,140,110);
         alreadyMap=1;}
         // PART I: World Map
 

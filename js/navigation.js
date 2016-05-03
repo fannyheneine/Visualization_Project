@@ -79,7 +79,7 @@ SelectedCountry.prototype.initVis = function() {
 
     var vis = this;
 
-    vis.margin = {top: 10, right: 10, bottom: 10, left: 10};
+    vis.margin = {top: 0, right: 0, bottom: 0, left: 0};
 
 
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
@@ -107,13 +107,15 @@ SelectedCountry.prototype.initVis = function() {
             }
 
 
-vis.wrangleData("American");
+vis.wrangleData("all");
 };
 
 
 SelectedCountry.prototype.wrangleData = function(cuisine) {
 
     var vis = this;
+
+    vis.cuisine=cuisine;
 
 
     vis.filteredMapData=vis.mapCountries.filter(function(d){
@@ -132,7 +134,6 @@ var vis=this;
 
 
     vis.map_projection = d3.geo.mercator()
-        .center([10, 50])
         .scale(1)
         .translate([0,0]);
 
@@ -159,13 +160,28 @@ var vis=this;
     b.height = Math.abs(b.n - b.s);
 
     b.width = Math.abs(b.e - b.w);
-    console.log(b.height)
-    console.log(b.width)
+    b.mid=(b.w+ b.e)/2;
+    console.log(b.mid)
     var s = 1 / Math.max(b.width / vis.width, b.height / vis.height);
+    var t = [(vis.width - s * (b.w + b.e)) / 2, (vis.height - s * (b.n + b.s)) / 2];
     console.log(s)
-    console.log(vis.width)
-    console.log(vis.height)
-    var t = [(vis.width - s * (b[1][0] + b[0][0])) / 2, (vis.height - s * (b[1][1] + b[0][1])) / 2];
+    console.log(t)
+
+    var lookupTable={};
+
+    lookupTable.all={};
+    lookupTable.all.s=190;
+    lookupTable.all.t=[10,140];
+    lookupTable.Mediterranean={};
+    lookupTable.Mediterranean.s=190;
+    lookupTable.Mediterranean.t=[-30,180];
+    lookupTable.American={};
+    lookupTable.American.s=70;
+    lookupTable.American.t=[250,135];
+
+    //vis.map_projection
+    //    .translate(lookupTable[vis.cuisine].t)
+    //    .scale(lookupTable[vis.cuisine].s);
 
     vis.map_projection
         .translate(t)
@@ -190,6 +206,10 @@ var vis=this;
 
     vis.countries
         .attr("d", vis.map_path_zoomed);
+
+
+    vis.cuisinePrintOut=d3.select("#selected-country").select("p").attr("id","selected-country-text");
+    vis.cuisinePrintOut.html("Selected: <br>" + vis.cuisine.replace(/_/g, ' ') + " Cuisine");
 
 
 };
