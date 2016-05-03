@@ -189,7 +189,7 @@ var vis=this;
     lookupTable.Caribbeans.t=[390,160];
     lookupTable.South_American={};
     lookupTable.South_American.s=79;
-    lookupTable.South_American.t=[140,17];
+    lookupTable.South_American.t=[150,17];
     lookupTable.British={};
     lookupTable.British.s=200;
     lookupTable.British.t=[76,270];
@@ -208,14 +208,23 @@ var vis=this;
     lookupTable.Portuguese_Spanish={};
     lookupTable.Portuguese_Spanish.s=280;
     lookupTable.Portuguese_Spanish.t=[85,270];
+    lookupTable.Italian={};
+    lookupTable.Italian.s=280;
+    lookupTable.Italian.t=[20,270];
+    lookupTable.West_European={};
+    lookupTable.West_European.s=280;
+    lookupTable.West_European.t=[20,330];
 
+if (vis.cuisine in lookupTable){
     vis.map_projection
         .translate(lookupTable[vis.cuisine].t)
         .scale(lookupTable[vis.cuisine].s);
-    //
-    //vis.map_projection
-    //    .translate(t)
-    //    .scale(s);
+} else {
+
+    vis.map_projection
+        .translate(t)
+        .scale(s);
+}
 
 
     vis.map_path_zoomed = d3.geo.path()
