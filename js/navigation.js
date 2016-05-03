@@ -21,7 +21,12 @@ $(function() {
 
 $("#mini-barchart").click(function() {
     $('html, body').animate({
-        scrollTop: $("#barcharts").offset().top-220
+        scrollTop: $("#barcharts").offset().top-250
+    }, 600);
+});
+$("#mini-ingredient-chart").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#barcharts").offset().top-250
     }, 600);
 });
 $("#map-return-button").click(function() {
