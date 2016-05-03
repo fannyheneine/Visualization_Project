@@ -31,7 +31,6 @@ Timeline.prototype.initVis = function(){
 	 });*/
 
 	vis.displayData = data_chosen.years;
-	console.log(vis.displayData)
 
 
 	vis.margin = {top: 10, right: 0, bottom: 20, left: 40};

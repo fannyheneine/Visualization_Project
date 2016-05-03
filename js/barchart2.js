@@ -21,8 +21,6 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 
     var vis = this;
 
-    console.log("en initVis",vis.data_ing2)
-
     vis.margin = {top: 40, right: 10, bottom: 100, left: vis.leftMargin};
 
 

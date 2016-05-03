@@ -1,6 +1,6 @@
 
 
-BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _svgWidth,  _svgHeight, _svgBarWidth,_svgMargin,_svgBottomMargin,_size){
+BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _svgWidth,  _svgHeight, _svgBarWidth,_svgLeftMargin,_svgRightMargin,_svgBottomMargin,_size){
     this.parentElement = _parentElement;
     this.data_p = _data_percentages;
     this.data_i = _data_ing;
@@ -9,7 +9,8 @@ BarChart = function(_parentElement, _data_percentages,_data_ing, _selection, _sv
     this.svgHeight = _svgHeight;
     this.selection = _selection;
     this.size = _size;
-    this.leftMargin = _svgMargin;
+    this.leftMargin = _svgLeftMargin;
+    this.rightMargin = _svgRightMargin;
     this.barWidth = _svgBarWidth;
     this.bottomMargin = _svgBottomMargin;
     this.initVis(this.selection);
@@ -29,7 +30,7 @@ BarChart.prototype.initVis = function(selection){
 
     var vis = this;
 
-    vis.margin = {top: vis.bottomMargin, right: 0, bottom: 100, left: vis.leftMargin};
+    vis.margin = {top: vis.bottomMargin, right: vis.rightMargin, bottom: 100, left: vis.leftMargin};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
@@ -111,8 +112,9 @@ BarChart.prototype.wrangleData = function(selection){
                 //else{
                 //    vis.updateVisualization2(vis.varXdomain[i].replace(" ", "_"), vis.ing_colors[i]);
                 //}
+
                 color_ing = ing_colors[i]
-                selected_ingredient = seen_ingredients[i]
+                selected_ingredient = varXdomain[i]
                 //console.log(color_ing, selected_ingredient)
                 ingchart.updateVisualization(selected_ingredient.replace(" ", "_"), color_ing)
                 ingchart2.updateVisualization(selected_ingredient.replace(" ", "_"), color_ing)

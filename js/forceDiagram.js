@@ -310,7 +310,6 @@ ForceDiagram.prototype.wrangleData = function(filters){
 ForceDiagram.prototype.updateVis = function() {
 
     var vis = this;
-    console.log(vis.filters);
     vis.filterPrintOut=d3.select("#force-layout-filters").select("p");
     if (vis.filters=="all"){
         vis.filterPrintOut
