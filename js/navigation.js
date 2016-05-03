@@ -177,15 +177,54 @@ var vis=this;
     lookupTable.Mediterranean.t=[-30,180];
     lookupTable.American={};
     lookupTable.American.s=70;
-    lookupTable.American.t=[250,135];
+    lookupTable.American.t=[220,135];
+    lookupTable.Canadian={};
+    lookupTable.Canadian.s=50;
+    lookupTable.Canadian.t=[155,140];
+    lookupTable.Mexican={};
+    lookupTable.Mexican.s=160;
+    lookupTable.Mexican.t=[370,120];
+    lookupTable.Caribbeans={};
+    lookupTable.Caribbeans.s=250;
+    lookupTable.Caribbeans.t=[390,160];
+    lookupTable.South_American={};
+    lookupTable.South_American.s=79;
+    lookupTable.South_American.t=[150,17];
+    lookupTable.British={};
+    lookupTable.British.s=200;
+    lookupTable.British.t=[76,270];
+    lookupTable.West_African={};
+    lookupTable.West_African.s=221;
+    lookupTable.West_African.t=[73,110];
+    lookupTable.North_African={};
+    lookupTable.North_African.s=148;
+    lookupTable.North_African.t=[44,117];
+    lookupTable.East_African={};
+    lookupTable.East_African.s=156;
+    lookupTable.East_African.t=[-8,67];
+    lookupTable.South_African={};
+    lookupTable.South_African.s=169;
+    lookupTable.South_African.t=[0,-20];
+    lookupTable.Portuguese_Spanish={};
+    lookupTable.Portuguese_Spanish.s=280;
+    lookupTable.Portuguese_Spanish.t=[85,270];
+    lookupTable.Italian={};
+    lookupTable.Italian.s=280;
+    lookupTable.Italian.t=[20,270];
+    lookupTable.West_European={};
+    lookupTable.West_European.s=280;
+    lookupTable.West_European.t=[20,330];
 
-    //vis.map_projection
-    //    .translate(lookupTable[vis.cuisine].t)
-    //    .scale(lookupTable[vis.cuisine].s);
+if (vis.cuisine in lookupTable){
+    vis.map_projection
+        .translate(lookupTable[vis.cuisine].t)
+        .scale(lookupTable[vis.cuisine].s);
+} else {
 
     vis.map_projection
         .translate(t)
         .scale(s);
+}
 
 
     vis.map_path_zoomed = d3.geo.path()
@@ -209,7 +248,9 @@ var vis=this;
 
 
     vis.cuisinePrintOut=d3.select("#selected-country").select("p").attr("id","selected-country-text");
-    vis.cuisinePrintOut.html("<br>" + vis.cuisine.replace(/_/g, ' ') + " Cuisine");
+
+
+    vis.cuisinePrintOut.html("Cuisine: <br>" + vis.cuisine.replace(/_/g, ' ') + "");
 
 
 };
