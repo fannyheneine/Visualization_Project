@@ -16,7 +16,6 @@ loadData_ingredientChart();
 function loadData_ingredientChart() {
     d3.csv("data/all_cuisines_all_ing.csv", function (error, data) {
 
-        console.log(selected_ingredient, color_ing)
         ingchart = new BarChart2("ingredient-chart",data ,500,0.8*500,15,20,100, "big");
         ingchart2 = new BarChart2("mini-ingredient-chart",data ,200,100,6,5,1, "small");
 

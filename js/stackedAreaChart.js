@@ -65,8 +65,6 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
     vis.width = vis.svgWidth - vis.margin.left - vis.margin.right;
     vis.height = vis.svgHeight - vis.margin.top - vis.margin.bottom;
 
-    console.log(vis.width)
-
 
     vis.svg_stacked = d3.select("#" + vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -160,7 +158,6 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
     stackedData = stack(transposedData);
     vis.stackedData = stackedData;
 
-    //console.log(stackedData);
 
 
     vis.displayData = vis.stackedData;
@@ -180,7 +177,6 @@ var next_country;
 
 StackedAreaChart.prototype.wrangleData = function(next_country) {
     var vis = this;
-    //console.log(next_country)
 
     if(next_country==country_chosen_st) {
         vis.displayData = stackedData

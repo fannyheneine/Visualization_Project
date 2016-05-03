@@ -207,7 +207,6 @@ function createMapVisualization(scaling, id, size) {
                 window.clearTimeout(timeOutHandler);
                 timeOutHandler= window.setTimeout(function() {
                     next_country = country_cuisine[d.id].name;
-                    //console.log(next_country)
                     areachart.wrangleData(next_country);
                     areachart2.wrangleData(next_country);
                     barchart.wrangleData(country_cuisine[d.id].cuisine);
@@ -218,7 +217,6 @@ function createMapVisualization(scaling, id, size) {
                     filterobject[0]={};
                     filterobject[0].type = "Cuisine";
                     filterobject[0].value=country_cuisine[d.id].cuisine;
-                    console.log(filterobject)
                     forceplot.wrangleData(filterobject);
                     forceplot_mini.wrangleData(filterobject);
                 }, 800);
@@ -303,7 +301,6 @@ function createMapVisualization(scaling, id, size) {
                 .attr('height', 400)
                 //.attr('xlink:href', function(d,i) {return "images/Protein.jpeg"})
                 .attr('xlink:href', function (d, i) {
-                    console.log(underscore(d.data.category));
                     return "images/" + underscore(d.data.category) + ".jpg"
                 });
 

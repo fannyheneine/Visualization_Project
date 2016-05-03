@@ -161,11 +161,8 @@ var vis=this;
 
     b.width = Math.abs(b.e - b.w);
     b.mid=(b.w+ b.e)/2;
-    console.log(b.mid)
     var s = 1 / Math.max(b.width / vis.width, b.height / vis.height);
     var t = [(vis.width - s * (b.w + b.e)) / 2, (vis.height - s * (b.n + b.s)) / 2];
-    console.log(s)
-    console.log(t)
 
     var lookupTable={};
 
