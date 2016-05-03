@@ -153,10 +153,23 @@ var vis=this;
 
 
     var b=boundingExtent(vis.filteredMapData);
-    var scale=1 / Math.max((b[1][0] - b[0][0]) / vis.width, (b[1][1] - b[0][1]) / vis.height);
+
+    b.s = b[0][1]; b.n = b[1][1];
+    b.w = b[0][0]; b.e = b[1][0];
+    b.height = Math.abs(b.n - b.s);
+
+    b.width = Math.abs(b.e - b.w);
+    console.log(b.height)
+    console.log(b.width)
+    var s = 1 / Math.max(b.width / vis.width, b.height / vis.height);
+    console.log(s)
+    console.log(vis.width)
+    console.log(vis.height)
+    var t = [(vis.width - s * (b[1][0] + b[0][0])) / 2, (vis.height - s * (b[1][1] + b[0][1])) / 2];
+
     vis.map_projection
-        .scale(scale)
-        .translate([(vis.width - scale * (b[1][0] + b[0][0])) / 2, (vis.height - scale * (b[1][1] + b[0][1])) / 2]);
+        .translate(t)
+        .scale(s);
 
 
     vis.map_path_zoomed = d3.geo.path()
