@@ -96,6 +96,7 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
                     filterobject[0].type = "Cuisine";
                     filterobject[0].value= varXdomain2[i].replace(" ","_");
                     //console.log(filterobject)
+                    selectedCountryPlot.wrangleData(varXdomain2[i].replace(" ","_"));
                     forceplot.wrangleData(filterobject);
                     forceplot_mini.wrangleData(filterobject);
 

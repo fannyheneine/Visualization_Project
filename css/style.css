@@ -55,7 +55,6 @@ body,html{
 #navigation-horizontal-bar {
 padding:0;
 }
-
 #mini-navigation {
     background-color: #EBE0D0;
             /*#f1f1f1;*/
@@ -93,7 +92,7 @@ padding:0;
 .mini-plot {
     position:absolute;
     top:60px;
-    height:130px;
+    height:120px;
 }
 
 .nav-panel:hover {
