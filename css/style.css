@@ -657,6 +657,37 @@ div.tooltip {
     text-decoration: none;
 }
 
+
+#explore2 {
+    font-size: 16px;
+    line-height: 37px;
+    letter-spacing: 0px;
+    margin-top: 13px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    width: 140px;
+    height: 38px;
+    background: rgba(0, 0, 0, 0.19999999999999996);
+    border: 1px solid white;
+    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 5px;}
+
+#explore2:hover {
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
 .vis-extra{
     height:500px;
     width:800px;

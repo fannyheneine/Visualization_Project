@@ -304,6 +304,7 @@ function createMapVisualization(scaling, id, size) {
                     return "images/" + underscore(d.data.category) + ".jpg"
                 });
 
+
             pie_patterns.exit().remove();
 
             var pie_slice = svg_pie.select(".pie-slices").selectAll("path.slice")
@@ -532,7 +533,8 @@ function createMapVisualization(scaling, id, size) {
                     .attr("height", hbar_height/7);
             })
             .on('click', function(d){
-                updateVisualization2(d.ingredient,colorbrewer.Set4[12][ingredients.indexOf(d.ingredient.replace("_"," "))])
+                ingchart.updateVisualization(d.ingredient, colorbrewer.Set4[12][seen_ingredients.indexOf(d.ingredient.replace("_"," "))])
+                ingchart2.updateVisualization(d.ingredient, colorbrewer.Set4[12][seen_ingredients.indexOf(d.ingredient.replace("_"," "))])
             });
 
         hbar.exit().remove();
