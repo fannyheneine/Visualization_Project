@@ -209,7 +209,7 @@ var vis=this;
 
 
     vis.cuisinePrintOut=d3.select("#selected-country").select("p").attr("id","selected-country-text");
-    vis.cuisinePrintOut.html("Selected: <br>" + vis.cuisine.replace(/_/g, ' ') + " Cuisine");
+    vis.cuisinePrintOut.html("<br>" + vis.cuisine.replace(/_/g, ' ') + " Cuisine");
 
 
 };

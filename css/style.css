@@ -57,7 +57,8 @@ padding:0;
 }
 
 #mini-navigation {
-    background-color: #f1f1f1;
+    background-color: #EBE0D0;
+            /*#f1f1f1;*/
     padding:10px;
     padding-right:10px;
     border-right:1px solid #aaa;
@@ -97,7 +98,8 @@ padding:0;
 
 .nav-panel:hover {
     /*background-color: #f0f2fb;*/
-    background-color: #e5e5e5;
+    background-color: #f3ece2;
+            /*#e5e5e5;*/
     /*border:2px solid ;*/
     /*opacity:0.6;*/
 }
@@ -115,7 +117,8 @@ p {
 
 #nav-horizontal-text {
     padding:0px;
-    background-color: #F1F1F1;
+    background-color: #EBE0D0;
+            /*#F1F1F1;*/
     border:1px solid #aaa;
     height:180px;
 }
@@ -667,7 +670,7 @@ div.tooltip {
 
 .selected {
     fill: url(#map-pattern);
-    stroke: black;
+    /*stroke: black;*/
 }
 
 

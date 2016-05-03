@@ -29,7 +29,7 @@ function createMapVisualization(scaling, id, size) {
         .append("image")
         .attr("xlink:href", "images/food_background.jpg")
         .attr("width", map_width)
-        .attr("height", map_height);
+        .attr("height", map_width);
 
     var map_projection = d3.geo.mercator()
         .center([10, 50 - map_height/80])
