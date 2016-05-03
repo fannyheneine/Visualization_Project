@@ -191,8 +191,8 @@ var vis=this;
     lookupTable.South_American.s=79;
     lookupTable.South_American.t=[150,17];
     lookupTable.British={};
-    lookupTable.British.s=200;
-    lookupTable.British.t=[76,270];
+    lookupTable.British.s=220;
+    lookupTable.British.t=[87,300];
     lookupTable.West_African={};
     lookupTable.West_African.s=221;
     lookupTable.West_African.t=[73,110];
@@ -214,8 +214,39 @@ var vis=this;
     lookupTable.West_European={};
     lookupTable.West_European.s=280;
     lookupTable.West_European.t=[20,330];
+    lookupTable.East_European={};
+    lookupTable.East_European.s=40;
+    lookupTable.East_European.t=[0,103];
+    lookupTable.Scandinavian={};
+    lookupTable.Scandinavian.s=120;
+    lookupTable.Scandinavian.t=[20,230];
+    lookupTable.Middle_Eastern={};
+    lookupTable.Middle_Eastern.s=160;
+    lookupTable.Middle_Eastern.t=[-80,150];
+    lookupTable.South_Asian={};
+    lookupTable.South_Asian.s=160;
+    lookupTable.South_Asian.t=[-140,140];
+    lookupTable.Indian={};
+    lookupTable.Indian.s=160;
+    lookupTable.Indian.t=[-150,115];
+    lookupTable.Chinese={};
+    lookupTable.Chinese.s=120;
+    lookupTable.Chinese.t=[-150,130];
+    lookupTable.Southeast_Asian={};
+    lookupTable.Southeast_Asian.s=120;
+    lookupTable.Southeast_Asian.t=[-160,70];
+    lookupTable.Korean={};
+    lookupTable.Korean.s=240;
+    lookupTable.Korean.t=[-470,200];
+    lookupTable.Japanese={};
+    lookupTable.Japanese.s=240;
+    lookupTable.Japanese.t=[-500,230];
+    lookupTable.French={};
+    lookupTable.French.s=280;
+    lookupTable.French.t=[60,315];
 
-if (vis.cuisine in lookupTable){
+
+    if (vis.cuisine in lookupTable){
     vis.map_projection
         .translate(lookupTable[vis.cuisine].t)
         .scale(lookupTable[vis.cuisine].s);
