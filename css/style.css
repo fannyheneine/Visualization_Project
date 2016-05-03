@@ -20,10 +20,18 @@
  }
 
 #selected-country-text {
-    font-size:13pt;
-    font-color: #5b5b5b;
+    font-size:11pt;
+    color: #5b5b5b;
     margin:5px;
 }
+#selected-country-text em{
+    color: #A50026;
+    font-style: normal;
+    font-family: 'Lato', sans-serif;
+    font-weight:400;
+    font-size:15pt;
+}
+
 #selected-country {
     float:left;
     margin-left:5px;

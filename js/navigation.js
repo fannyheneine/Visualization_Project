@@ -276,9 +276,10 @@ var vis=this;
 
 
     vis.cuisinePrintOut=d3.select("#selected-country").select("p").attr("id","selected-country-text");
+    vis.cuisinePrintOut.html("Cuisine: <br>");
 
-
-    vis.cuisinePrintOut.html("Cuisine: <br>" + vis.cuisine.replace(/_/g, ' ') + "");
+    vis.cuisinePrintOut.append("em")
+        .html(vis.cuisine.replace(/_/g, ' '));
 
 
 };
