@@ -31,7 +31,7 @@ $("#mini-ingredient-chart").click(function() {
 });
 $("#map-return-button").click(function() {
     $('html, body').animate({
-        scrollTop: $("#nav-anchor").offset().top+180
+        scrollTop: $("#nav-anchor").offset().top+10
     }, 600);
 });
 
