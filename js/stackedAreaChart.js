@@ -166,6 +166,8 @@ StackedAreaChart.prototype.initVis = function(country_chosen_st) {
     vis.displayData = vis.stackedData;
 
 
+    document.getElementById("country").innerHTML = country_chosen_st;
+
     vis.updateVis();
 }
 
@@ -228,6 +230,7 @@ StackedAreaChart.prototype.wrangleData = function(next_country) {
         // In the first step no data wrangling/filtering needed
     }
 
+    document.getElementById("country").innerHTML = next_country;
 
 
     // Update the visualization
@@ -297,10 +300,6 @@ StackedAreaChart.prototype.updateVis = function() {
             d3.select(this).style("opacity",0.8);
             div
                 .style("opacity", 0);
-        })
-        .on("click",function (d){
-            console.log(d.name)
-
         });
 
 
@@ -331,6 +330,3 @@ StackedAreaChart.prototype.updateVis = function() {
 }
 
 
-var selectCategory = function(cat) {
-    console.log(cat)
-}
