@@ -187,8 +187,11 @@ function createMapVisualization(scaling, id, size) {
                     .style("opacity", 0);
             })
             .on('click',function(d){
-                d3.select(".selected").classed("selected", false);
-                d3.select(this).classed("selected", true);
+                if (size=="big") {
+                    d3.select(".selected").classed("selected", false);
+                    d3.select(this).classed("selected", true);
+
+                }
                 var map_unavailable = (country_cuisine[d.id] == undefined || country_cuisine[d.id].cuisine == undefined)
                 if (map_unavailable==false) {
 

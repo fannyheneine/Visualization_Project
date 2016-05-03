@@ -18,7 +18,7 @@ function loadData_ingredientChart() {
 
         console.log(selected_ingredient, color_ing)
         ingchart = new BarChart2("ingredient-chart",data ,500,0.8*500,15,20,100, "big");
-        ingchart2 = new BarChart2("mini-ingredient-chart",data ,200,100,6,5,10, "small");
+        ingchart2 = new BarChart2("mini-ingredient-chart",data ,200,100,6,5,1, "small");
 
 
     })
