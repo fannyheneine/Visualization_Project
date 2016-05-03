@@ -19,12 +19,12 @@ $(function() {
 });
 
 
-$("#mini-barchart").click(function() {
+$("#bar-chart-panel").click(function() {
     $('html, body').animate({
         scrollTop: $("#barcharts").offset().top-250
     }, 600);
 });
-$("#mini-ingredient-chart").click(function() {
+$("#ingredient-chart-panel").click(function() {
     $('html, body').animate({
         scrollTop: $("#barcharts").offset().top-250
     }, 600);
@@ -44,7 +44,7 @@ $("#explore").click(function() {
 
 
 
-$("#mini-forceplot").click(function() {
+$("#force-plot-panel").click(function() {
     $('html, body').animate({
         scrollTop: $("#force-layout-controls").offset().top-100
     }, 600);
@@ -53,7 +53,7 @@ $("#mini-forceplot").click(function() {
 
 
 
-$("#mini-stacked").click(function() {
+$("#stacked-panel").click(function() {
     $('html, body').animate({
         scrollTop: $("#stacked-area-chart").offset().top-180
     }, 600);
