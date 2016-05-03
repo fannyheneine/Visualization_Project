@@ -1,5 +1,5 @@
 
-BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight,_svgBarWidth, _svgMargin,_size){
+BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight,_svgBarWidth, _svgLeftMargin,_svgBottomMargin,_size){
     this.parentElement = _parentElement;
     this.data_ing2 = _data;
     //this.color = _this_color;
@@ -7,8 +7,9 @@ BarChart2 = function(_parentElement, _data, _svgWidth, _svgHeight,_svgBarWidth, 
     //this.selected_ingredient = _selected_ingredient;
     this.size = _size;
     this.svgHeight = _svgHeight;
-    this.leftMargin = _svgMargin;
+    this.leftMargin = _svgLeftMargin;
     this.barWidth = _svgBarWidth;
+    this.bottomMargin = _svgBottomMargin;
     this.initVis(selected_ingredient, color_ing);
 };
 
@@ -21,7 +22,7 @@ BarChart2.prototype.initVis = function(selected_ingredient,this_color) {
 
     var vis = this;
 
-    vis.margin = {top: 40, right: 10, bottom: 100, left: vis.leftMargin};
+    vis.margin = {top: 40, right: 10, bottom: vis.bottomMargin, left: vis.leftMargin};
 
 
     //LEGEND WILL DISAPPEAR FOR VIS.WIDTH < 500 px
