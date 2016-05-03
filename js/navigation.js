@@ -21,12 +21,12 @@ $(function() {
 
 $("#mini-barchart").click(function() {
     $('html, body').animate({
-        scrollTop: $("#barcharts").offset().top-250
+        scrollTop: $("#barcharts").offset().top-260
     }, 600);
 });
 $("#mini-ingredient-chart").click(function() {
     $('html, body').animate({
-        scrollTop: $("#barcharts").offset().top-250
+        scrollTop: $("#barcharts").offset().top-260
     }, 600);
 });
 $("#map-return-button").click(function() {
@@ -55,7 +55,7 @@ $("#mini-forceplot").click(function() {
 
 $("#mini-stacked").click(function() {
     $('html, body').animate({
-        scrollTop: $("#stacked-area-chart").offset().top-180
+        scrollTop: $("#stacked-area-chart").offset().top-240
     }, 600);
 });
 

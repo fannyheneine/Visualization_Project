@@ -127,26 +127,26 @@ function createMapVisualization(scaling, id, size) {
         // PART I: World Map
 
         // SET UP LABEL
-        if(size=="big") {
-            map_label.append("text")
-                .attr("class", "map-label cuisine")
-                .style("font-size", 20)
-                .attr("x", 0)
-                .attr("y", -145)
-                .attr("text-anchor", "middle");
-
-            map_label.append("text")
-                .attr("x", 0)
-                .attr("y", -145)
-                .attr("class", "detail")
-                .attr("text-anchor", "middle");
-            map_label.select(".detail")
-                .append("tspan")
-                .attr("x", 0)
-                .attr("dy", 25)
-                .attr("class", "map-label detail country")
-                .attr("text-anchor", "middle");
-        }
+        //if(size=="big") {
+        //    map_label.append("text")
+        //        .attr("class", "map-label cuisine")
+        //        .style("font-size", 20)
+        //        .attr("x", 0)
+        //        .attr("y", -145)
+        //        .attr("text-anchor", "middle");
+        //
+        //    map_label.append("text")
+        //        .attr("x", 0)
+        //        .attr("y", -145)
+        //        .attr("class", "detail")
+        //        .attr("text-anchor", "middle");
+        //    map_label.select(".detail")
+        //        .append("tspan")
+        //        .attr("x", 0)
+        //        .attr("dy", 25)
+        //        .attr("class", "map-label detail country")
+        //        .attr("text-anchor", "middle");
+        //}
 
         // DRAW MAP
         map_colorScale.domain(Object.keys(cuisine_ingredient));
