@@ -653,13 +653,7 @@ ForceDiagram.prototype.updateVis = function() {
     }
 
     function clearAllFunction() {
-        vis.node.each(function (dd) {
-            var n = d3.select(this);
-            setIfDifferent(n, dd, 'fill-opacity', 1);
-            setIfDifferent(n, dd, 'stroke', "#ccc");
-            setIfDifferent(n, dd, 'stroke-width', vis.nodeStrokeWidth);
-            setIfDifferent_att(n, dd, 'r', vis.nodeRadius_normal);
-        });
+
         vis.link.each(function(l) {
             var el = d3.select(this);
             setIfDifferent(el, l, 'stroke', "#aaa");
@@ -678,15 +672,20 @@ ForceDiagram.prototype.updateVis = function() {
             setIfDifferent(el, l, 'stroke-opacity', strokeOpacity);
             setIfDifferent(el, l, 'stroke-width', strokeWidth);
         });
+
+        vis.node.each(function (dd) {
+            var n = d3.select(this);
+            setIfDifferent(n, dd, 'fill-opacity', 1);
+            setIfDifferent(n, dd, 'stroke', "#ccc");
+            setIfDifferent(n, dd, 'stroke-width', vis.nodeStrokeWidth);
+            setIfDifferent_att(n, dd, 'r', vis.nodeRadius_normal);
+        });
     }
 
     function mouseOverFunction(d,thisvar) {
         vis.rect=vis.svg.append("g");
 
         if (!vis.toggleNode){
-            vis.tip.show(d);
-            setIfDifferent_att(thisvar, d, 'r', vis.nodeRadius_highlight);
-            setIfDifferent(thisvar, d, 'stroke-width', vis.nodeStrokeWidthActive);
 
 
             vis.link.each(function(l) {
@@ -710,6 +709,9 @@ ForceDiagram.prototype.updateVis = function() {
         )
         ;
 
+            vis.tip.show(d);
+            setIfDifferent_att(thisvar, d, 'r', vis.nodeRadius_highlight);
+            setIfDifferent(thisvar, d, 'stroke-width', vis.nodeStrokeWidthActive);
 
             vis.node.each(function(dd){
                 var n=d3.select(this);
@@ -750,23 +752,7 @@ ForceDiagram.prototype.updateVis = function() {
 
             }
             else if (neighboring(d,vis.selectedNode)) {
-                vis.tip.show(d);
-                setIfDifferent_att(thisvar, d, 'r', vis.nodeRadius_highlight);
-                setIfDifferent(thisvar, d, 'stroke-width', vis.nodeStrokeWidthActive);
 
-                if (vis.selectedVal == "recipe"){
-                    printIngredients(d);}
-                else if (vis.selectedVal == "ingredient"){
-                    printRecipes(d)
-                }
-
-
-                vis.rect.append("text")
-                    .attr("class","force-hover-label-title")
-                    .attr("y",-30)
-                    .attr("x",145)
-                    .text("Intersection:")
-                    .attr("fill","#777");
                 vis.link.each(function(l)
                 {var el = d3.select(this);
                     if (((d === l.source && vis.selectedNode=== l.target) || (d === l.target && vis.selectedNode=== l.source)) && (l.strength > vis.threshold)){
@@ -793,6 +779,25 @@ ForceDiagram.prototype.updateVis = function() {
                     }
 
                 });
+
+                vis.tip.show(d);
+                setIfDifferent_att(thisvar, d, 'r', vis.nodeRadius_highlight);
+                setIfDifferent(thisvar, d, 'stroke-width', vis.nodeStrokeWidthActive);
+
+                if (vis.selectedVal == "recipe"){
+                    printIngredients(d);}
+                else if (vis.selectedVal == "ingredient"){
+                    printRecipes(d)
+                }
+
+
+                vis.rect.append("text")
+                    .attr("class","force-hover-label-title")
+                    .attr("y",-30)
+                    .attr("x",145)
+                    .text("Intersection:")
+                    .attr("fill","#777");
+
             }
 
         }
